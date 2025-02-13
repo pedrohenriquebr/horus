@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="MediatR" Version="12.0.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.12"/>
+        <PackageReference Include="Supabase" Version="1.1.1"/>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Shared\LuzInga.Contracts\Horus.Modules.Shared.Contracts.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="ValueObjects\"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="Pgvector">
+            <HintPath>..\..\..\..\..\.nuget\packages\pgvector\0.1.4\lib\net6.0\Pgvector.dll</HintPath>
+        </Reference>
+        <Reference Include="StackExchange.Redis">
+            <HintPath>..\..\..\..\..\.nuget\packages\stackexchange.redis\2.6.104\lib\net5.0\StackExchange.Redis.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+</Project>

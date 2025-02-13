@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>QWEN Chat Clone</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <script defer src="index.js"></script>
+</head>
+<body>
+<div class="h-screen bg-[#1E1E1E] text-white flex">
+    <!-- Sidebar -->
+    <div class="fixed lg:static inset-y-0 left-0 transform lg:translate-x-0 transition-transform duration-300 ease-in-out w-64 bg-[#171717] flex flex-col z-30"
+         id="sidebar">
+        <div class="p-4 flex items-center gap-2">
+            <button class="hover:bg-[#2A2A2A] p-1.5 rounded-md transition-colors" id="menuToggle">
+                <i class="fas fa-th-large w-5 h-5"></i>
+            </button>
+            <div class="flex items-center gap-2 text-indigo-400 font-semibold">
+                <i class="fas fa-comment-alt w-6 h-6"></i>
+                QWEN CHAT
+            </div>
+        </div>
+        <button class="mx-4 mb-4 bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-md flex items-center gap-2">
+            <i class="fas fa-plus w-4 h-4"></i>
+            New Chat
+        </button>
+
+        <div class="mx-4 mb-4 relative">
+            <i class="fas fa-search w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <input
+                    class="w-full bg-[#2A2A2A] rounded-md py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    placeholder="Search"
+                    type="text"
+            >
+        </div>
+        <div class="flex-1 overflow-y-auto">
+            <div class="mb-4">
+                <div class="px-4 py-2 text-sm text-gray-400 flex items-center">
+                    <i class="fas fa-chevron-down w-4 h-4 mr-1"></i>
+                    Today
+                </div>
+                <div class="px-4 py-2 text-sm hover:bg-[#2A2A2A] cursor-pointer">Hardware Constraints and Mod</div>
+                <div class="px-4 py-2 text-sm hover:bg-[#2A2A2A] cursor-pointer">Receita de Bolo Simples</div>
+                <div class="px-4 py-2 text-sm hover:bg-[#2A2A2A] cursor-pointer">Chatbot Interface Design</div>
+            </div>
+
+            <div class="mb-4">
+                <div class="px-4 py-2 text-sm text-gray-400 flex items-center">
+                    <i class="fas fa-chevron-down w-4 h-4 mr-1"></i>
+                    Yesterday
+                </div>
+                <div class="px-4 py-2 text-sm hover:bg-[#2A2A2A] cursor-pointer">Web App Clone Prompt Flow</div>
+            </div>
+
+            <div class="mb-4">
+                <div class="px-4 py-2 text-sm text-gray-400 flex items-center">
+                    <i class="fas fa-chevron-down w-4 h-4 mr-1"></i>
+                    Previous 7 days
+                </div>
+                <div class="px-4 py-2 text-sm hover:bg-[#2A2A2A] cursor-pointer">Solução para 26 com 2, 3, 4</div>
+                <div class="px-4 py-2 text-sm hover:bg-[#2A2A2A] cursor-pointer">Configuração PC para Programaç</div>
+                <div class="px-4 py-2 text-sm hover:bg-[#2A2A2A] cursor-pointer">Xbox Series S UI Clone</div>
+                <div class="px-4 py-2 text-sm hover:bg-[#2A2A2A] cursor-pointer">Xbox Dashboard Clone</div>
+                <div class="px-4 py-2 text-sm hover:bg-[#2A2A2A] cursor-pointer">Dividindo Maçãs Igualmente</div>
+                <div class="px-4 py-2 text-sm hover:bg-[#2A2A2A] cursor-pointer">Neural Cellular Automata for Pac</div>
+                <div class="px-4 py-2 text-sm hover:bg-[#2A2A2A] cursor-pointer">Noticias do Tempo Apresentação</div>
+            </div>
+
+        </div>
+
+        <div class="p-4 border-t border-gray-800 mt-auto">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-gray-600"></div>
+                <span class="text-sm">Pedro Braga</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+        <header class="h-14 border-b border-gray-800 flex items-center px-4">
+            <div class="flex items-center justify-between w-full">
+                <div class="text-lg">Qwen2.5-Max</div>
+                <button class="text-gray-400 hover:text-white">
+                    Set as default
+                </button>
+            </div>
+        </header>
+
+        <main class="flex-1 flex flex-col items-center justify-center p-4">
+            <h1 class="text-3xl mb-8">Good evening, Pedro Braga</h1>
+
+            <div class="max-w-2xl w-full">
+                <div class="bg-[#1A1A1A] rounded-2xl p-3 mb-4">
+                    <!-- Action buttons above input -->
+                    <div class="flex items-center gap-3 mb-2 text-gray-400 text-sm">
+                        <button class="flex items-center gap-1.5 hover:bg-[#2A2A2A] px-2 py-1 rounded-md transition-colors">
+                            <i class="fas fa-comment w-4 h-4"></i>
+                            Artifacts
+                        </button>
+                        <button class="flex items-center gap-1.5 hover:bg-[#2A2A2A] px-2 py-1 rounded-md transition-colors">
+                            <i class="fas fa-search w-4 h-4"></i>
+                            Web Search
+                        </button>
+                        <button class="flex items-center gap-1.5 hover:bg-[#2A2A2A] px-2 py-1 rounded-md transition-colors">
+                            <i class="fas fa-image w-4 h-4"></i>
+                            Image Generation
+                        </button>
+                        <button class="flex items-center gap-1.5 hover:bg-[#2A2A2A] px-2 py-1 rounded-md transition-colors">
+                            <i class="fas fa-video w-4 h-4"></i>
+                            Video Generation
+                        </button>
+                        <div class="flex-grow"></div>
+                        <button class="hover:bg-[#2A2A2A] p-1.5 rounded-md transition-colors">
+                            <i class="fas fa-link w-4 h-4"></i>
+                        </button>
+                        <button class="hover:bg-[#2A2A2A] p-1.5 rounded-md transition-colors">
+                            <i class="fas fa-image w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <!-- Input field -->
+                    <div class="relative">
+                        <input
+                                class="w-full bg-transparent focus:outline-none pr-10 text-[15px]"
+                                id="message-input"
+                                placeholder="How can I help you today?"
+                                type="text"
+                        >
+                        <button class="absolute right-0 top-1/2 -translate-y-1/2 bg-[#4B4B4B] p-1.5 rounded-md hover:bg-[#5B5B5B] transition-colors">
+                            <i class="fas fa-arrow-up w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick action buttons -->
+                <div class="flex flex-wrap gap-2 justify-center">
+                    <button class="px-3 py-1.5 bg-[#1A1A1A] rounded-md hover:bg-[#2A2A2A] transition-colors flex items-center gap-2 text-sm text-gray-300">
+                        <i class="fas fa-image w-4 h-4"></i>
+                        Create image
+                    </button>
+                    <button class="px-3 py-1.5 bg-[#1A1A1A] rounded-md hover:bg-[#2A2A2A] transition-colors flex items-center gap-2 text-sm text-gray-300">
+                        <i class="fas fa-code w-4 h-4"></i>
+                        Code
+                    </button>
+                    <button class="px-3 py-1.5 bg-[#1A1A1A] rounded-md hover:bg-[#2A2A2A] transition-colors flex items-center gap-2 text-sm text-gray-300">
+                        <i class="fas fa-file-alt w-4 h-4"></i>
+                        Make a plan
+                    </button>
+                    <button class="px-3 py-1.5 bg-[#1A1A1A] rounded-md hover:bg-[#2A2A2A] transition-colors flex items-center gap-2 text-sm text-gray-300">
+                        <i class="fas fa-lightbulb w-4 h-4"></i>
+                        News
+                    </button>
+                    <button class="px-3 py-1.5 bg-[#1A1A1A] rounded-md hover:bg-[#2A2A2A] transition-colors text-sm text-gray-300">
+                        More
+                    </button>
+                </div>
+            </div>
+    </div>
+    </main>
+
+    <div class="p-4 border-t border-gray-800">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-gray-600"></div>
+            <span class="text-sm">Pedro Braga</span>
+        </div>
+    </div>
+</div>
+</div>
+
+
+</body>
+</html>

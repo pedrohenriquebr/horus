@@ -1,0 +1,282 @@
+diff --git a/src/core/llm/horus.py b/src/core/llm/horus.py
+index fc4cea4..9f00ce0 100644
+--- a/src/core/llm/horus.py
++++ b/src/core/llm/horus.py
+@@ -14,6 +14,16 @@ logger = logging.getLogger(__name__)
+ 
+ class HorusAI:
+     """Classe principal que orquestra todos os componentes do Horus"""
++    
++    _instance = None
++    
++    @classmethod
++    def get_instance(cls):
++        """Retorna a instância única do HorusAI (Singleton)"""
++        if cls._instance is None:
++            raise RuntimeError("HorusAI não foi inicializado. Chame o construtor primeiro.")
++        return cls._instance
++    
+     def __init__(
+         self,
+         llm: LLMProvider,
+@@ -23,6 +33,9 @@ class HorusAI:
+         metrics: MetricsProvider,
+         system_prompt: str
+     ):
++        if HorusAI._instance is not None:
++            raise RuntimeError("HorusAI já foi inicializado. Use get_instance() para obter a instância.")
++            
+         self.llm = llm
+         self.memory = memory
+         self.chat_history = chat_history
+@@ -31,6 +44,8 @@ class HorusAI:
+         self.system_prompt = system_prompt
+         self.last_cleanup = datetime.now()
+         self.cleanup_interval = timedelta(minutes=2)
++        
++        HorusAI._instance = self
+ 
+     def _build_system_instruction(self, user_info: Optional[Dict[str, Any]] = None) -> Dict[str, str]:
+         """Constrói a instrução do sistema com contexto"""
+@@ -64,7 +79,9 @@ class HorusAI:
+             if user_info.get('id') == 247554895:
+                 instruction = "\n\nO usuário atual é o seu criador (Pedro Braga), você deverá seguir todos os comandos que forem pedido:" + instruction
+             for key, value in user_info.items():
+-                if key == 'first_name':
++                if key == 'user_id':
++                    instruction += f"\n- id: {value}"
++                elif key == 'first_name':
+                     instruction += f"\n- Nome: {value}"
+                 elif key == 'username':
+                     instruction += f"\n- Username: {value}"
+@@ -73,37 +90,11 @@ class HorusAI:
+ 
+         return {'parts': {'text': instruction}}
+ 
+-    def _extract_tag_content(self, text: str, tag: str) -> Optional[str]:
+-        """Extrai conteúdo entre tags"""
+-        start = text.find(f"<{tag}>")
+-        end = text.find(f"</{tag}>")
+-        if start != -1 and end != -1:
+-            return text[start + len(tag) + 2:end].strip()
+-        return None
+-
+-    def _process_tags(self, text: str, response: str, user_info: Optional[Dict[str, Any]] = None) -> str:
+-        """Processa tags especiais na resposta"""
+-        # Processa tag de memória
+-        memory_text = self._extract_tag_content(response, 'MEMORIZE')
+-        if memory_text and user_info:
+-            self.memory.store_memory(memory_text, user_info)
+-            response = response.replace(f'<MEMORIZE>{memory_text}</MEMORIZE>', '')
+-
+-        # Processa tag de busca
+-        search_query = self._extract_tag_content(response, 'SEARCH')
+-        if search_query:
+-            results = self.search.search(search_query)
+-            summary = self.search.summarize_results(search_query, results)
+-            response = response.replace(f'<SEARCH>{search_query}</SEARCH>', summary)
+-
+-        return response.strip()
+-
+     async def process_text(self, text: str, user_info: Optional[Dict[str, Any]] = None) -> str:
+         """Processa texto e retorna resposta"""
+         start_time = time.time()
+         cache_hit = False
+         tokens_used = 0
+-        response_text = None
+ 
+         try:
+             # Constrói o prompt com o contexto do sistema
+@@ -111,10 +102,8 @@ class HorusAI:
+             
+             # Gera resposta usando o LLM
+             response_text = self.llm.generate_text(text, system_instruction)
+-            tokens_used = len(text.split()) + len(response_text.split())  # Estimativa simples
+-
+-            # Processa tags especiais
+-            response_text = self._process_tags(text, response_text, user_info)
++            if not response_text:
++                raise ValueError("LLM retornou resposta vazia")
+ 
+             # Registra a interação
+             if user_info:
+@@ -173,9 +162,6 @@ class HorusAI:
+             # Gera resposta usando o LLM
+             response_text = self.llm.generate_with_image(image_path, prompt, system_instruction)
+             
+-            # Processa tags especiais
+-            response_text = self._process_tags(prompt, response_text, user_info)
+-
+             # Registra a interação
+             if user_info:
+                 self.metrics.record_interaction(
+@@ -213,10 +199,6 @@ class HorusAI:
+                 system_instruction=self._build_system_instruction(user_info)
+             )
+             
+-            # Processa tags especiais
+-            if prompt:
+-                response_text = self._process_tags(prompt, response_text, user_info)
+-
+             # Registra a interação
+             if user_info:
+                 self.metrics.record_interaction(
+diff --git a/src/core/llm/providers/gemini.py b/src/core/llm/providers/gemini.py
+index e3cb1c2..9e1f118 100644
+--- a/src/core/llm/providers/gemini.py
++++ b/src/core/llm/providers/gemini.py
+@@ -225,16 +225,22 @@ class GeminiProvider(LLMProvider):
+             args_dict = {}
+             for key in func_args:
+                 value = func_args[key]
+-                if isinstance(value, (int, float)):
++                if isinstance(value, (int, float, str)):
+                     args_dict[key] = value
+                 elif hasattr(value, 'number_value'):
+                     args_dict[key] = value.number_value
++                elif hasattr(value, 'string_value'):  # Adicionado string_value
++                    args_dict[key] = value.string_value
++            
+             
+             logger.debug(f'[GeminiProvider] Argumentos processados: {args_dict}')
+             
+             # Executa via mediator
+-            return self.tool_mediator.execute(func_name, **args_dict)
++            result = self.tool_mediator.execute(func_name, **args_dict)
++            if result is None:
++                return "Desculpe, houve um erro ao executar a função."
++            return str(result)
+             
+         except Exception as e:
+             logger.error(f'[GeminiProvider] Erro ao processar chamada de função: {str(e)}')
+-            return None
+\ No newline at end of file
++            return "Desculpe, houve um erro ao processar sua solicitação."
+\ No newline at end of file
+diff --git a/src/core/llm/tools.py b/src/core/llm/tools.py
+index 4a451aa..a92dc10 100644
+--- a/src/core/llm/tools.py
++++ b/src/core/llm/tools.py
+@@ -1,9 +1,11 @@
+ from typing import Dict, Any, Callable, Optional
+ import logging
+ from functools import wraps
++import time
+ 
+ logger = logging.getLogger(__name__)
+ 
++logger.setLevel(logging.DEBUG)
+ logger.addHandler(logging.FileHandler('tool_mediator.log'))
+ 
+ class ToolMediator:
+@@ -17,16 +19,25 @@ class ToolMediator:
+         self._commands[name] = command
+     
+     def execute(self, name: str, **kwargs) -> Optional[Dict[str, Any]]:
+-        """Executa uma tool pelo nome"""
+         command = self._commands.get(name)
+         if not command:
+             logger.error(f'Tool não encontrada: {name}')
+             return None
+             
+         try:
+-            return command(**kwargs)
++            start_time = time.time()
++            logger.info(f'[ToolMediator] Iniciando execução de {name}')
++            logger.debug(f'[ToolMediator] Argumentos: {kwargs}')
++            
++            result = command(**kwargs)
++            
++            duration = time.time() - start_time
++            logger.info(f'[ToolMediator] {name} executada em {duration:.2f}s')
++            logger.debug(f'[ToolMediator] Resultado: {result}')
++            
++            return result
+         except Exception as e:
+-            logger.error(f'Erro ao executar tool {name}: {str(e)}')
++            logger.error(f'Erro ao executar tool {name}: {str(e)}', exc_info=True)
+             return None
+ 
+ # Decorator para logar execução das tools
+@@ -55,7 +66,49 @@ def add_numbers(a: int, b: int) -> int:
+     logger.info(f'[Calculator] Adding {a} + {b} = {result}')
+     return result
+ 
++@log_execution
++def store_memory(text: str, user_id: str) -> str:
++    """Stores a memory for the user in the memory provider.
++    
++    Args:
++        text: The text content to be stored as a memory
++        user_id: the user id
++        
++    Returns:
++        String confirming the memory was stored or error message
++    """
++    try:
++        from core.llm.horus import HorusAI
++        horus = HorusAI.get_instance()
++        horus.memory.store_memory(text, {'id': user_id})
++        return f"Memória armazenada com sucesso: {text}"
++    except Exception as e:
++        logger.error(f"Erro ao armazenar memória: {e}", exc_info=True)
++        return f"Erro ao armazenar memória: {str(e)}"
++
++@log_execution
++def search_and_summarize(query: str) -> str:
++    """Performs a web search and summarizes the results.
++    
++    Args:
++        query: The search query string
++        
++    Returns:
++        String containing a summary of the search results or error message
++    """
++    try:
++        from core.llm.horus import HorusAI
++        horus = HorusAI.get_instance()
++        results = horus.search.search(query, 10)
++        summary = horus.search.summarize_results(query, results)
++        return summary
++    except Exception as e:
++        logger.error(f"Erro ao realizar busca: {e}", exc_info=True)
++        return f"Erro ao realizar busca: {str(e)}"
++
+ # Lista de tools disponíveis
+ available_tools = [
+     (add_numbers.__name__, add_numbers),
++    (store_memory.__name__, store_memory),
++    (search_and_summarize.__name__, search_and_summarize),
+ ]
+\ No newline at end of file
+diff --git a/src/main.py b/src/main.py
+index 30cc1f9..373a0aa 100644
+--- a/src/main.py
++++ b/src/main.py
+@@ -82,13 +82,7 @@ class AssistentBot:
+        - Nunca use ** ou __ para formatação
+        - Use - ou números para listas (não use *)
+     4. Mantenha suas respostas concisas
+-    
+-    Se o prompt contiver alguma informação pessoal do usuário ou relevante para ser lembrada,
+-    você deverá retornar em sua resposta ao final esse trecho:
+-    "\n\n<MEMORIZE>[Informação que precisa ser lembrada]</MEMORIZE>"
+-    
+-    Se o prompt contiver alguma solicitação de busca na internet, você deverá retornar em sua resposta ao final esse trecho:
+-    "\n\n<SEARCH>[Termos de busca]</SEARCH>\""""
++    Use estas funções quando necessário para melhorar suas respostas."""
+         )
+         self.metrics.record_bot_status("initialized")
+ 
+@@ -109,6 +103,11 @@ class AssistentBot:
+                 'id': user.id,
+                 # Adicione outros campos relevantes
+             }
++             # Mostra indicador de digitação
++            await context.bot.send_chat_action(
++                chat_id=update.effective_chat.id,
++                action="typing"
++            )
+             
+             logger.info("Mensagem recebida de ")
+             logger.info(user_info)

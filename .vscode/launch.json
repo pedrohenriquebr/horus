@@ -1,0 +1,29 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Core Launch (web) with Hot Reload",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/backend/Api/RootBootstrapper/bin/Debug/net8.0/linux-x64/Horus.RootBootstrapper.dll",
+      "justMyCode": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:3000"
+      },
+      "cwd": "${workspaceFolder}/backend",
+      "stopAtEntry": false,
+      // "serverReadyAction": {
+      //     "action": "openExternally",
+      //     "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+      //     "uriFormat": "%s/swagger"
+      // },
+      "console": "integratedTerminal",
+      "dotnetWatch": true
+    }
+  ]
+}

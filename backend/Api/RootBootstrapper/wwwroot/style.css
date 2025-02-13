@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+.bg-dark-primary {
+    background-color: #1E1E1E;
+}
+
+.bg-dark-secondary {
+    background-color: #171717;
+}
+
+.bg-dark-accent {
+    background-color: #2A2A2A;
+}
+
+.hover-bg-dark-accent:hover {
+    background-color: #2A2A2A;
+}
+
+/* Transitions */
+.sidebar-transition {
+    transition-property: transform;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+}

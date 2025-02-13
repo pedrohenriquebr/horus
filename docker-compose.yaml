@@ -1,0 +1,50 @@
+version: '3.8'
+
+volumes:
+  db_volume:
+  redis_volume:
+
+networks:
+  horus:
+
+services:
+  db:
+    build:
+      context: ./.docker/postgres
+      dockerfile: Dockerfile
+    container_name: db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: horusdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    networks:
+      - horus
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d horusdb" ]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 3s
+  
+  redis:
+    image: redis:latest
+    container_name: redis
+    volumes:
+      - redis_volume:/data
+    ports:
+      - "6380:6379"
+    env_file:
+      - .env
+    networks:
+      - horus
+    command: [ "redis-server","--save",
+               "60",
+               "1",
+               "--loglevel",
+               "warning",
+               "--requirepass",
+               "$REDIS_PASSWORD" ]

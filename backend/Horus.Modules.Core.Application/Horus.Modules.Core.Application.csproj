@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Ardalis.ApiEndpoints" Version="4.0.1"/>
+        <PackageReference Include="AspNetCore.IQueryable.Extensions" Version="7.0.0"/>
+        <PackageReference Include="Dapper" Version="2.0.123"/>
+        <PackageReference Include="FluentValidation" Version="11.5.2"/>
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2"/>
+        <PackageReference Include="Hangfire" Version="1.8.2"/>
+        <PackageReference Include="MediatR" Version="12.0.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.12"/>
+        <PackageReference Include="Scrutor" Version="4.2.2"/>
+        <PackageReference Include="Serilog" Version="2.12.0"/>
+        <PackageReference Include="SqlKata" Version="2.4.0"/>
+        <PackageReference Include="SqlKata.Execution" Version="2.4.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0"/>
+        <PackageReference Include="Telegram.Bot" Version="19.0.0"/>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Horus.Modules.Core.Domain\Horus.Modules.Core.Domain.csproj"/>
+        <ProjectReference Include="..\Horus.Modules.Core.Contract\Horus.Modules.Core.Contract.csproj"/>
+        <ProjectReference Include="..\Shared\LuzInga.Contracts\Horus.Modules.Shared.Contracts.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="DomainEventsHandlers\"/>
+    </ItemGroup>
+</Project>

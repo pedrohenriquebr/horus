@@ -1,0 +1,21 @@
+version: '3.8'
+volumes:
+  horus_redis_volume:
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    volumes:
+      - horus_redis_volume
+    ports:
+      - "6380:6379"
+    env_file:
+      - .env
+    command: [ "redis-server","--save",
+               "60",
+               "1",
+               "--loglevel",
+               "warning",
+               "--requirepass",
+               "$REDIS_PASSWORD" ]

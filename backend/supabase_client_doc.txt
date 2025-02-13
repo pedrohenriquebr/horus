@@ -1,0 +1,206 @@
+# Supabase Client Documentation
+
+## Overview
+O SupabaseClient fornece uma interface type-safe para interagir com o banco de dados Supabase, especialmente projetado para trabalhar com objetos Document e suporte a busca semântica usando embeddings.
+
+## Operações Básicas
+
+### Buscar Documento
+```csharp
+// Retorna null se não encontrar
+var doc = await client.GetAsync("documents", "123");
+if (doc != null)
+{
+    // Documento encontrado
+}
+```
+
+### Buscar Documentos
+```csharp
+// Nunca retorna null, apenas lista vazia
+var docs = await client.GetAllAsync("documents");
+```
+
+### Inserir Documento
+```csharp
+// Lança InvalidOperationException se falhar
+var doc = new Document 
+{
+    Content = "Exemplo de conteúdo",
+    Metadata = new Dictionary<string, object>
+    {
+        { "category", "technical" },
+        { "author", "John Doe" }
+    }
+};
+var inserted = await client.InsertAsync("documents", doc);
+```
+
+### Atualizar Documento
+```csharp
+// Lança InvalidOperationException se falhar
+var updated = await client.UpdateAsync("documents", "123", doc);
+```
+
+### Remover Documento
+```csharp
+// Lança Exception se falhar
+await client.DeleteAsync("documents", "123");
+```
+
+## Filtros
+
+### Sintaxe Simplificada
+O método GetAllAsync suporta três formatos de filtro:
+
+1. Filtro simples (campo=valor):
+```csharp
+var docs = await client.GetAllAsync("documents", "content=exemplo");
+```
+
+2. Filtro em campos JSON (campo->subcampo=valor):
+```csharp
+var docs = await client.GetAllAsync("documents", "metadata->category=technical");
+```
+
+3. Filtro LIKE (campo%valor):
+```csharp
+var docs = await client.GetAllAsync("documents", "content%texto a buscar");
+```
+
+### Sintaxe Fluente
+Para queries mais complexas, use a sintaxe fluente:
+
+```csharp
+var docs = await client.From<Document>()
+    .Select("content, metadata")
+    .Filter("metadata->category", Operator.Equals, "technical")
+    .Filter("created_at", Operator.GreaterThan, DateTime.UtcNow.AddDays(-7))
+    .Order("created_at", Ordering.Descending)
+    .Range(0, 9) // Paginação
+    .Get();
+```
+
+### Operadores Disponíveis
+- Equals
+- NotEquals
+- GreaterThan
+- GreaterThanOrEqual
+- LessThan
+- LessThanOrEqual
+- Like
+- ILike (case insensitive)
+- In
+- Contains
+- ContainedIn
+- Overlap
+- NotIn
+- Match
+- IMatch (case insensitive)
+
+## Busca Semântica
+
+```csharp
+// Nunca retorna null, apenas lista vazia
+var docs = await client.MatchDocumentsAsync(
+    embedding: documentEmbedding,
+    limit: 5,
+    threshold: 0.7f
+);
+```
+
+## Funções PostgreSQL (RPC)
+
+### Exemplo Básico
+```csharp
+var response = await client.Rpc("calculate_statistics", null);
+if (response?.Content != null)
+{
+    var stats = JsonSerializer.Deserialize<Dictionary<string, object>>(response.Content);
+}
+```
+
+### Com Parâmetros
+```csharp
+var response = await client.Rpc("process_document", new Dictionary<string, object>
+{
+    { "doc_id", 123 },
+    { "action", "analyze" }
+});
+
+if (response?.Content != null)
+{
+    var result = JsonSerializer.Deserialize<ProcessResult>(response.Content);
+}
+```
+
+## Tratamento de Erros
+
+### Retornos Nulos
+- `GetAsync`: Pode retornar null se o documento não for encontrado
+- `GetAllAsync`: Nunca retorna null, apenas `IEnumerable.Empty<Document>()`
+- `MatchDocumentsAsync`: Nunca retorna null, apenas `IEnumerable.Empty<Document>()`
+- `InsertAsync`: Nunca retorna null, lança exceção se falhar
+- `UpdateAsync`: Nunca retorna null, lança exceção se falhar
+
+### Exceções
+- `InsertAsync`: Lança `InvalidOperationException` se a inserção falhar
+- `UpdateAsync`: Lança `InvalidOperationException` se a atualização falhar
+- `DeleteAsync`: Lança `Exception` se a deleção falhar
+
+Todas as operações:
+- Logam erros usando ILogger
+- Incluem informações detalhadas na mensagem de erro
+- Preservam a stack trace original em caso de exceção
+
+### Exemplo de Tratamento
+```csharp
+try 
+{
+    var doc = await client.GetAsync("documents", id);
+    if (doc == null)
+    {
+        // Documento não encontrado
+        return NotFound();
+    }
+
+    // Atualiza documento
+    try 
+    {
+        doc.Content = "Novo conteúdo";
+        await client.UpdateAsync("documents", id, doc);
+    }
+    catch (InvalidOperationException ex)
+    {
+        // Falha na atualização
+        _logger.LogError(ex, "Falha ao atualizar documento {id}", id);
+        return Problem("Falha ao atualizar documento");
+    }
+}
+catch (Exception ex)
+{
+    // Erro inesperado
+    _logger.LogError(ex, "Erro ao processar documento {id}", id);
+    return Problem("Erro interno do servidor");
+}
+```
+
+## Boas Práticas
+
+1. Sempre verifique se GetAsync retornou null
+2. Use try-catch em operações de escrita (Insert/Update/Delete)
+3. Prefira a sintaxe simplificada de filtros para queries simples
+4. Use a sintaxe fluente para queries complexas
+5. Considere o threshold na busca semântica (0.5f-0.9f)
+6. Use Select() para limitar campos retornados
+7. Adicione paginação para grandes conjuntos de dados
+8. Verifique Content != null antes de deserializar respostas RPC
+
+## Limitações
+
+1. Não suporta transações
+2. Não suporta agregações complexas
+3. Filtros em campos JSON podem ser mais lentos
+4. LIKE com prefixo % não usa índice
+5. Limite de 1GB para campos JSON
+6. RPC requer deserialização manual do Content

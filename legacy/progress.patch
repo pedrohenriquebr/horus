@@ -1,0 +1,735 @@
+diff --git a/requirements.txt b/requirements.txt
+index 72c0845..58f0e56 100644
+--- a/requirements.txt
++++ b/requirements.txt
+@@ -20,6 +20,7 @@ multidict==6.1.0
+ packaging==24.2
+ postgrest==0.18.0
+ propcache==0.2.1
++psutil==5.9.7
+ pydantic==2.10.4
+ pydantic_core==2.27.2
+ python-dateutil==2.9.0.post0
+@@ -45,4 +46,5 @@ beautifulsoup4==4.12.3
+ googlesearch-python==1.2.5
+ trafilatura==2.0.0
+ google-generativeai==0.8.3
+-Pillow==11.0.0
+\ No newline at end of file
++Pillow==11.0.0
++sentence_transformers==3.3.1
+\ No newline at end of file
+diff --git a/src/core/llm/horus.py b/src/core/llm/horus.py
+index fb45010..c378fd5 100644
+--- a/src/core/llm/horus.py
++++ b/src/core/llm/horus.py
+@@ -69,7 +69,7 @@ class HorusAI:
+             if history:
+                 instruction += "\n\nHistórico recente da conversa:"
+                 for msg in history:
+-                    instruction += f"\n{msg['role'].title()}: {msg['content']}"
++                    instruction += f"\n-{msg['role'].title()}: {msg['content']}"
+ 
+             # Adiciona memórias relevantes
+             memories = self.memory.get_memories(user_info)
+@@ -105,9 +105,9 @@ class HorusAI:
+             # Constrói o prompt com o contexto do sistema
+             system_instruction = self._build_system_instruction(user_info)
+             # busca contexto de outras fontes que não sejam memórias ou historico de chat
+-            context = self.memory.get_context(text)
+-            if context and context != "":
+-                system_instruction['parts']['text'] += f"\n\nContexto atual: {context}"
++            # context = self.memory.get_context(text)
++            # if context and context != "":
++            #     system_instruction['parts']['text'] += f"\n\nContexto atual: {context}"
+ 
+             logger.debug('Construindo prompt com o contexto do sistema')
+             logger.debug('Prompt: ' + system_instruction.get('parts').get('text') + '\n\n' + 'Prompt do usuário: ' + text)
+diff --git a/src/core/llm/providers/gemini.py b/src/core/llm/providers/gemini.py
+index 52e352c..627e35a 100644
+--- a/src/core/llm/providers/gemini.py
++++ b/src/core/llm/providers/gemini.py
+@@ -1,12 +1,12 @@
+ import os
++import time
++import base64
+ import logging
++from typing import Dict, Optional, List
+ import google.generativeai as genai
+-import PIL.Image
+-import base64
+-import httpx
+-from typing import Dict, Optional, Union, List
+ from ..base import LLMProvider
+-from ..tools import ToolMediator, available_tools
++from .rate_limiter import RateLimiter
++from ...tools.available_tools import available_tools
+ 
+ logger = logging.getLogger(__name__)
+ logger.setLevel(logging.DEBUG)
+@@ -31,10 +31,18 @@ class GeminiProvider(LLMProvider):
+             self.tool_mediator.register(name, func)
+         
+         self.tools = [func for _, func in available_tools]
++        
++        # Inicializa o rate limiter (15 requisições por minuto = 0.25 por segundo, burst de 5)
++        self.rate_limiter = RateLimiter(tokens_per_second=0.25, burst=5)
+ 
+     def generate_text(self, prompt: str, system_instruction: Optional[Dict] = None) -> str:
+         """Gera texto usando o modelo Gemini"""
+         try:
++            # Aplica rate limiting
++            while not self.rate_limiter.acquire():
++                logger.warning("[GeminiProvider] Rate limit excedido, aguardando...")
++                time.sleep(1)  # Espera 1 segundo antes de tentar novamente
++            
+             # Se tem system instruction, cria um novo chat
+             if system_instruction:
+                 instruction = system_instruction.get('parts', {}).get('text', '')
+@@ -81,6 +89,11 @@ class GeminiProvider(LLMProvider):
+     def generate_with_image(self, image_path: str, prompt: str, system_instruction: Optional[Dict] = None) -> str:
+         """Gera texto com base em uma imagem usando o Gemini"""
+ 
++        # Aplica rate limiting
++        while not self.rate_limiter.acquire():
++            logger.warning("[GeminiProvider] Rate limit excedido, aguardando...")
++            time.sleep(1)  # Espera 1 segundo antes de tentar novamente
++
+         # Se tem system instruction, cria um novo chat
+         if system_instruction:
+             instruction = system_instruction.get('parts', {}).get('text', '')
+@@ -114,6 +127,13 @@ class GeminiProvider(LLMProvider):
+     def generate_with_audio(self, audio_path: str, prompt: Optional[str] = None,
+                           system_instruction: Optional[Dict] = None) -> str:
+         """Gera texto com base em um arquivo de áudio"""
++
++                # Aplica rate limiting
++        while not self.rate_limiter.acquire():
++            logger.warning("[GeminiProvider] Rate limit excedido, aguardando...")
++            time.sleep(1)  # Espera 1 segundo antes de tentar novamente
++
++
+         try:
+             # Primeiro, vamos fazer upload do arquivo de áudio
+             audio_file = genai.upload_file(path=audio_path)
+@@ -148,8 +168,8 @@ class GeminiProvider(LLMProvider):
+ 
+             model = genai.GenerativeModel(
+                 model_name="gemini-1.5-flash",
+-                system_instruction=instruction
+-            )
++                    system_instruction=instruction
++                )
+             
+             # Faz a requisição com timeout adequado para áudio
+             response = model.generate_content(
+@@ -161,7 +181,7 @@ class GeminiProvider(LLMProvider):
+             audio_file.delete()
+             
+             return response.text
+-            
++                
+         except Exception as e:
+             logger.error(f"Erro ao processar áudio: {e}")
+             raise
+diff --git a/src/core/llm/providers/rate_limiter.py b/src/core/llm/providers/rate_limiter.py
+new file mode 100644
+index 0000000..81f3319
+--- /dev/null
++++ b/src/core/llm/providers/rate_limiter.py
+@@ -0,0 +1,63 @@
++"""
++Rate limiter implementation using token bucket algorithm.
++"""
++
++import time
++from collections import deque
++import logging
++
++logger = logging.getLogger(__name__)
++
++class RateLimiter:
++    """Implementa um rate limiter usando token bucket algorithm"""
++    def __init__(self, tokens_per_second: float = 1.0, burst: int = 1):
++        """
++        Inicializa o rate limiter.
++        
++        Args:
++            tokens_per_second (float): Taxa de tokens por segundo
++            burst (int): Número máximo de tokens que podem ser acumulados
++        """
++        self.tokens_per_second = tokens_per_second
++        self.burst = burst
++        self.tokens = burst
++        self.last_update = time.time()
++        self.requests = deque()  # Track request timestamps
++        
++    def update_tokens(self):
++        """Atualiza o número de tokens disponíveis baseado no tempo decorrido"""
++        now = time.time()
++        delta = now - self.last_update
++        self.tokens = min(self.burst, self.tokens + delta * self.tokens_per_second)
++        self.last_update = now
++        
++        # Remove old requests from deque (older than 1 minute)
++        while self.requests and now - self.requests[0] > 60:
++            self.requests.popleft()
++            
++    def acquire(self) -> bool:
++        """
++        Tenta adquirir um token.
++        
++        Returns:
++            bool: True se conseguir adquirir um token, False caso contrário
++        """
++        self.update_tokens()
++        if self.tokens >= 1:
++            self.tokens -= 1
++            self.requests.append(time.time())
++            return True
++        return False
++        
++    def get_current_rate(self) -> float:
++        """
++        Calcula a taxa atual de requisições por minuto.
++        
++        Returns:
++            float: Número de requisições no último minuto
++        """
++        now = time.time()
++        # Remove requests older than 1 minute
++        while self.requests and now - self.requests[0] > 60:
++            self.requests.popleft()
++        return len(self.requests)
+diff --git a/src/core/llm/providers/search.py b/src/core/llm/providers/search.py
+index 838bda6..d2fb508 100644
+--- a/src/core/llm/providers/search.py
++++ b/src/core/llm/providers/search.py
+@@ -5,6 +5,11 @@ from ...redis_cache import RedisCache
+ from ...supabase_rag import SupabaseRAG
+ from googlesearch import search
+ import trafilatura
++import concurrent.futures
++import time
++from urllib.parse import urlparse
++import os
++import psutil
+ 
+ logger = logging.getLogger(__name__)
+ logger.setLevel(logging.DEBUG)
+@@ -12,47 +17,133 @@ file_handler = logging.FileHandler('search.log', mode='w')
+ file_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+ logger.addHandler(file_handler)
+ 
++def calculate_optimal_workers():
++    """Calcula o número ótimo de workers com base nos recursos do sistema"""
++    try:
++        # Obtém informações do sistema
++        cpu_count = os.cpu_count() or 1
++        memory = psutil.virtual_memory()
++        
++        # Fatores de ajuste
++        IO_BOUND_MULTIPLIER = 2  # Multiplicador para tarefas I/O bound
++        MEMORY_THRESHOLD = 0.1  # % de memória livre desejada
++        MIN_WORKERS = 32  # Mínimo de workers
++        MAX_WORKERS = 64  # Máximo absoluto de workers
++        
++        # Cálculo base: para tarefas I/O bound, podemos usar mais threads que CPUs
++        base_workers = cpu_count * IO_BOUND_MULTIPLIER
++        
++        # Ajuste baseado na memória disponível
++        memory_factor = memory.available / memory.total
++        if memory_factor < MEMORY_THRESHOLD:
++            # Reduz workers se memória estiver baixa
++            memory_adjustment = max(0.5, memory_factor / MEMORY_THRESHOLD)
++            base_workers *= memory_adjustment
++        
++        # Arredonda para o inteiro mais próximo e aplica limites
++        optimal_workers = max(MIN_WORKERS, min(MAX_WORKERS, round(base_workers)))
++        
++        logger.info(f"[Workers] CPU cores: {cpu_count}, Memória livre: {memory_factor:.1%}")
++        logger.info(f"[Workers] Número ótimo calculado: {optimal_workers}")
++        
++        return optimal_workers
++        
++    except Exception as e:
++        logger.warning(f"[Workers] Erro ao calcular workers: {e}. Usando fallback.")
++        return 8  # Valor fallback seguro
++
+ class WebSearchProvider(SearchProvider):
+     """Implementação de busca web com cache"""
+     def __init__(self, llm: LLMProvider, cache: RedisCache, rag: SupabaseRAG):
+         self.llm = llm
+         self.cache = cache
+         self.rag = rag
++        self.max_workers = calculate_optimal_workers()
++
++    def _scrape_url(self, url: str) -> Optional[str]:
++        """Extrai o conteúdo de uma URL"""
++        try:
++            start_time = time.time()
++            domain = urlparse(url).netloc
++            
++            # Primeiro verifica no cache
++            cached_content = self.cache.get_search_result(url)
++            if cached_content:
++                logger.info(f"[Cache Hit] {domain} - Conteúdo recuperado do cache")
++                return cached_content
++
++            logger.info(f"[Download] Iniciando download de {domain}")
++            downloaded = trafilatura.fetch_url(url)
++            if downloaded:
++                content = trafilatura.extract(downloaded, include_links=False, include_images=False)
++                if content:
++                    content_length = len(content)
++                    processing_time = time.time() - start_time
++                    
++                    # Salva no cache e no RAG
++                    self.cache.set_search_result(url, content)
++                    self.rag.add_search_result(url, content)
++                    
++                    logger.info(f"[Sucesso] {domain} - {content_length} caracteres em {processing_time:.2f}s")
++                    return content
++                else:
++                    logger.warning(f"[Falha] {domain} - Conteúdo extraído está vazio")
++            else:
++                logger.warning(f"[Falha] {domain} - Download falhou")
++            return None
++        except Exception as e:
++            logger.error(f"[Erro] {domain} - {str(e)}")
++            return None
++
++    def _process_url(self, url: str) -> Dict[str, str]:
++        """Processa uma URL e retorna um dicionário com url e conteúdo"""
++        domain = urlparse(url).netloc
++        logger.debug(f"[Processo] Iniciando processamento de {domain}")
++        content = self._scrape_url(url)
++        if content:
++            logger.debug(f"[Processo] {domain} processado com sucesso")
++            return {'url': url, 'content': content}
++        logger.debug(f"[Processo] {domain} falhou no processamento")
++        return None
+ 
+     def search(self, query: str, num_results: int = 5) -> List[Dict[str, str]]:
+-        """Realiza busca na web e retorna resultados"""
++        """Realiza busca na web de forma paralela"""
+         try:
+-            results = []
+-            logger.info('Realizando busca na web para: %s', query)
+-            # Primeiro busca resultados similares no RAG
+-            # nunca mais usar isso
+-            # cached_results = self.rag.get_search_results(query)
+-
+-            # logger.info(f"Encontrados {len(cached_results)} resultados similares no RAG")
+-
+-            # if cached_results:
+-            #     results.extend([{
+-            #         'url': r['metadata']['url'],
+-            #         'content': r['content']
+-            #     } for r in cached_results])
+-
+-            # Se não tem resultados suficientes, faz busca no Google
+-            if len(results) < num_results:
+-                urls = list(search(query, num_results=num_results - len(results), lang="pt"))
+-
+-                logger.info(f"Encontrados {len(urls)} resultados no Google")
+-
+-                for url in urls:
+-                    content = self._scrape_url(url)
+-                    if content:
+-                        results.append({
+-                            'url': url,
+-                            'content': content[:2000]  # Limita o tamanho do conteúdo
+-                        })
+-
+-            return results
++            start_time = time.time()
++            logger.info(f"[Busca] Iniciando busca para: '{query}'")
++            
++            # Obtém URLs do Google
++            urls = list(search(query, num_results=num_results, lang="pt"))
++            logger.info(f"[Google] Encontrados {len(urls)} resultados")
++
++            # Processa URLs em paralelo
++            valid_results = []
++            with concurrent.futures.ThreadPoolExecutor(max_workers=self.max_workers) as executor:
++                logger.info(f"[Thread] Iniciando processamento paralelo com {self.max_workers} workers")
++                # Submete todas as URLs para processamento
++                future_to_url = {executor.submit(self._process_url, url): url for url in urls}
++                
++                # Coleta resultados à medida que ficam prontos
++                for future in concurrent.futures.as_completed(future_to_url):
++                    url = future_to_url[future]
++                    domain = urlparse(url).netloc
++                    try:
++                        result = future.result()
++                        if result:
++                            valid_results.append(result)
++                            logger.debug(f"[Thread] {domain} processado com sucesso")
++                    except Exception as e:
++                        logger.error(f"[Thread] Erro ao processar {domain}: {e}")
++
++            total_time = time.time() - start_time
++            success_rate = (len(valid_results) / len(urls)) * 100 if urls else 0
++            logger.info(f"[Resumo] Busca concluída em {total_time:.2f}s")
++            logger.info(f"[Resumo] {len(valid_results)}/{len(urls)} URLs processadas com sucesso ({success_rate:.1f}%)")
++            
++            return valid_results
++
+         except Exception as e:
+-            logger.error(f"Erro na busca web: {e}")
++            logger.error(f"[Erro] Falha na busca: {e}")
+             return []
+ 
+     def summarize_results(self, query: str, results: List[Dict[str, str]]) -> str:
+@@ -79,15 +170,22 @@ class WebSearchProvider(SearchProvider):
+             prompt = f"""Você é um assistente especializado em analisar e sintetizar informações de múltiplas fontes. Sua tarefa é:
+ 
+ 1. Analise cuidadosamente os resultados de busca fornecidos
+-2. Forneça uma resposta completa, precisa e bem estruturada
++2. Forneça uma resposta completa, precisa e bem estruturada em português
+ 3. Priorize informações mais recentes e relevantes
+-4. Cite as fontes usando markdown no formato [Fonte X](URL)
++4. Cite as fontes usando formato numérico simples (Ex: [1], [2], etc)
+ 5. Indique quando houver discrepâncias entre as fontes
+ 6. Mencione a data/hora das informações quando relevante
+ 7. Se os dados forem numéricos (preços, estatísticas, etc):
+    - Apresente os valores de forma clara
+    - Indique variações ou faixas quando houver
+    - Mencione a data de referência
++8. Para formatação use APENAS:
++   - <i>texto</i> para itálico
++   - <b>texto</b> para negrito
++   - <code>texto</code> para código/valores
++   - Use - ou números para listas
++   - NÃO use markdown (* ou _)
++9. Mantenha a resposta concisa, com no máximo 800 caracteres
+ 
+ Mantenha um tom profissional e objetivo, evitando opiniões pessoais.
+ 
+@@ -97,31 +195,16 @@ Resultados da busca:
+ Pergunta original:
+ {query}"""
+ 
+-            return self.llm.generate_text(prompt)
++            response_text = self.llm.generate_text(prompt)
+ 
+-        except Exception as e:
+-            logger.error(f"Erro ao sumarizar resultados: {e}")
+-            return "Ocorreu um erro ao processar os resultados da busca."
++            response_text += '\n\n'
++            response_text += 'Fontes da pesquisa:\n'
+ 
+-    def _scrape_url(self, url: str) -> Optional[str]:
+-        """Extrai o conteúdo de uma URL com cache"""
+-        try:
+-            # Primeiro tenta pegar do cache
+-            cached_content = self.cache.get_search_result(url)
+-            if cached_content:
+-                logger.info(f"Cache hit para URL: {url}")
+-                return cached_content
++            for i, result in enumerate(results, 1):
++                response_text += f"{i}. {result['url']}\n"
++            
++            return response_text
+ 
+-            # Se não está no cache, faz o scraping
+-            downloaded = trafilatura.fetch_url(url)
+-            if downloaded:
+-                content = trafilatura.extract(downloaded, include_links=False, include_images=False)
+-                if content:
+-                    # Salva no cache e no RAG
+-                    self.cache.set_search_result(url, content)
+-                    self.rag.add_search_result(url, content)
+-                    return content
+-            return None
+         except Exception as e:
+-            logger.error(f"Erro ao fazer scraping da URL {url}: {e}")
+-            return None
++            logger.error(f"Erro ao sumarizar resultados: {e}")
++            return "Ocorreu um erro ao processar os resultados da busca."
+diff --git a/src/core/llm/tools.py b/src/core/llm/tools.py
+index 21c9626..caf42d8 100644
+--- a/src/core/llm/tools.py
++++ b/src/core/llm/tools.py
+@@ -102,7 +102,7 @@ def search_and_summarize(query: str) -> str:
+     try:
+         from core.llm.horus import HorusAI
+         horus = HorusAI.get_instance()
+-        results = horus.search.search(query, 20)
++        results = horus.search.search(query, 30)
+         summary = horus.search.summarize_results(query, results)
+         return summary
+     except Exception as e:
+diff --git a/src/core/supabase_rag.py b/src/core/supabase_rag.py
+index d7a98ab..c42caf5 100644
+--- a/src/core/supabase_rag.py
++++ b/src/core/supabase_rag.py
+@@ -5,6 +5,10 @@ import json
+ from typing import List, Dict, Any
+ import requests
+ from datetime import datetime
++import time
++import requests.exceptions
++import random
++from sentence_transformers import SentenceTransformer
+ 
+ logger = logging.getLogger(__name__)
+ logger.setLevel(logging.DEBUG)
+@@ -14,19 +18,43 @@ logger.addHandler(file_handler)
+ 
+ class SupabaseRAG:
+     def __init__(self, redis_cache):
+-        self.supabase: Client = create_client(
+-            os.getenv('SUPABASE_URL'),
+-            os.getenv('SUPABASE_KEY')
+-        )
++        # Validate environment variables
++        supabase_url = os.getenv('SUPABASE_URL')
++        supabase_key = os.getenv('SUPABASE_KEY')
++        
++        if not all([supabase_url, supabase_key]):
++            raise ValueError("Missing required environment variables: SUPABASE_URL and/or SUPABASE_KEY")
++        
++        try:
++            self.supabase = create_client(supabase_url, supabase_key)
++            logger.info("Verificando conexão com Supabase...")
++            self.check_connection()
++        except Exception as e:
++            raise ConnectionError(f"Failed to initialize Supabase client: {e}")
++            
+         self.hf_api_key = os.getenv('HF_API_KEY')
+         self.hf_api_url = "https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2"
++        self.model_name = "sentence-transformers/all-MiniLM-L6-v2"
++        self.local_model = None  # Lazy loading do modelo local
++        
+         if not self.hf_api_key:
+             raise ValueError("HF_API_KEY não encontrada nas variáveis de ambiente")
+         self.setup_database()
+         self.redis_cache = redis_cache
+ 
++    def check_connection(self) -> bool:
++        try:
++            self.supabase.table('documents').select('id').limit(1).execute()
++            return True
++        except Exception as e:
++            logger.error(f"Supabase connection check failed: {e}")
++            return False
++
+     def get_embedding(self, text: str) -> List[float]:
+-        """Gera embedding usando Hugging Face Inference API com cache"""
++        """Gera embedding usando Hugging Face Inference API com cache e retry logic"""
++        max_retries = 3
++        retry_delay = 1  # seconds
++        
+         # Verifica cache Redis primeiro
+         embedding = self.redis_cache.get_embedding(text)
+         if embedding:
+@@ -34,13 +62,84 @@ class SupabaseRAG:
+             return embedding
+         
+         logger.info("Cache miss para embedding")
+-        # Se não está no cache, gera novo embedding
+-        embedding = self._generate_embedding(text)
+         
+-        # Adiciona ao cache Redis
+-        self.redis_cache.set_embedding(text, embedding)
++        # Se não está no cache, gera novo embedding com retry
++        for attempt in range(max_retries):
++            try:
++                embedding = self._generate_embedding(text)
++                # Adiciona ao cache Redis
++                self.redis_cache.set_embedding(text, embedding)
++                return embedding
++            except requests.exceptions.RequestException as e:
++                if attempt == max_retries - 1:
++                    logger.error(f"Failed to generate embedding after {max_retries} attempts: {e}")
++                    raise
++                logger.warning(f"Attempt {attempt + 1} failed, retrying in {retry_delay * (2 ** attempt)} seconds")
++                time.sleep(retry_delay * (2 ** attempt))  # Exponential backoff
++
++    def _load_local_model(self):
++        """Carrega o modelo local se ainda não foi carregado"""
++        if self.local_model is None:
++            logger.info("Carregando modelo local...")
++            try:
++                self.local_model = SentenceTransformer(self.model_name)
++                logger.info("Modelo local carregado com sucesso")
++            except Exception as e:
++                logger.error(f"Erro ao carregar modelo local: {e}")
++                raise
++
++    def _generate_embedding_api(self, text: str) -> List[float]:
++        """Gera embedding usando a API do HuggingFace"""
++        headers = {
++            "Authorization": f"Bearer {self.hf_api_key}",
++            "Content-Type": "application/json"
++        }
++        response = requests.post(
++            self.hf_api_url,
++            json={"inputs": text},
++            headers=headers,
++            timeout=10
++        )
++        response.raise_for_status()
++        return response.json()
++
++    def _generate_embedding_local(self, text: str) -> List[float]:
++        """Gera embedding usando o modelo local"""
++        self._load_local_model()
++        embeddings = self.local_model.encode([text], convert_to_tensor=False)[0]
++        return embeddings.tolist()
++
++    def _generate_embedding(self, text: str) -> List[float]:
++        """Gera embedding usando API ou modelo local de forma aleatória, com fallback"""
++        # 70% de chance de usar a API, 30% de usar o modelo local
++        use_api = random.random() < 0.7
+         
+-        return embedding
++        try:
++            if use_api:
++                logger.info("Tentando gerar embedding via API...")
++                return self._generate_embedding_api(text)
++            else:
++                logger.info("Usando modelo local para gerar embedding...")
++                return self._generate_embedding_local(text)
++        except Exception as e:
++            logger.warning(f"Erro ao gerar embedding com método {'API' if use_api else 'local'}: {e}")
++            
++            # Se falhou usando API, tenta com modelo local como fallback
++            if use_api:
++                logger.info("Usando modelo local como fallback...")
++                try:
++                    return self._generate_embedding_local(text)
++                except Exception as fallback_error:
++                    logger.error(f"Erro também no fallback local: {fallback_error}")
++                    raise
++            else:
++                # Se falhou usando modelo local, tenta API como fallback
++                logger.info("Tentando API como fallback...")
++                try:
++                    return self._generate_embedding_api(text)
++                except Exception as fallback_error:
++                    logger.error(f"Erro também no fallback da API: {fallback_error}")
++                    raise
+ 
+     def get_user_messages(self, user_id: str, limit: int = 100) -> List[Dict[str, Any]]:
+         """Busca mensagens do usuário ordenadas por data"""
+@@ -78,7 +177,7 @@ class SupabaseRAG:
+             return []
+ 
+     def add_document(self, content: str, metadata: Dict = None) -> Dict:
+-        """Adiciona um documento com seu embedding"""
++        """Adiciona um documento com seu embedding e validação de JSON"""
+         try:
+             # Verifica se o documento já existe
+             result = self.supabase.table('documents')\
+@@ -166,40 +265,6 @@ class SupabaseRAG:
+             logger.error(traceback.format_exc())
+             return []
+ 
+-    def _generate_embedding(self, text: str) -> List[float]:
+-        """Gera embedding usando Hugging Face Inference API"""
+-        headers = {"Authorization": f"Bearer {self.hf_api_key}"}
+-        
+-        try:
+-            response = requests.post(
+-                self.hf_api_url,
+-                headers=headers,
+-                json={"inputs": text, "options": {"wait_for_model": True}}
+-            )
+-            response.raise_for_status()
+-            
+-            embedding = response.json()
+-            if isinstance(embedding, list) and len(embedding) > 0:
+-                if isinstance(embedding[0], list):
+-                    return embedding[0]
+-                else:
+-                    return [float(x) for x in embedding]
+-            else:
+-                raise ValueError(f"Formato de embedding inválido: {embedding}")
+-                
+-        except Exception as e:
+-            logger.error(f"Erro ao gerar embedding: {e}")
+-            raise
+-
+-    def setup_database(self):
+-        """Configura a tabela de documentos se não existir"""
+-        try:
+-            logger.info("Verificando conexão com Supabase...")
+-            self.supabase.table('documents').select("*").limit(1).execute()
+-        except Exception as e:
+-            logger.error(f"Erro ao configurar Supabase: {e}")
+-            raise
+-
+     def search_similar(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
+         """Busca documentos similares usando pgvector"""
+         logger.debug(f"Buscando documentos similares para a query: {query}")
+@@ -251,4 +316,13 @@ class SupabaseRAG:
+             
+         except Exception as e:
+             logger.error(f"Erro ao obter contexto: {e}")
+-            return ""
+\ No newline at end of file
++            return ""
++
++    def setup_database(self):
++        """Configura a tabela de documentos se não existir"""
++        try:
++            logger.info("Verificando conexão com Supabase...")
++            self.supabase.table('documents').select("*").limit(1).execute()
++        except Exception as e:
++            logger.error(f"Erro ao configurar Supabase: {e}")
++            raise
+\ No newline at end of file
+diff --git a/src/main.py b/src/main.py
+index 63a8e05..81d3f1d 100644
+--- a/src/main.py
++++ b/src/main.py
+@@ -57,7 +57,7 @@ class AssistentBot:
+     - Transcrição e compreensão de áudio
+     - Memória persistente através de cache e base de conhecimento adaptativa
+     - Aprendizado contínuo com cada interação
+-    - Pesquisa na internet 
++    - Pesquisa na internet em tempo real através da função/tool `search_and_summarize`
+     
+     Diretrizes de comportamento:
+     - Mantenha um tom profissional mas amigável, como um assistente pessoal confiável
+@@ -74,19 +74,29 @@ class AssistentBot:
+     Ao responder:
+     1. Use linguagem natural e amigável em português
+     2. Seja conciso, direto e informativo
+-    3. Para formatação use apenas:
+-       - _texto_ para itálico (underscore simples)
+-       - *texto* para negrito (asterisco simples)
+-       - Nunca use ** ou __ para formatação
+-       - Use - ou números para listas (não use *)
++    3. Para formatação use APENAS:
++        - <i>texto</i> para itálico
++        - <b>texto</b> para negrito
++        - <code>texto</code> para código/valores
++        - Use - ou números para listas
++        - NÃO use markdown (* ou _)
+     4. Mantenha suas respostas concisas
+-    Se o prompt contiver alguma informação pessoal do usuário ou relevante para ser lembrada, ou então se for solicitado para vc se lembrar de algo, você deverá usar a função `store_memory` para armazenar essa informação.
++
++    Pesquisa na Internet:
++    - SEMPRE use a função search_and_summarize quando o usuário pedir para pesquisar algo
++    - SEMPRE use search_and_summarize quando você não tiver informações atualizadas
++    - NUNCA diga ao usuário para ele mesmo pesquisar
++    - NUNCA se recuse a pesquisar quando solicitado
++    - NUNCA sugira que o usuário use mecanismos de busca externos
++    - Ao pesquisar, use termos de busca relevantes e específicos
++    - Após a pesquisa, sintetize as informações de forma clara e organizada
++    
++    Memória:
++    Se o prompt contiver alguma informação pessoal do usuário ou relevante para ser lembrada, ou então se for solicitado para você se lembrar de algo, você deverá usar a função `store_memory` para armazenar essa informação.
+     a função `store_memory` tem os seguintes argumentos:
+         - text: descrição da memória (fica ao seu critério o texto da descrição)
+         - user_id: use sempre o user_id da seção "Informações do usuário atual".
+     
+-    Você é capaz de buscar informações em tempo real usando suas ferramentas. como a `search_and_summarize`. Sempre que vc não tiver informações suficientes sobre algo que é pedido pelo usuário você deve usar essa ferramenta, fica ao seu critério a query para pesquisa.
+-    
+     Você não deve mencionar os nomes das suas funções nem comentar sobre seus argumentos. A conversa precisa ser o mais natural possível. Identifique o que o usuário deseja com base no contexto e utilize as funções apropriadas sem explicitar seu uso.
+ 
+     Nunca solicite ao usuário os argumentos das funções. Mantenha a conversa fluida e natural, inferindo as informações necessárias a partir do contexto da interação.

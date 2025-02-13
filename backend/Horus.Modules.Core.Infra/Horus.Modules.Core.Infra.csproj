@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <ProjectReference Include="..\Horus.Modules.Core.Application\Horus.Modules.Core.Application.csproj"/>
+        <ProjectReference Include="..\Horus.Modules.Core.Domain\Horus.Modules.Core.Domain.csproj"/>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Bogus" Version="34.0.2"/>
+        <PackageReference Include="DotLiquid" Version="2.2.692"/>
+        <PackageReference Include="DotnetGeminiSDK" Version="1.0.14"/>
+        <PackageReference Include="Hangfire" Version="1.8.2"/>
+        <PackageReference Include="Hangfire.SqlServer" Version="1.8.2"/>
+        <PackageReference Include="LLMSharp.Google.Ai.Generativelanguage.V1Beta2" Version="1.0.2"/>
+        <PackageReference Include="MediatR" Version="12.0.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.12"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.12"/>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1"/>
+        <PackageReference Include="Microsoft.ML" Version="4.0.0"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+        <PackageReference Include="Npgsql" Version="8.0.6"/>
+        <PackageReference Include="Npgsql.DependencyInjection" Version="8.0.6"/>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11"/>
+        <PackageReference Include="Pgvector" Version="0.2.0"/>
+        <PackageReference Include="Pgvector.EntityFrameworkCore" Version="0.2.0"/>
+        <PackageReference Include="Refit" Version="8.0.0"/>
+        <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0"/>
+        <PackageReference Include="StackExchange.Redis" Version="2.7.27"/>
+        <PackageReference Include="Google.Apis.CustomSearchAPI.v1" Version="1.64.0.3106"/>
+        <PackageReference Include="HtmlAgilityPack" Version="1.11.57"/>
+        <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0"/>
+        <PackageReference Include="Polly" Version="8.5.0"/>
+        <PackageReference Include="Supabase" Version="1.1.1"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Abstractions\**"/>
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Remove="Abstractions\**"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="Abstractions\**"/>
+        <None Update="Services\NotificationService\Templates\ConfirmedEmailTemplate.html">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="Microsoft.Data.SqlClient">
+            <HintPath>..\Api\RootBootstrapper\bin\Debug\net7.0\Microsoft.Data.SqlClient.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+</Project>

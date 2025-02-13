@@ -1,0 +1,151 @@
+
+import "Microsoft.Extensions.Caching.Memory"
+using System.Text.RegularExpressions;
+using Microsoft.Extensions.Caching.Memory;
+
+namespace Horus.Modules.Core.Application.Services;
+
+public class MemoryProcessorTest : TestMemoryProcessor
+{
+    private readonly Mock<MemoryProvider> mockMemoryProvider;
+    private readonly Dictionary<string, string> mockUserIDs;
+    private readonly List<string> sanitizedMemories;
+    private readonly List<MemoryItem> cachedMemories;
+
+    public override void Setup()
+    {
+        // Initialize mocks for testing
+        mockMemoryProvider = new Mock<MemoryProvider>();
+        mockUserIDs = new Dictionary<string, string>();
+
+        // Add any additional dependencies to the test file path if needed
+    }
+
+    public override bool TestProcessMemoryTags(string response, Dictionary<string, string> userInfo)
+    {
+        var memoryMatches = Regex.Matches(response, "<(store_memory|memory)>(.*?)</\\1>");
+
+        if (memoryMatches.Count > 0 && !userInfo.TryGetValue("id", out string id))
+        {
+            // Skip invalid test cases
+            return false;
+        }
+
+        // Mock the MemoryProvider
+        mockMemoryProvider.SetupAsync());
+        
+        var memoryUserInfo = new Dictionary<string, string>();
+        foreach (var match in memoryMatches)
+        {
+            string memory = match.Value;
+            if (!string.IsNullOrWhiteSpace(memory))
+            {
+                memoryUserInfo.Add("id", id);
+                memoryUserInfo.Add("content", memory);
+            }
+        }
+
+        // Store memories
+        await ProcessMemoryTagsAsync(memoryUserInfo, memoryUserInfo);
+
+        // Verify no errors occurred
+        if (mockMemoryProvider.FailedToStoreAsync失败 != null)
+        {
+            return false;
+        }
+
+        // Verify user ID was found in the memoized data
+        var userId = await mockMemoryProvider.GetUserIDsAsync();
+        if (!userId.TryGetValue("id", out string id))
+        {
+            return false;
+        }
+
+        // Verify memories were stored correctly
+        foreach (var memory in sanitizedMemories)
+        {
+            var item = new MemoryItem(
+                Content: memory,
+                CreatedAt: DateTime.UtcNow,
+                Source: "LLM-tagged",
+                Metadata: new Dictionary<string, object>
+                {
+                    ["version"] = "1.0"
+                }
+            );
+            await mockMemoryProvider.StoreAsync(item, memoryUserInfo);
+        }
+
+        // Verify tags were removed from the response
+        var tagCount = response.Split(new[] { "<(store_memory|memory)>", "</</" }, StringSplitOptions.None).Length;
+        if (tagCount != 2)
+        {
+            return false;
+        }
+        foreach (var tag in response.Split(new[] { "<(store_memory|memory)>", "</</" }, StringSplitOptions.None))
+        {
+            if (!tag.Contains("id"))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public override void TestProcessMemoryTagsAsync(Dictionary<string, string> userInfo)
+    {
+        // Skip invalid test cases
+        return false;
+    }
+
+    public override void TestSanitizeMemoryContent()
+    {
+        var input = "<store_memory>test</store_memory>";
+        var sanitized = new Dictionary<string, string>();
+        
+        var content = SanitizeMemoryContent(input);
+        if (sanitized.Count != 1)
+        {
+            return false;
+        }
+        var item = new MemoryItem(
+            Content: content.Value,
+            CreatedAt: DateTime.UtcNow,
+            Source: "LLM-tagged",
+            Metadata: new Dictionary<string, object>
+            {
+                ["version"] = "1.0"
+            }
+        );
+        mockMemoryProvider.SetupAsync());
+        
+        await SanitizeMemoryContentAsync(item.Value);
+        if (mockMemoryProvider.FailedToStoreAsync失败 != null)
+        {
+            return false;
+        }
+
+        var item = new MemoryItem(
+            Content: content.Value,
+            CreatedAt: DateTime.UtcNow,
+            Source: "LLM-tagged",
+            Metadata: new Dictionary<string, object>
+            {
+                ["version"] = "1.0"
+            }
+        );
+        
+        await mockMemoryProvider.StoreAsync(item.Value);
+        if (mockMemoryProvider.FailedToStoreAsyncFailure != null)
+        {
+            return false;
+        }
+
+        // Verify no errors occurred
+        if (mockMemoryProvider.FailedToStoreAsyncFailure != null)
+        {
+            return false;
+        }
+    }
+}

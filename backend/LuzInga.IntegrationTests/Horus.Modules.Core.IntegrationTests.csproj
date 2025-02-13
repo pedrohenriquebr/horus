@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <RootNamespace>LuzInga.IntegrationTests</RootNamespace>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0"/>
+        <PackageReference Include="Moq" Version="4.18.4"/>
+        <PackageReference Include="Testcontainers" Version="3.2.0"/>
+        <PackageReference Include="xunit" Version="2.4.1"/>
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="coverlet.collector" Version="3.1.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Api\RootBootstrapper\Horus.RootBootstrapper.csproj"/>
+        <ProjectReference Include="..\Horus.Modules.Core.Application\Horus.Modules.Core.Application.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="FluentAssertions">
+            <HintPath>..\..\..\..\..\.nuget\packages\fluentassertions\6.11.0\lib\net6.0\FluentAssertions.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <None Update="LlmProviders\TestData\test-image.jpg">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+</Project>
