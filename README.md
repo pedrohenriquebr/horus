@@ -21,6 +21,9 @@ A powerful, extensible AI assistant platform with multi-model support and advanc
 - PostgreSQL with pgvector
 - Redis
 - Ollama running
+- Hugging Faces Api Key
+- Telegram Bot Api Key
+- Gemini Api Key
 
 ### Development Setup
 
@@ -29,8 +32,7 @@ A powerful, extensible AI assistant platform with multi-model support and advanc
 
 2. Configure Environment:
 
-- Copy `.env.example` to `.env`
-- Set required API keys and configurations
+- Set required API keys and configurations on appsettings.*.json
 
 3. Pull models on ollama
    ```bash
