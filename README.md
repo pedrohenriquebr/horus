@@ -82,17 +82,8 @@ Key settings in appsettings.json:
     "ModelName": "qwen2.5:1.5b"
   },
   "Supabase": {
-    "Url": "your-supabase-url",
-    "Key": "your-supabase-key",
     "HuggingFaceApiKey": "your-huggingface-key",
     "HuggingFaceModelName": "sentence-transformers/all-MiniLM-L6-v2"
-  },
-  "GoogleSearch": {
-    "ApiKey": "your-google-api-key",
-    "SearchEngineId": "your-search-engine-id",
-    "SafeSearch": "active",
-    "CountryCode": "BR",
-    "Language": "pt"
   }
 }
 ```
