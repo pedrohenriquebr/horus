@@ -1,0 +1,1495 @@
+2025-03-26 13:01:11,698 - lightrag - INFO - Created new empty graph
+2025-03-26 13:01:11,749 - uvicorn.error - INFO - Started server process [661007]
+2025-03-26 13:01:11,749 - uvicorn.error - INFO - Waiting for application startup.
+2025-03-26 13:01:11,749 - lightrag - INFO - Process 661007 KV load full_docs with 0 records
+2025-03-26 13:01:11,749 - lightrag - INFO - Process 661007 KV load text_chunks with 0 records
+2025-03-26 13:01:11,750 - lightrag - INFO - Process 661007 KV load llm_response_cache with 0 records
+2025-03-26 13:01:11,750 - lightrag - INFO - Process 661007 doc status load doc_status with 0 records
+2025-03-26 13:01:11,750 - uvicorn.error - INFO - Application startup complete.
+2025-03-26 13:01:11,750 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:9621 (Press CTRL+C to quit)
+2025-03-26 13:36:51,892 - uvicorn.access - INFO - 127.0.0.1:42372 - "GET / HTTP/1.1" 307
+2025-03-26 13:36:51,897 - uvicorn.access - INFO - 127.0.0.1:42372 - "GET /webui HTTP/1.1" 307
+2025-03-26 13:36:51,949 - uvicorn.access - INFO - 127.0.0.1:42372 - "GET /webui/assets/index-DTDDxtXc.js HTTP/1.1" 200
+2025-03-26 13:36:51,955 - uvicorn.access - INFO - 127.0.0.1:42384 - "GET /webui/assets/index-CbzkrOyx.css HTTP/1.1" 200
+2025-03-26 13:36:52,278 - uvicorn.access - INFO - 127.0.0.1:42372 - "GET /auth-status HTTP/1.1" 200
+2025-03-26 13:36:52,517 - uvicorn.access - INFO - 127.0.0.1:42372 - "GET /docs HTTP/1.1" 200
+2025-03-26 13:36:52,539 - uvicorn.access - INFO - 127.0.0.1:42384 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 13:36:52,553 - lightrag - INFO - Subgraph query successful | Node count: 0 | Edge count: 0
+2025-03-26 13:36:52,554 - uvicorn.access - INFO - 127.0.0.1:42372 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 13:36:52,556 - uvicorn.access - INFO - 127.0.0.1:42384 - "GET /webui/logo.png HTTP/1.1" 200
+2025-03-26 13:36:52,843 - uvicorn.access - INFO - 127.0.0.1:42384 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 13:37:18,115 - uvicorn.access - INFO - 127.0.0.1:42384 - "POST /documents/upload HTTP/1.1" 200
+2025-03-26 13:37:19,476 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 13:37:19,476 - lightrag - INFO - Process 661007 doc status writting 1 records to doc_status
+2025-03-26 13:37:19,477 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 13:37:19,477 - lightrag - INFO - Successfully fetched and enqueued file: CV_Pedro_Braga_-_Middle_Fullstack_Developer.pdf
+2025-03-26 13:37:19,477 - lightrag - INFO - Processing 1 document(s) in 1 batches
+2025-03-26 13:37:19,477 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 13:37:19,769 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 13:37:19,769 - lightrag - INFO - Process 661007 doc status writting 1 records to doc_status
+2025-03-26 13:37:19,769 - lightrag - INFO - Inserting 1 to chunks
+2025-03-26 13:37:19,770 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 13:37:19,770 - lightrag - INFO - Inserting 1 records to text_chunks
+2025-03-26 13:37:46,192 - uvicorn.access - INFO - 127.0.0.1:42384 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 13:37:48,153 - uvicorn.access - INFO - 127.0.0.1:42384 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 13:37:50,153 - uvicorn.access - INFO - 127.0.0.1:42384 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 13:37:52,154 - uvicorn.access - INFO - 127.0.0.1:42384 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 13:37:54,154 - uvicorn.access - INFO - 127.0.0.1:42384 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 13:37:56,154 - uvicorn.access - INFO - 127.0.0.1:42384 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 13:37:58,153 - uvicorn.access - INFO - 127.0.0.1:42384 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 13:38:14,148 - uvicorn.access - INFO - 127.0.0.1:58088 - "POST /documents/scan HTTP/1.1" 200
+2025-03-26 13:38:14,161 - lightrag - INFO - Found 1 new files to index.
+2025-03-26 13:38:14,162 - lightrag - INFO - Processing batch 1/1 with 1 files
+2025-03-26 13:38:14,398 - lightrag - INFO - No new unique documents were found.
+2025-03-26 13:38:14,400 - lightrag - INFO - Successfully fetched and enqueued file: CV_Pedro_Braga_-_Middle_Fullstack_Developer.pdf
+2025-03-26 13:38:14,400 - lightrag - INFO - Another process is already processing the document queue. Request queued.
+2025-03-26 13:38:14,401 - lightrag - INFO - Processed 1/1 files (100.0%)
+2025-03-26 13:38:42,972 - uvicorn.access - INFO - 127.0.0.1:58088 - "POST /documents/scan HTTP/1.1" 200
+2025-03-26 13:38:42,976 - lightrag - INFO - Found 1 new files to index.
+2025-03-26 13:38:42,978 - lightrag - INFO - Processing batch 1/1 with 1 files
+2025-03-26 13:38:43,086 - lightrag - INFO - No new unique documents were found.
+2025-03-26 13:38:43,087 - lightrag - INFO - Successfully fetched and enqueued file: CV_Pedro_Braga_-_Middle_Fullstack_Developer.pdf
+2025-03-26 13:38:43,088 - lightrag - INFO - Another process is already processing the document queue. Request queued.
+2025-03-26 13:38:43,089 - lightrag - INFO - Processed 1/1 files (100.0%)
+2025-03-26 13:38:44,190 - uvicorn.access - INFO - 127.0.0.1:58088 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 13:38:48,783 - uvicorn.access - INFO - 127.0.0.1:58088 - "GET /docs HTTP/1.1" 200
+2025-03-26 13:38:49,300 - uvicorn.access - INFO - 127.0.0.1:58088 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 13:39:08,238 - uvicorn.error - INFO - Shutting down
+2025-03-26 13:39:08,340 - uvicorn.error - INFO - Waiting for background tasks to complete. (CTRL+C to force quit)
+2025-03-26 13:39:12,380 - uvicorn.error - INFO - Finished server process [661007]
+2025-03-26 13:39:12,402 - uvicorn.error - ERROR - Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 636, in run_until_complete
+    self.run_forever()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1909, in _run_once
+    handle._run()
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/server.py", line 69, in serve
+    with self.capture_signals():
+  File "/usr/lib/python3.10/contextlib.py", line 142, in __exit__
+    next(self.gen)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/server.py", line 330, in capture_signals
+    signal.raise_signal(captured_signal)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 699, in lifespan
+    await receive()
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/lifespan/on.py", line 137, in receive
+    return await self.receive_queue.get()
+  File "/usr/lib/python3.10/asyncio/queues.py", line 159, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+2025-03-26 13:39:12,402 - lightrag - INFO - Document processing pipeline completed
+2025-03-26 13:39:12,403 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 636, in run_until_complete
+    self.run_forever()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1909, in _run_once
+    handle._run()
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/server.py", line 69, in serve
+    with self.capture_signals():
+  File "/usr/lib/python3.10/contextlib.py", line 142, in __exit__
+    next(self.gen)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/server.py", line 330, in capture_signals
+    signal.raise_signal(captured_signal)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/responses.py", line 160, in __call__
+    await self.background()
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/background.py", line 41, in __call__
+    await task()
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/background.py", line 26, in __call__
+    await self.func(*self.args, **self.kwargs)
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/api/routers/document_routes.py", line 401, in pipeline_index_file
+    await rag.apipeline_process_enqueue_documents()
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/lightrag.py", line 1047, in apipeline_process_enqueue_documents
+    await asyncio.gather(*doc_tasks)
+asyncio.exceptions.CancelledError
+2025-03-26 17:32:11,985 - lightrag - INFO - Created new empty graph
+2025-03-26 17:32:12,057 - uvicorn.error - INFO - Started server process [722014]
+2025-03-26 17:32:12,057 - uvicorn.error - INFO - Waiting for application startup.
+2025-03-26 17:32:12,058 - lightrag - INFO - Process 722014 KV load full_docs with 0 records
+2025-03-26 17:32:12,058 - lightrag - INFO - Process 722014 KV load text_chunks with 0 records
+2025-03-26 17:32:12,058 - lightrag - INFO - Process 722014 KV load llm_response_cache with 0 records
+2025-03-26 17:32:12,059 - lightrag - INFO - Process 722014 doc status load doc_status with 1 records
+2025-03-26 17:32:12,059 - uvicorn.error - INFO - Application startup complete.
+2025-03-26 17:32:12,059 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:9621 (Press CTRL+C to quit)
+2025-03-26 17:32:26,245 - uvicorn.access - INFO - 127.0.0.1:47718 - "GET / HTTP/1.1" 307
+2025-03-26 17:32:26,247 - uvicorn.access - INFO - 127.0.0.1:47718 - "GET /webui HTTP/1.1" 307
+2025-03-26 17:32:26,275 - uvicorn.access - INFO - 127.0.0.1:47720 - "GET /webui/assets/index-CbzkrOyx.css HTTP/1.1" 200
+2025-03-26 17:32:26,276 - uvicorn.access - INFO - 127.0.0.1:47718 - "GET /webui/assets/index-DTDDxtXc.js HTTP/1.1" 200
+2025-03-26 17:32:26,579 - uvicorn.access - INFO - 127.0.0.1:47718 - "GET /auth-status HTTP/1.1" 200
+2025-03-26 17:32:26,609 - uvicorn.access - INFO - 127.0.0.1:47718 - "GET /webui/logo.png HTTP/1.1" 200
+2025-03-26 17:32:26,740 - uvicorn.access - INFO - 127.0.0.1:47718 - "GET /docs HTTP/1.1" 200
+2025-03-26 17:32:26,759 - uvicorn.access - INFO - 127.0.0.1:47720 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:32:26,776 - lightrag - INFO - Subgraph query successful | Node count: 0 | Edge count: 0
+2025-03-26 17:32:26,777 - uvicorn.access - INFO - 127.0.0.1:47718 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:32:27,060 - uvicorn.access - INFO - 127.0.0.1:47720 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 17:32:33,910 - uvicorn.access - INFO - 127.0.0.1:56802 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:32:33,916 - lightrag - INFO - Subgraph query successful | Node count: 0 | Edge count: 0
+2025-03-26 17:32:33,917 - uvicorn.access - INFO - 127.0.0.1:56802 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:33:04,976 - uvicorn.access - INFO - 127.0.0.1:56802 - "POST /documents/upload HTTP/1.1" 200
+2025-03-26 17:33:04,978 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 17:33:04,978 - lightrag - INFO - Process 722014 doc status writting 2 records to doc_status
+2025-03-26 17:33:04,980 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 17:33:04,980 - lightrag - INFO - Successfully fetched and enqueued file: book.txt
+2025-03-26 17:33:04,980 - lightrag - INFO - Processing 2 document(s) in 1 batches
+2025-03-26 17:33:04,981 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 17:33:05,290 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 17:33:05,291 - lightrag - INFO - Process 722014 doc status writting 2 records to doc_status
+2025-03-26 17:33:05,291 - lightrag - INFO - Inserting 1 to chunks
+2025-03-26 17:33:05,292 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 17:33:05,292 - lightrag - INFO - Inserting 1 records to text_chunks
+2025-03-26 17:33:05,292 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 17:33:05,292 - lightrag - INFO - Process 722014 doc status writting 2 records to doc_status
+2025-03-26 17:33:05,292 - lightrag - INFO - Inserting 1 to chunks
+2025-03-26 17:33:05,292 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 17:33:05,292 - lightrag - INFO - Inserting 1 records to text_chunks
+2025-03-26 17:34:09,140 - uvicorn.access - INFO - 127.0.0.1:41446 - "DELETE /documents HTTP/1.1" 200
+2025-03-26 17:34:13,516 - uvicorn.error - INFO - Shutting down
+2025-03-26 17:34:13,618 - uvicorn.error - INFO - Waiting for background tasks to complete. (CTRL+C to force quit)
+2025-03-26 17:34:15,834 - uvicorn.error - INFO - Finished server process [722014]
+2025-03-26 17:34:15,901 - uvicorn.error - ERROR - Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 636, in run_until_complete
+    self.run_forever()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1909, in _run_once
+    handle._run()
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/server.py", line 69, in serve
+    with self.capture_signals():
+  File "/usr/lib/python3.10/contextlib.py", line 142, in __exit__
+    next(self.gen)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/server.py", line 330, in capture_signals
+    signal.raise_signal(captured_signal)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 699, in lifespan
+    await receive()
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/lifespan/on.py", line 137, in receive
+    return await self.receive_queue.get()
+  File "/usr/lib/python3.10/asyncio/queues.py", line 159, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+2025-03-26 17:34:15,903 - lightrag - INFO - Document processing pipeline completed
+2025-03-26 17:34:15,904 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 636, in run_until_complete
+    self.run_forever()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1909, in _run_once
+    handle._run()
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/server.py", line 69, in serve
+    with self.capture_signals():
+  File "/usr/lib/python3.10/contextlib.py", line 142, in __exit__
+    next(self.gen)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/server.py", line 330, in capture_signals
+    signal.raise_signal(captured_signal)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/responses.py", line 160, in __call__
+    await self.background()
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/background.py", line 41, in __call__
+    await task()
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/background.py", line 26, in __call__
+    await self.func(*self.args, **self.kwargs)
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/api/routers/document_routes.py", line 401, in pipeline_index_file
+    await rag.apipeline_process_enqueue_documents()
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/lightrag.py", line 1047, in apipeline_process_enqueue_documents
+    await asyncio.gather(*doc_tasks)
+asyncio.exceptions.CancelledError
+2025-03-26 17:37:18,277 - lightrag - INFO - Created new empty graph
+2025-03-26 17:37:18,353 - uvicorn.error - INFO - Started server process [724957]
+2025-03-26 17:37:18,353 - uvicorn.error - INFO - Waiting for application startup.
+2025-03-26 17:37:18,354 - lightrag - INFO - Process 724957 KV load full_docs with 0 records
+2025-03-26 17:37:18,354 - lightrag - INFO - Process 724957 KV load text_chunks with 0 records
+2025-03-26 17:37:18,354 - lightrag - INFO - Process 724957 KV load llm_response_cache with 0 records
+2025-03-26 17:37:18,354 - lightrag - INFO - Process 724957 doc status load doc_status with 0 records
+2025-03-26 17:37:18,354 - uvicorn.error - INFO - Application startup complete.
+2025-03-26 17:37:18,355 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:9621 (Press CTRL+C to quit)
+2025-03-26 17:40:18,321 - uvicorn.error - INFO - Shutting down
+2025-03-26 17:40:18,422 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-03-26 17:40:18,423 - uvicorn.error - INFO - Application shutdown complete.
+2025-03-26 17:40:18,423 - uvicorn.error - INFO - Finished server process [724957]
+2025-03-26 17:41:09,253 - lightrag - INFO - Created new empty graph
+2025-03-26 17:41:09,324 - uvicorn.error - INFO - Started server process [726652]
+2025-03-26 17:41:09,324 - uvicorn.error - INFO - Waiting for application startup.
+2025-03-26 17:41:09,324 - lightrag - INFO - Process 726652 KV load full_docs with 0 records
+2025-03-26 17:41:09,325 - lightrag - INFO - Process 726652 KV load text_chunks with 0 records
+2025-03-26 17:41:09,325 - lightrag - INFO - Process 726652 KV load llm_response_cache with 0 records
+2025-03-26 17:41:09,325 - lightrag - INFO - Process 726652 doc status load doc_status with 0 records
+2025-03-26 17:41:09,325 - uvicorn.error - INFO - Application startup complete.
+2025-03-26 17:41:09,325 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:9621 (Press CTRL+C to quit)
+2025-03-26 17:41:49,763 - uvicorn.error - INFO - Shutting down
+2025-03-26 17:41:49,864 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-03-26 17:41:49,864 - uvicorn.error - INFO - Application shutdown complete.
+2025-03-26 17:41:49,864 - uvicorn.error - INFO - Finished server process [726652]
+2025-03-26 17:43:19,853 - lightrag - INFO - Created new empty graph
+2025-03-26 17:43:19,910 - uvicorn.error - INFO - Started server process [728231]
+2025-03-26 17:43:19,910 - uvicorn.error - INFO - Waiting for application startup.
+2025-03-26 17:43:19,910 - lightrag - INFO - Process 728231 KV load full_docs with 0 records
+2025-03-26 17:43:19,910 - lightrag - INFO - Process 728231 KV load text_chunks with 0 records
+2025-03-26 17:43:19,911 - lightrag - INFO - Process 728231 KV load llm_response_cache with 0 records
+2025-03-26 17:43:19,911 - lightrag - INFO - Process 728231 doc status load doc_status with 0 records
+2025-03-26 17:43:19,911 - uvicorn.error - INFO - Application startup complete.
+2025-03-26 17:43:19,912 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:9621 (Press CTRL+C to quit)
+2025-03-26 17:43:54,115 - uvicorn.error - INFO - Shutting down
+2025-03-26 17:43:54,216 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-03-26 17:43:54,218 - uvicorn.error - INFO - Application shutdown complete.
+2025-03-26 17:43:54,219 - uvicorn.error - INFO - Finished server process [728231]
+2025-03-26 17:43:57,470 - lightrag - INFO - Connected to neo4j at neo4j://localhost:7687
+2025-03-26 17:43:57,532 - uvicorn.error - INFO - Started server process [728667]
+2025-03-26 17:43:57,532 - uvicorn.error - INFO - Waiting for application startup.
+2025-03-26 17:43:57,532 - lightrag - INFO - Process 728667 KV load full_docs with 0 records
+2025-03-26 17:43:57,532 - lightrag - INFO - Process 728667 KV load text_chunks with 0 records
+2025-03-26 17:43:57,532 - lightrag - INFO - Process 728667 KV load llm_response_cache with 0 records
+2025-03-26 17:43:57,532 - lightrag - INFO - Process 728667 doc status load doc_status with 0 records
+2025-03-26 17:43:57,533 - uvicorn.error - INFO - Application startup complete.
+2025-03-26 17:43:57,533 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:9621 (Press CTRL+C to quit)
+2025-03-26 17:44:12,750 - uvicorn.access - INFO - 127.0.0.1:59042 - "GET /docs HTTP/1.1" 200
+2025-03-26 17:44:12,958 - uvicorn.access - INFO - 127.0.0.1:59042 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 17:44:35,347 - uvicorn.access - INFO - 127.0.0.1:59042 - "POST /documents/upload HTTP/1.1" 200
+2025-03-26 17:44:35,430 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 17:44:35,430 - lightrag - INFO - Process 728667 doc status writting 1 records to doc_status
+2025-03-26 17:44:35,431 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 17:44:35,431 - lightrag - INFO - Successfully fetched and enqueued file: Job Description - Full Stack - Bravium.pdf
+2025-03-26 17:44:35,431 - lightrag - INFO - Processing 1 document(s) in 1 batches
+2025-03-26 17:44:35,431 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 17:44:35,733 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 17:44:35,733 - lightrag - INFO - Process 728667 doc status writting 1 records to doc_status
+2025-03-26 17:44:35,733 - lightrag - INFO - Inserting 1 to chunks
+2025-03-26 17:44:35,734 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 17:44:35,734 - lightrag - INFO - Inserting 1 records to text_chunks
+2025-03-26 17:45:39,768 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 17:45:54,534 - uvicorn.access - INFO - 127.0.0.1:57304 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 17:45:56,475 - uvicorn.access - INFO - 127.0.0.1:57304 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 17:45:58,474 - uvicorn.access - INFO - 127.0.0.1:57304 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 17:46:00,551 - uvicorn.access - INFO - 127.0.0.1:57304 - "POST /documents/scan HTTP/1.1" 200
+2025-03-26 17:46:00,581 - lightrag - INFO - Found 1 new files to index.
+2025-03-26 17:46:00,581 - lightrag - INFO - Processing batch 1/1 with 1 files
+2025-03-26 17:46:00,680 - lightrag - INFO - No new unique documents were found.
+2025-03-26 17:46:00,681 - lightrag - INFO - Successfully fetched and enqueued file: Job Description - Full Stack - Bravium.pdf
+2025-03-26 17:46:00,682 - lightrag - INFO - Another process is already processing the document queue. Request queued.
+2025-03-26 17:46:00,682 - lightrag - INFO - Processed 1/1 files (100.0%)
+2025-03-26 17:46:14,359 - uvicorn.access - INFO - 127.0.0.1:57304 - "POST /documents/scan HTTP/1.1" 200
+2025-03-26 17:46:14,363 - lightrag - INFO - Found 1 new files to index.
+2025-03-26 17:46:14,364 - lightrag - INFO - Processing batch 1/1 with 1 files
+2025-03-26 17:46:14,415 - lightrag - INFO - No new unique documents were found.
+2025-03-26 17:46:14,415 - lightrag - INFO - Successfully fetched and enqueued file: Job Description - Full Stack - Bravium.pdf
+2025-03-26 17:46:14,416 - lightrag - INFO - Another process is already processing the document queue. Request queued.
+2025-03-26 17:46:14,416 - lightrag - INFO - Processed 1/1 files (100.0%)
+2025-03-26 17:46:22,708 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 17:46:22,708 - lightrag - INFO -   Chunk 1/1: extracted 0 entities and 0 relationships (deduplicated)
+2025-03-26 17:46:22,708 - lightrag - INFO - Didn't extract any entities and relationships.
+2025-03-26 17:46:22,708 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 17:46:22,709 - lightrag - INFO - Process 728667 doc status writting 1 records to doc_status
+2025-03-26 17:46:22,710 - lightrag - INFO - Process 728667 KV writting 1 records to full_docs
+2025-03-26 17:46:22,712 - lightrag - INFO - Process 728667 KV writting 1 records to text_chunks
+2025-03-26 17:46:22,712 - lightrag - INFO - Process 728667 KV writting 2 records to llm_response_cache
+2025-03-26 17:46:22,718 - lightrag - INFO - In memory DB persist to disk
+2025-03-26 17:46:22,719 - lightrag - INFO - Completed batch 1 of 1.
+2025-03-26 17:46:22,719 - lightrag - INFO - Processing additional documents due to pending request
+2025-03-26 17:46:22,719 - lightrag - INFO - All documents have been processed or are duplicates
+2025-03-26 17:46:22,719 - lightrag - INFO - Document processing pipeline completed
+2025-03-26 17:47:09,160 - uvicorn.access - INFO - 127.0.0.1:48048 - "POST /documents/upload HTTP/1.1" 200
+2025-03-26 17:47:09,161 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 17:47:09,162 - lightrag - INFO - Process 728667 doc status writting 2 records to doc_status
+2025-03-26 17:47:09,162 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 17:47:09,162 - lightrag - INFO - Successfully fetched and enqueued file: book.txt
+2025-03-26 17:47:09,163 - lightrag - INFO - Processing 1 document(s) in 1 batches
+2025-03-26 17:47:09,163 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 17:47:09,185 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 17:47:09,186 - lightrag - INFO - Process 728667 doc status writting 2 records to doc_status
+2025-03-26 17:47:09,186 - lightrag - INFO - Inserting 1 to chunks
+2025-03-26 17:47:09,187 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 17:47:09,187 - lightrag - INFO - Inserting 1 records to text_chunks
+2025-03-26 17:47:46,495 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 17:48:24,899 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 17:48:24,899 - lightrag - INFO -   Chunk 1/1: extracted 2 entities and 0 relationships (deduplicated)
+2025-03-26 17:48:25,257 - lightrag - INFO - Didn't extract any relationships
+2025-03-26 17:48:25,257 - lightrag - INFO - Extracted 2 entities and 0 relationships (deduplicated)
+2025-03-26 17:48:25,257 - lightrag - INFO - Inserting 2 to entities
+2025-03-26 17:48:25,302 - lightrag - INFO - Inserting 0 to relationships
+2025-03-26 17:48:25,302 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 17:48:25,303 - lightrag - INFO - Process 728667 doc status writting 2 records to doc_status
+2025-03-26 17:48:25,303 - lightrag - INFO - Process 728667 KV writting 2 records to full_docs
+2025-03-26 17:48:25,303 - lightrag - INFO - Process 728667 KV writting 2 records to text_chunks
+2025-03-26 17:48:25,304 - lightrag - INFO - Process 728667 KV writting 4 records to llm_response_cache
+2025-03-26 17:48:25,306 - lightrag - INFO - In memory DB persist to disk
+2025-03-26 17:48:25,306 - lightrag - INFO - Completed batch 1 of 1.
+2025-03-26 17:48:25,306 - lightrag - INFO - Document processing pipeline completed
+2025-03-26 17:48:37,767 - uvicorn.access - INFO - 127.0.0.1:42906 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:48:37,820 - lightrag - WARNING - APOC plugin error: {code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'D' (line 6, column 23 (offset: 207))
+"                    ORDER BY degree DESC"
+                       ^}
+2025-03-26 17:48:37,820 - uvicorn.access - INFO - 127.0.0.1:42906 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:48:38,571 - uvicorn.access - INFO - 127.0.0.1:42906 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:48:38,588 - lightrag - WARNING - APOC plugin error: {code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'D' (line 6, column 23 (offset: 207))
+"                    ORDER BY degree DESC"
+                       ^}
+2025-03-26 17:48:38,588 - uvicorn.access - INFO - 127.0.0.1:42906 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:48:38,993 - uvicorn.access - INFO - 127.0.0.1:42906 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:48:39,006 - lightrag - WARNING - APOC plugin error: {code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'D' (line 6, column 23 (offset: 207))
+"                    ORDER BY degree DESC"
+                       ^}
+2025-03-26 17:48:39,006 - uvicorn.access - INFO - 127.0.0.1:42906 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:48:39,225 - uvicorn.access - INFO - 127.0.0.1:42906 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:48:39,239 - lightrag - WARNING - APOC plugin error: {code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'D' (line 6, column 23 (offset: 207))
+"                    ORDER BY degree DESC"
+                       ^}
+2025-03-26 17:48:39,240 - uvicorn.access - INFO - 127.0.0.1:42906 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:48:42,571 - uvicorn.access - INFO - 127.0.0.1:42906 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:48:42,585 - lightrag - WARNING - APOC plugin error: {code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'D' (line 6, column 23 (offset: 207))
+"                    ORDER BY degree DESC"
+                       ^}
+2025-03-26 17:48:42,585 - uvicorn.access - INFO - 127.0.0.1:42906 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:48:43,545 - uvicorn.access - INFO - 127.0.0.1:42906 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:48:43,557 - lightrag - WARNING - APOC plugin error: {code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'D' (line 6, column 23 (offset: 207))
+"                    ORDER BY degree DESC"
+                       ^}
+2025-03-26 17:48:43,557 - uvicorn.access - INFO - 127.0.0.1:42906 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:48:45,054 - uvicorn.access - INFO - 127.0.0.1:42906 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:48:45,092 - lightrag - WARNING - APOC plugin error: {code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'D' (line 21, column 23 (offset: 935))
+"                    ORDER BY"
+                       ^}
+2025-03-26 17:48:45,092 - lightrag - WARNING - Neo4j: falling back to basic Cypher recursive search...
+2025-03-26 17:48:45,136 - uvicorn.access - INFO - 127.0.0.1:42906 - "GET /graphs?label=Lily&max_depth=3&min_degree=0 HTTP/1.1" 500
+2025-03-26 17:48:45,136 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/kg/neo4j_impl.py", line 712, in get_knowledge_graph
+    result_set = await session.run(
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/work/session.py", line 328, in run
+    await self._auto_result._run(
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/work/result.py", line 236, in _run
+    await self._attach()
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/work/result.py", line 430, in _attach
+    await self._connection.fetch_message()
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/io/_common.py", line 195, in inner
+    await coroutine_func(*args, **kwargs)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/io/_bolt.py", line 864, in fetch_message
+    res = await self._process_message(tag, fields)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/io/_bolt4.py", line 498, in _process_message
+    await response.on_failure(summary_metadata or {})
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/io/_common.py", line 254, in on_failure
+    raise self._hydrate_error(metadata)
+neo4j.exceptions.CypherSyntaxError: {code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'D' (line 21, column 23 (offset: 935))
+"                    ORDER BY"
+                       ^}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/api/routers/graph_routes.py", line 49, in get_knowledge_graph
+    return await rag.get_knowledge_graph(
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/lightrag.py", line 540, in get_knowledge_graph
+    return await self.chunk_entity_relation_graph.get_knowledge_graph(**kwargs)
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/kg/neo4j_impl.py", line 774, in get_knowledge_graph
+    return await self._robust_fallback(
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/kg/neo4j_impl.py", line 893, in _robust_fallback
+    properties=dict(node_record["n"].properties),
+AttributeError: 'Node' object has no attribute 'properties'. Did you mean: '_properties'?
+2025-03-26 17:49:05,511 - uvicorn.access - INFO - 127.0.0.1:35320 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:49:05,526 - lightrag - WARNING - APOC plugin error: {code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'D' (line 6, column 23 (offset: 207))
+"                    ORDER BY degree DESC"
+                       ^}
+2025-03-26 17:49:05,527 - uvicorn.access - INFO - 127.0.0.1:35320 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:49:12,019 - uvicorn.access - INFO - 127.0.0.1:47190 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:49:12,045 - lightrag - WARNING - APOC plugin error: {code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'D' (line 21, column 23 (offset: 935))
+"                    ORDER BY"
+                       ^}
+2025-03-26 17:49:12,045 - lightrag - WARNING - Neo4j: falling back to basic Cypher recursive search...
+2025-03-26 17:49:12,050 - uvicorn.access - INFO - 127.0.0.1:47190 - "GET /graphs?label=Central%20Park&max_depth=3&min_degree=0 HTTP/1.1" 500
+2025-03-26 17:49:12,050 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/kg/neo4j_impl.py", line 712, in get_knowledge_graph
+    result_set = await session.run(
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/work/session.py", line 328, in run
+    await self._auto_result._run(
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/work/result.py", line 236, in _run
+    await self._attach()
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/work/result.py", line 430, in _attach
+    await self._connection.fetch_message()
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/io/_common.py", line 195, in inner
+    await coroutine_func(*args, **kwargs)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/io/_bolt.py", line 864, in fetch_message
+    res = await self._process_message(tag, fields)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/io/_bolt4.py", line 498, in _process_message
+    await response.on_failure(summary_metadata or {})
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/io/_common.py", line 254, in on_failure
+    raise self._hydrate_error(metadata)
+neo4j.exceptions.CypherSyntaxError: {code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'D' (line 21, column 23 (offset: 935))
+"                    ORDER BY"
+                       ^}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/api/routers/graph_routes.py", line 49, in get_knowledge_graph
+    return await rag.get_knowledge_graph(
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/lightrag.py", line 540, in get_knowledge_graph
+    return await self.chunk_entity_relation_graph.get_knowledge_graph(**kwargs)
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/kg/neo4j_impl.py", line 774, in get_knowledge_graph
+    return await self._robust_fallback(
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/kg/neo4j_impl.py", line 893, in _robust_fallback
+    properties=dict(node_record["n"].properties),
+AttributeError: 'Node' object has no attribute 'properties'. Did you mean: '_properties'?
+2025-03-26 17:49:13,976 - uvicorn.access - INFO - 127.0.0.1:47206 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:49:14,000 - lightrag - WARNING - APOC plugin error: {code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'D' (line 21, column 23 (offset: 935))
+"                    ORDER BY"
+                       ^}
+2025-03-26 17:49:14,001 - lightrag - WARNING - Neo4j: falling back to basic Cypher recursive search...
+2025-03-26 17:49:14,005 - uvicorn.access - INFO - 127.0.0.1:47206 - "GET /graphs?label=Lily&max_depth=3&min_degree=0 HTTP/1.1" 500
+2025-03-26 17:49:14,006 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/kg/neo4j_impl.py", line 712, in get_knowledge_graph
+    result_set = await session.run(
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/work/session.py", line 328, in run
+    await self._auto_result._run(
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/work/result.py", line 236, in _run
+    await self._attach()
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/work/result.py", line 430, in _attach
+    await self._connection.fetch_message()
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/io/_common.py", line 195, in inner
+    await coroutine_func(*args, **kwargs)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/io/_bolt.py", line 864, in fetch_message
+    res = await self._process_message(tag, fields)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/io/_bolt4.py", line 498, in _process_message
+    await response.on_failure(summary_metadata or {})
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/neo4j/_async/io/_common.py", line 254, in on_failure
+    raise self._hydrate_error(metadata)
+neo4j.exceptions.CypherSyntaxError: {code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'D' (line 21, column 23 (offset: 935))
+"                    ORDER BY"
+                       ^}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/api/routers/graph_routes.py", line 49, in get_knowledge_graph
+    return await rag.get_knowledge_graph(
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/lightrag.py", line 540, in get_knowledge_graph
+    return await self.chunk_entity_relation_graph.get_knowledge_graph(**kwargs)
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/kg/neo4j_impl.py", line 774, in get_knowledge_graph
+    return await self._robust_fallback(
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/kg/neo4j_impl.py", line 893, in _robust_fallback
+    properties=dict(node_record["n"].properties),
+AttributeError: 'Node' object has no attribute 'properties'. Did you mean: '_properties'?
+2025-03-26 17:49:15,709 - uvicorn.access - INFO - 127.0.0.1:47212 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:49:15,722 - lightrag - WARNING - APOC plugin error: {code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'D' (line 6, column 23 (offset: 207))
+"                    ORDER BY degree DESC"
+                       ^}
+2025-03-26 17:49:15,722 - uvicorn.access - INFO - 127.0.0.1:47212 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:49:16,702 - uvicorn.access - INFO - 127.0.0.1:47212 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:49:16,714 - lightrag - WARNING - APOC plugin error: {code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'D' (line 6, column 23 (offset: 207))
+"                    ORDER BY degree DESC"
+                       ^}
+2025-03-26 17:49:16,715 - uvicorn.access - INFO - 127.0.0.1:47212 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:49:45,513 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 17:49:45,513 - lightrag - INFO - Process 728667 buidling query context...
+2025-03-26 17:49:45,513 - lightrag - INFO - Query edges: Name, Individual, top_k: 10, cosine: 0.2
+2025-03-26 17:49:45,551 - lightrag - INFO - Process 728667 KV writting 5 records to llm_response_cache
+2025-03-26 17:49:45,553 - uvicorn.access - INFO - 127.0.0.1:34162 - "POST /query/stream HTTP/1.1" 200
+2025-03-26 17:50:28,941 - uvicorn.error - INFO - Shutting down
+2025-03-26 17:50:29,042 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-03-26 17:50:29,043 - uvicorn.error - INFO - Application shutdown complete.
+2025-03-26 17:50:29,043 - uvicorn.error - INFO - Finished server process [728667]
+2025-03-26 17:51:07,118 - lightrag - INFO - Created new empty graph
+2025-03-26 17:51:07,198 - uvicorn.error - INFO - Started server process [740824]
+2025-03-26 17:51:07,198 - uvicorn.error - INFO - Waiting for application startup.
+2025-03-26 17:51:07,199 - lightrag - INFO - Process 740824 KV load full_docs with 0 records
+2025-03-26 17:51:07,199 - lightrag - INFO - Process 740824 KV load text_chunks with 0 records
+2025-03-26 17:51:07,199 - lightrag - INFO - Process 740824 KV load llm_response_cache with 0 records
+2025-03-26 17:51:07,199 - lightrag - INFO - Process 740824 doc status load doc_status with 0 records
+2025-03-26 17:51:07,199 - uvicorn.error - INFO - Application startup complete.
+2025-03-26 17:51:07,200 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:9621 (Press CTRL+C to quit)
+2025-03-26 17:51:09,815 - uvicorn.error - INFO - Shutting down
+2025-03-26 17:51:09,916 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-03-26 17:51:09,916 - uvicorn.error - INFO - Application shutdown complete.
+2025-03-26 17:51:09,917 - uvicorn.error - INFO - Finished server process [740824]
+2025-03-26 17:51:20,853 - lightrag - INFO - Created new empty graph
+2025-03-26 17:51:20,913 - uvicorn.error - INFO - Started server process [740984]
+2025-03-26 17:51:20,914 - uvicorn.error - INFO - Waiting for application startup.
+2025-03-26 17:51:20,914 - lightrag - INFO - Process 740984 KV load full_docs with 0 records
+2025-03-26 17:51:20,914 - lightrag - INFO - Process 740984 KV load text_chunks with 0 records
+2025-03-26 17:51:20,915 - lightrag - INFO - Process 740984 KV load llm_response_cache with 0 records
+2025-03-26 17:51:20,915 - lightrag - INFO - Process 740984 doc status load doc_status with 0 records
+2025-03-26 17:51:20,915 - uvicorn.error - INFO - Application startup complete.
+2025-03-26 17:51:20,915 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:9621 (Press CTRL+C to quit)
+2025-03-26 17:51:27,352 - uvicorn.error - INFO - Shutting down
+2025-03-26 17:51:27,453 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-03-26 17:51:27,454 - uvicorn.error - INFO - Application shutdown complete.
+2025-03-26 17:51:27,454 - uvicorn.error - INFO - Finished server process [740984]
+2025-03-26 17:51:38,092 - lightrag - INFO - Created new empty graph
+2025-03-26 17:51:38,142 - uvicorn.error - INFO - Started server process [741193]
+2025-03-26 17:51:38,142 - uvicorn.error - INFO - Waiting for application startup.
+2025-03-26 17:51:38,142 - lightrag - INFO - Process 741193 KV load full_docs with 0 records
+2025-03-26 17:51:38,142 - lightrag - INFO - Process 741193 KV load text_chunks with 0 records
+2025-03-26 17:51:38,142 - lightrag - INFO - Process 741193 KV load llm_response_cache with 0 records
+2025-03-26 17:51:38,142 - lightrag - INFO - Process 741193 doc status load doc_status with 0 records
+2025-03-26 17:51:38,143 - uvicorn.error - INFO - Application startup complete.
+2025-03-26 17:51:38,143 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:9621 (Press CTRL+C to quit)
+2025-03-26 17:52:12,692 - uvicorn.access - INFO - 127.0.0.1:35840 - "GET /docs HTTP/1.1" 200
+2025-03-26 17:52:12,898 - uvicorn.access - INFO - 127.0.0.1:35840 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 17:52:18,184 - uvicorn.access - INFO - 127.0.0.1:35840 - "POST /documents/upload HTTP/1.1" 200
+2025-03-26 17:52:18,186 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 17:52:18,186 - lightrag - INFO - Process 741193 doc status writting 1 records to doc_status
+2025-03-26 17:52:18,186 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 17:52:18,187 - lightrag - INFO - Successfully fetched and enqueued file: book.txt
+2025-03-26 17:52:18,187 - lightrag - INFO - Processing 1 document(s) in 1 batches
+2025-03-26 17:52:18,187 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 17:52:18,491 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 17:52:18,491 - lightrag - INFO - Process 741193 doc status writting 1 records to doc_status
+2025-03-26 17:52:18,492 - lightrag - INFO - Inserting 1 to chunks
+2025-03-26 17:52:18,492 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 17:52:18,492 - lightrag - INFO - Inserting 1 records to text_chunks
+2025-03-26 17:53:37,296 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 17:54:04,848 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 17:54:04,848 - lightrag - INFO -   Chunk 1/1: extracted 9 entities and 0 relationships (deduplicated)
+2025-03-26 17:54:04,850 - lightrag - INFO - Didn't extract any relationships
+2025-03-26 17:54:04,850 - lightrag - INFO - Extracted 9 entities and 0 relationships (deduplicated)
+2025-03-26 17:54:04,850 - lightrag - INFO - Inserting 9 to entities
+2025-03-26 17:54:04,929 - lightrag - INFO - Inserting 0 to relationships
+2025-03-26 17:54:04,929 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 17:54:04,929 - lightrag - INFO - Process 741193 doc status writting 1 records to doc_status
+2025-03-26 17:54:04,930 - lightrag - INFO - Process 741193 KV writting 1 records to full_docs
+2025-03-26 17:54:04,931 - lightrag - INFO - Process 741193 KV writting 1 records to text_chunks
+2025-03-26 17:54:04,931 - lightrag - INFO - Process 741193 KV writting 2 records to llm_response_cache
+2025-03-26 17:54:04,932 - lightrag - INFO - Writing graph with 9 nodes, 0 edges
+2025-03-26 17:54:04,933 - lightrag - INFO - In memory DB persist to disk
+2025-03-26 17:54:04,933 - lightrag - INFO - Completed batch 1 of 1.
+2025-03-26 17:54:04,933 - lightrag - INFO - Document processing pipeline completed
+2025-03-26 17:56:28,062 - uvicorn.error - INFO - Shutting down
+2025-03-26 17:56:28,165 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-03-26 17:56:28,167 - uvicorn.error - INFO - Application shutdown complete.
+2025-03-26 17:56:28,168 - uvicorn.error - INFO - Finished server process [741193]
+2025-03-26 17:56:39,892 - lightrag - INFO - Loaded graph from /home/pedrobr/Documents/repos/horus/python_services/lightrag-server/rag_storage/graph_chunk_entity_relation.graphml with 9 nodes, 0 edges
+2025-03-26 17:56:40,006 - uvicorn.error - INFO - Started server process [746598]
+2025-03-26 17:56:40,007 - uvicorn.error - INFO - Waiting for application startup.
+2025-03-26 17:56:40,008 - lightrag - INFO - Process 746598 KV load full_docs with 1 records
+2025-03-26 17:56:40,008 - lightrag - INFO - Process 746598 KV load text_chunks with 1 records
+2025-03-26 17:56:40,009 - lightrag - INFO - Process 746598 KV load llm_response_cache with 2 records
+2025-03-26 17:56:40,009 - lightrag - INFO - Process 746598 doc status load doc_status with 1 records
+2025-03-26 17:56:40,010 - uvicorn.error - INFO - Application startup complete.
+2025-03-26 17:56:40,010 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:9621 (Press CTRL+C to quit)
+2025-03-26 17:56:41,826 - uvicorn.access - INFO - 127.0.0.1:42072 - "GET /docs HTTP/1.1" 200
+2025-03-26 17:56:42,018 - uvicorn.access - INFO - 127.0.0.1:42072 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 17:56:45,335 - uvicorn.access - INFO - 127.0.0.1:42072 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:56:45,342 - lightrag - INFO - Subgraph query successful | Node count: 9 | Edge count: 0
+2025-03-26 17:56:45,343 - uvicorn.access - INFO - 127.0.0.1:42072 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:57:18,135 - uvicorn.access - INFO - 127.0.0.1:34360 - "DELETE /documents HTTP/1.1" 200
+2025-03-26 17:57:23,540 - uvicorn.access - INFO - 127.0.0.1:34360 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:57:23,546 - lightrag - INFO - Subgraph query successful | Node count: 9 | Edge count: 0
+2025-03-26 17:57:23,546 - uvicorn.access - INFO - 127.0.0.1:34360 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:57:24,124 - uvicorn.access - INFO - 127.0.0.1:34360 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:57:24,129 - lightrag - INFO - Subgraph query successful | Node count: 9 | Edge count: 0
+2025-03-26 17:57:24,130 - uvicorn.access - INFO - 127.0.0.1:34360 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:57:24,409 - uvicorn.access - INFO - 127.0.0.1:34360 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:57:24,415 - lightrag - INFO - Subgraph query successful | Node count: 9 | Edge count: 0
+2025-03-26 17:57:24,415 - uvicorn.access - INFO - 127.0.0.1:34360 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:57:24,822 - uvicorn.access - INFO - 127.0.0.1:34360 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:57:24,827 - lightrag - INFO - Subgraph query successful | Node count: 9 | Edge count: 0
+2025-03-26 17:57:24,828 - uvicorn.access - INFO - 127.0.0.1:34360 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:57:25,789 - uvicorn.access - INFO - 127.0.0.1:34360 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:57:25,794 - lightrag - INFO - Subgraph query successful | Node count: 9 | Edge count: 0
+2025-03-26 17:57:25,794 - uvicorn.access - INFO - 127.0.0.1:34360 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:57:55,765 - uvicorn.access - INFO - 127.0.0.1:58714 - "POST /documents/scan HTTP/1.1" 200
+2025-03-26 17:57:55,768 - lightrag - INFO - Found 1 new files to index.
+2025-03-26 17:57:55,768 - lightrag - INFO - Processing batch 1/1 with 1 files
+2025-03-26 17:57:55,769 - lightrag - INFO - No new unique documents were found.
+2025-03-26 17:57:55,769 - lightrag - INFO - Successfully fetched and enqueued file: book.txt
+2025-03-26 17:57:55,769 - lightrag - INFO - No documents to process
+2025-03-26 17:57:55,769 - lightrag - INFO - Processed 1/1 files (100.0%)
+2025-03-26 17:58:14,237 - uvicorn.access - INFO - 127.0.0.1:58714 - "DELETE /documents HTTP/1.1" 200
+2025-03-26 17:58:27,365 - uvicorn.access - INFO - 127.0.0.1:58714 - "GET /docs HTTP/1.1" 200
+2025-03-26 17:58:27,381 - uvicorn.access - INFO - 127.0.0.1:53410 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:58:27,396 - lightrag - INFO - Subgraph query successful | Node count: 9 | Edge count: 0
+2025-03-26 17:58:27,396 - uvicorn.access - INFO - 127.0.0.1:58714 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:58:27,479 - uvicorn.access - INFO - 127.0.0.1:53410 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 17:58:36,381 - uvicorn.access - INFO - 127.0.0.1:53410 - "POST /documents/upload HTTP/1.1" 200
+2025-03-26 17:58:36,383 - lightrag - INFO - No new unique documents were found.
+2025-03-26 17:58:36,383 - lightrag - INFO - Successfully fetched and enqueued file: book.txt
+2025-03-26 17:58:36,383 - lightrag - INFO - No documents to process
+2025-03-26 17:58:45,893 - uvicorn.error - INFO - Shutting down
+2025-03-26 17:58:45,994 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-03-26 17:58:45,994 - uvicorn.error - INFO - Application shutdown complete.
+2025-03-26 17:58:45,994 - uvicorn.error - INFO - Finished server process [746598]
+2025-03-26 17:59:02,126 - lightrag - INFO - Created new empty graph
+2025-03-26 17:59:02,196 - uvicorn.error - INFO - Started server process [747747]
+2025-03-26 17:59:02,196 - uvicorn.error - INFO - Waiting for application startup.
+2025-03-26 17:59:02,197 - lightrag - INFO - Process 747747 KV load full_docs with 0 records
+2025-03-26 17:59:02,197 - lightrag - INFO - Process 747747 KV load text_chunks with 0 records
+2025-03-26 17:59:02,197 - lightrag - INFO - Process 747747 KV load llm_response_cache with 0 records
+2025-03-26 17:59:02,197 - lightrag - INFO - Process 747747 doc status load doc_status with 0 records
+2025-03-26 17:59:02,198 - uvicorn.error - INFO - Application startup complete.
+2025-03-26 17:59:02,198 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:9621 (Press CTRL+C to quit)
+2025-03-26 17:59:07,958 - uvicorn.access - INFO - 127.0.0.1:39666 - "GET /docs HTTP/1.1" 200
+2025-03-26 17:59:07,973 - uvicorn.access - INFO - 127.0.0.1:39678 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 17:59:07,987 - lightrag - INFO - Subgraph query successful | Node count: 0 | Edge count: 0
+2025-03-26 17:59:07,987 - uvicorn.access - INFO - 127.0.0.1:39666 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 17:59:08,065 - uvicorn.access - INFO - 127.0.0.1:39666 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 17:59:13,493 - uvicorn.access - INFO - 127.0.0.1:39666 - "POST /documents/upload HTTP/1.1" 200
+2025-03-26 17:59:13,494 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 17:59:13,495 - lightrag - INFO - Process 747747 doc status writting 1 records to doc_status
+2025-03-26 17:59:13,495 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 17:59:13,495 - lightrag - INFO - Successfully fetched and enqueued file: book.txt
+2025-03-26 17:59:13,495 - lightrag - INFO - Processing 1 document(s) in 1 batches
+2025-03-26 17:59:13,495 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 17:59:13,795 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 17:59:13,795 - lightrag - INFO - Process 747747 doc status writting 1 records to doc_status
+2025-03-26 17:59:13,795 - lightrag - INFO - Inserting 1 to chunks
+2025-03-26 17:59:13,796 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 17:59:13,796 - lightrag - INFO - Inserting 1 records to text_chunks
+2025-03-26 18:01:34,235 - uvicorn.access - INFO - 127.0.0.1:60798 - "GET /webui/assets/index-DTDDxtXc.js HTTP/1.1" 304
+2025-03-26 18:01:34,252 - uvicorn.access - INFO - 127.0.0.1:60806 - "GET /webui/assets/index-CbzkrOyx.css HTTP/1.1" 304
+2025-03-26 18:01:35,880 - uvicorn.access - INFO - 127.0.0.1:60806 - "GET /docs HTTP/1.1" 200
+2025-03-26 18:01:36,045 - uvicorn.access - INFO - 127.0.0.1:60806 - "GET /webui/logo.png HTTP/1.1" 304
+2025-03-26 18:01:36,440 - uvicorn.access - INFO - 127.0.0.1:60806 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 18:02:50,639 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:03:15,570 - uvicorn.access - INFO - 127.0.0.1:48396 - "POST /documents/upload HTTP/1.1" 200
+2025-03-26 18:03:16,057 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:03:16,057 - lightrag - INFO - Process 747747 doc status writting 2 records to doc_status
+2025-03-26 18:03:16,064 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 18:03:16,064 - lightrag - INFO - Successfully fetched and enqueued file: CV_Pedro_Braga_-_Middle_Fullstack_Developer.pdf
+2025-03-26 18:03:16,065 - lightrag - INFO - Another process is already processing the document queue. Request queued.
+2025-03-26 18:03:45,880 - uvicorn.access - INFO - 127.0.0.1:51714 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 18:03:45,932 - lightrag - INFO - Subgraph query successful | Node count: 0 | Edge count: 0
+2025-03-26 18:03:45,937 - uvicorn.access - INFO - 127.0.0.1:51714 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:04:19,325 - uvicorn.access - INFO - 127.0.0.1:51714 - "GET /docs HTTP/1.1" 200
+2025-03-26 18:04:19,890 - uvicorn.access - INFO - 127.0.0.1:51714 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 18:04:40,768 - uvicorn.access - INFO - 127.0.0.1:54454 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:04:42,698 - uvicorn.access - INFO - 127.0.0.1:54454 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:04:44,696 - uvicorn.access - INFO - 127.0.0.1:54454 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:04:46,695 - uvicorn.access - INFO - 127.0.0.1:54454 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:05:13,152 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:05:13,154 - lightrag - INFO -   Chunk 1/1: extracted 12 entities and 7 relationships (deduplicated)
+2025-03-26 18:05:13,189 - lightrag - INFO - Extracted 12 entities and 7 relationships (deduplicated)
+2025-03-26 18:05:13,194 - lightrag - INFO - Inserting 12 to entities
+2025-03-26 18:05:13,715 - lightrag - INFO - Inserting 7 to relationships
+2025-03-26 18:05:13,804 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:05:13,804 - lightrag - INFO - Process 747747 doc status writting 2 records to doc_status
+2025-03-26 18:05:13,806 - lightrag - INFO - Process 747747 KV writting 1 records to full_docs
+2025-03-26 18:05:13,806 - lightrag - INFO - Process 747747 KV writting 1 records to text_chunks
+2025-03-26 18:05:13,807 - lightrag - INFO - Process 747747 KV writting 2 records to llm_response_cache
+2025-03-26 18:05:13,809 - lightrag - INFO - Writing graph with 12 nodes, 7 edges
+2025-03-26 18:05:13,824 - lightrag - INFO - In memory DB persist to disk
+2025-03-26 18:05:13,824 - lightrag - INFO - Completed batch 1 of 1.
+2025-03-26 18:05:13,824 - lightrag - INFO - Processing additional documents due to pending request
+2025-03-26 18:05:13,824 - lightrag - INFO - Processing 1 document(s) in 1 batches
+2025-03-26 18:05:13,824 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 18:05:13,841 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:05:13,842 - lightrag - INFO - Process 747747 doc status writting 2 records to doc_status
+2025-03-26 18:05:13,842 - lightrag - INFO - Inserting 1 to chunks
+2025-03-26 18:05:13,843 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 18:05:13,843 - lightrag - INFO - Inserting 1 records to text_chunks
+2025-03-26 18:05:33,933 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:05:44,268 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:05:44,268 - lightrag - INFO -   Chunk 1/1: extracted 0 entities and 0 relationships (deduplicated)
+2025-03-26 18:05:44,268 - lightrag - INFO - Didn't extract any entities and relationships.
+2025-03-26 18:05:44,269 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:05:44,269 - lightrag - INFO - Process 747747 doc status writting 2 records to doc_status
+2025-03-26 18:05:44,269 - lightrag - INFO - Process 747747 KV writting 2 records to full_docs
+2025-03-26 18:05:44,269 - lightrag - INFO - Process 747747 KV writting 2 records to text_chunks
+2025-03-26 18:05:44,270 - lightrag - INFO - Process 747747 KV writting 4 records to llm_response_cache
+2025-03-26 18:05:44,272 - lightrag - INFO - Writing graph with 12 nodes, 7 edges
+2025-03-26 18:05:44,279 - lightrag - INFO - In memory DB persist to disk
+2025-03-26 18:05:44,280 - lightrag - INFO - Completed batch 1 of 1.
+2025-03-26 18:05:44,280 - lightrag - INFO - Document processing pipeline completed
+2025-03-26 18:06:14,436 - uvicorn.access - INFO - 127.0.0.1:47592 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 18:06:14,449 - lightrag - INFO - Subgraph query successful | Node count: 12 | Edge count: 7
+2025-03-26 18:06:14,450 - uvicorn.access - INFO - 127.0.0.1:47592 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:07:05,491 - uvicorn.access - INFO - 127.0.0.1:42226 - "DELETE /documents HTTP/1.1" 200
+2025-03-26 18:08:56,203 - uvicorn.access - INFO - 127.0.0.1:43748 - "GET /docs HTTP/1.1" 200
+2025-03-26 18:08:56,219 - uvicorn.access - INFO - 127.0.0.1:33786 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 18:08:56,254 - lightrag - INFO - Subgraph query successful | Node count: 12 | Edge count: 7
+2025-03-26 18:08:56,256 - uvicorn.access - INFO - 127.0.0.1:43748 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:08:56,363 - uvicorn.access - INFO - 127.0.0.1:43748 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 18:08:59,426 - uvicorn.access - INFO - 127.0.0.1:43748 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:09:01,401 - uvicorn.access - INFO - 127.0.0.1:43748 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:09:03,401 - uvicorn.access - INFO - 127.0.0.1:43748 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:09:05,401 - uvicorn.access - INFO - 127.0.0.1:43748 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:09:07,401 - uvicorn.access - INFO - 127.0.0.1:43748 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:09:09,179 - uvicorn.access - INFO - 127.0.0.1:43748 - "GET /docs HTTP/1.1" 200
+2025-03-26 18:09:09,194 - uvicorn.access - INFO - 127.0.0.1:47514 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 18:09:09,209 - lightrag - INFO - Subgraph query successful | Node count: 12 | Edge count: 7
+2025-03-26 18:09:09,210 - uvicorn.access - INFO - 127.0.0.1:43748 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:09:09,294 - uvicorn.access - INFO - 127.0.0.1:47514 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 18:09:35,999 - uvicorn.access - INFO - 127.0.0.1:43384 - "DELETE /documents HTTP/1.1" 200
+2025-03-26 18:09:44,840 - uvicorn.access - INFO - 127.0.0.1:43384 - "GET /docs HTTP/1.1" 200
+2025-03-26 18:09:44,862 - uvicorn.access - INFO - 127.0.0.1:54848 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 18:09:44,892 - lightrag - INFO - Subgraph query successful | Node count: 12 | Edge count: 7
+2025-03-26 18:09:44,894 - uvicorn.access - INFO - 127.0.0.1:43384 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:09:45,026 - uvicorn.access - INFO - 127.0.0.1:43384 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 18:09:49,346 - uvicorn.access - INFO - 127.0.0.1:43384 - "POST /documents/scan HTTP/1.1" 200
+2025-03-26 18:09:49,358 - lightrag - INFO - Found 2 new files to index.
+2025-03-26 18:09:49,359 - lightrag - INFO - Processing batch 1/1 with 2 files
+2025-03-26 18:09:49,363 - lightrag - INFO - No new unique documents were found.
+2025-03-26 18:09:49,363 - lightrag - INFO - Successfully fetched and enqueued file: book.txt
+2025-03-26 18:09:49,432 - lightrag - INFO - No new unique documents were found.
+2025-03-26 18:09:49,432 - lightrag - INFO - Successfully fetched and enqueued file: CV_Pedro_Braga_-_Middle_Fullstack_Developer.pdf
+2025-03-26 18:09:49,432 - lightrag - INFO - No documents to process
+2025-03-26 18:09:49,432 - lightrag - INFO - Processed 2/2 files (100.0%)
+2025-03-26 18:10:07,253 - lightrag - INFO - Subgraph query successful | Node count: 8 | Edge count: 7
+2025-03-26 18:10:07,254 - uvicorn.access - INFO - 127.0.0.1:59586 - "GET /graphs?label=Lily&max_depth=2&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:10:58,131 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:10:58,133 - lightrag - INFO - Process 747747 buidling query context...
+2025-03-26 18:10:58,142 - uvicorn.access - INFO - 127.0.0.1:48338 - "POST /query/stream HTTP/1.1" 500
+2025-03-26 18:11:13,604 - uvicorn.error - INFO - Shutting down
+2025-03-26 18:11:13,706 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-03-26 18:11:13,707 - uvicorn.error - INFO - Application shutdown complete.
+2025-03-26 18:11:13,708 - uvicorn.error - INFO - Finished server process [747747]
+2025-03-26 18:11:32,200 - lightrag - INFO - Created new empty graph
+2025-03-26 18:11:32,308 - uvicorn.error - INFO - Started server process [760950]
+2025-03-26 18:11:32,308 - uvicorn.error - INFO - Waiting for application startup.
+2025-03-26 18:11:32,309 - lightrag - INFO - Process 760950 KV load full_docs with 0 records
+2025-03-26 18:11:32,309 - lightrag - INFO - Process 760950 KV load text_chunks with 0 records
+2025-03-26 18:11:32,309 - lightrag - INFO - Process 760950 KV load llm_response_cache with 0 records
+2025-03-26 18:11:32,309 - lightrag - INFO - Process 760950 doc status load doc_status with 0 records
+2025-03-26 18:11:32,309 - uvicorn.error - INFO - Application startup complete.
+2025-03-26 18:11:32,309 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:9621 (Press CTRL+C to quit)
+2025-03-26 18:11:51,246 - uvicorn.access - INFO - 127.0.0.1:51372 - "GET /docs HTTP/1.1" 200
+2025-03-26 18:11:51,265 - uvicorn.access - INFO - 127.0.0.1:51372 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 18:11:51,293 - lightrag - INFO - Subgraph query successful | Node count: 0 | Edge count: 0
+2025-03-26 18:11:51,294 - uvicorn.access - INFO - 127.0.0.1:51372 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:11:51,408 - uvicorn.access - INFO - 127.0.0.1:51372 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 18:11:54,498 - uvicorn.access - INFO - 127.0.0.1:51372 - "GET /docs HTTP/1.1" 200
+2025-03-26 18:11:54,559 - uvicorn.access - INFO - 127.0.0.1:51372 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 18:11:55,735 - uvicorn.access - INFO - 127.0.0.1:51372 - "GET /docs HTTP/1.1" 200
+2025-03-26 18:11:55,796 - uvicorn.access - INFO - 127.0.0.1:51372 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 18:11:56,272 - uvicorn.access - INFO - 127.0.0.1:51372 - "GET /docs HTTP/1.1" 200
+2025-03-26 18:11:56,340 - uvicorn.access - INFO - 127.0.0.1:51372 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 18:12:02,295 - uvicorn.access - INFO - 127.0.0.1:51372 - "POST /documents/upload HTTP/1.1" 200
+2025-03-26 18:12:02,398 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:12:02,398 - lightrag - INFO - Process 760950 doc status writting 1 records to doc_status
+2025-03-26 18:12:02,399 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 18:12:02,399 - lightrag - INFO - Successfully fetched and enqueued file: CV_Pedro_Braga_-_Desenvolvedor_Backend_Pleno[1].pdf
+2025-03-26 18:12:02,399 - lightrag - INFO - Processing 1 document(s) in 1 batches
+2025-03-26 18:12:02,399 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 18:12:02,777 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:12:02,778 - lightrag - INFO - Process 760950 doc status writting 1 records to doc_status
+2025-03-26 18:12:02,778 - lightrag - INFO - Inserting 1 to chunks
+2025-03-26 18:12:02,779 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 18:12:02,779 - lightrag - INFO - Inserting 1 records to text_chunks
+2025-03-26 18:12:11,185 - uvicorn.error - INFO - Shutting down
+2025-03-26 18:12:11,287 - uvicorn.error - INFO - Waiting for background tasks to complete. (CTRL+C to force quit)
+2025-03-26 18:12:11,992 - uvicorn.error - INFO - Finished server process [760950]
+2025-03-26 18:12:12,001 - uvicorn.error - ERROR - Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 636, in run_until_complete
+    self.run_forever()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1909, in _run_once
+    handle._run()
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/server.py", line 69, in serve
+    with self.capture_signals():
+  File "/usr/lib/python3.10/contextlib.py", line 142, in __exit__
+    next(self.gen)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/server.py", line 330, in capture_signals
+    signal.raise_signal(captured_signal)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 699, in lifespan
+    await receive()
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/lifespan/on.py", line 137, in receive
+    return await self.receive_queue.get()
+  File "/usr/lib/python3.10/asyncio/queues.py", line 159, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+2025-03-26 18:12:12,002 - lightrag - INFO - Document processing pipeline completed
+2025-03-26 18:12:12,002 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 636, in run_until_complete
+    self.run_forever()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1909, in _run_once
+    handle._run()
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/server.py", line 69, in serve
+    with self.capture_signals():
+  File "/usr/lib/python3.10/contextlib.py", line 142, in __exit__
+    next(self.gen)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/server.py", line 330, in capture_signals
+    signal.raise_signal(captured_signal)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/responses.py", line 160, in __call__
+    await self.background()
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/background.py", line 41, in __call__
+    await task()
+  File "/home/pedrobr/envs/horus/lib/python3.10/site-packages/starlette/background.py", line 26, in __call__
+    await self.func(*self.args, **self.kwargs)
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/api/routers/document_routes.py", line 401, in pipeline_index_file
+    await rag.apipeline_process_enqueue_documents()
+  File "/home/pedrobr/Documents/repos/horus/python_services/LightRAG/lightrag/lightrag.py", line 1047, in apipeline_process_enqueue_documents
+    await asyncio.gather(*doc_tasks)
+asyncio.exceptions.CancelledError
+2025-03-26 18:17:49,151 - lightrag - INFO - Created new empty graph
+2025-03-26 18:17:49,229 - uvicorn.error - INFO - Started server process [763611]
+2025-03-26 18:17:49,229 - uvicorn.error - INFO - Waiting for application startup.
+2025-03-26 18:17:49,229 - lightrag - INFO - Process 763611 KV load full_docs with 0 records
+2025-03-26 18:17:49,229 - lightrag - INFO - Process 763611 KV load text_chunks with 0 records
+2025-03-26 18:17:49,229 - lightrag - INFO - Process 763611 KV load llm_response_cache with 0 records
+2025-03-26 18:17:49,230 - lightrag - INFO - Process 763611 doc status load doc_status with 0 records
+2025-03-26 18:17:49,230 - uvicorn.error - INFO - Application startup complete.
+2025-03-26 18:17:49,230 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:9621 (Press CTRL+C to quit)
+2025-03-26 18:21:57,016 - uvicorn.access - INFO - 127.0.0.1:39820 - "POST /documents/upload HTTP/1.1" 200
+2025-03-26 18:21:57,116 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:21:57,116 - lightrag - INFO - Process 763611 doc status writting 1 records to doc_status
+2025-03-26 18:21:57,117 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 18:21:57,117 - lightrag - INFO - Successfully fetched and enqueued file: CV_Pedro_Braga_-_Desenvolvedor_Backend_Pleno[1].pdf
+2025-03-26 18:21:57,117 - lightrag - INFO - Processing 1 document(s) in 1 batches
+2025-03-26 18:21:57,117 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 18:21:57,501 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:21:57,502 - lightrag - INFO - Process 763611 doc status writting 1 records to doc_status
+2025-03-26 18:21:57,502 - lightrag - INFO - Inserting 1 to chunks
+2025-03-26 18:21:57,502 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 18:21:57,502 - lightrag - INFO - Inserting 1 records to text_chunks
+2025-03-26 18:23:18,766 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:25:17,626 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:25:17,629 - lightrag - INFO -   Chunk 1/1: extracted 0 entities and 0 relationships (deduplicated)
+2025-03-26 18:25:17,629 - lightrag - INFO - Didn't extract any entities and relationships.
+2025-03-26 18:25:17,630 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:25:17,630 - lightrag - INFO - Process 763611 doc status writting 1 records to doc_status
+2025-03-26 18:25:17,635 - lightrag - INFO - Process 763611 KV writting 1 records to full_docs
+2025-03-26 18:25:17,636 - lightrag - INFO - Process 763611 KV writting 1 records to text_chunks
+2025-03-26 18:25:17,636 - lightrag - INFO - Process 763611 KV writting 2 records to llm_response_cache
+2025-03-26 18:25:17,647 - lightrag - INFO - Writing graph with 0 nodes, 0 edges
+2025-03-26 18:25:17,684 - lightrag - INFO - In memory DB persist to disk
+2025-03-26 18:25:17,684 - lightrag - INFO - Completed batch 1 of 1.
+2025-03-26 18:25:17,684 - lightrag - INFO - Document processing pipeline completed
+2025-03-26 18:25:18,550 - uvicorn.access - INFO - 127.0.0.1:39598 - "GET /docs HTTP/1.1" 200
+2025-03-26 18:25:18,588 - uvicorn.access - INFO - 127.0.0.1:39606 - "GET /auth-status HTTP/1.1" 200
+2025-03-26 18:25:18,927 - uvicorn.access - INFO - 127.0.0.1:39606 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 18:25:35,165 - uvicorn.access - INFO - 127.0.0.1:54214 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 18:25:35,173 - lightrag - INFO - Subgraph query successful | Node count: 0 | Edge count: 0
+2025-03-26 18:25:35,173 - uvicorn.access - INFO - 127.0.0.1:54214 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:25:37,462 - uvicorn.access - INFO - 127.0.0.1:54214 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 18:25:37,469 - lightrag - INFO - Subgraph query successful | Node count: 0 | Edge count: 0
+2025-03-26 18:25:37,469 - uvicorn.access - INFO - 127.0.0.1:54214 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:25:37,953 - uvicorn.access - INFO - 127.0.0.1:54214 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 18:25:37,958 - lightrag - INFO - Subgraph query successful | Node count: 0 | Edge count: 0
+2025-03-26 18:25:37,959 - uvicorn.access - INFO - 127.0.0.1:54214 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:25:38,275 - uvicorn.access - INFO - 127.0.0.1:54214 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 18:25:38,281 - lightrag - INFO - Subgraph query successful | Node count: 0 | Edge count: 0
+2025-03-26 18:25:38,281 - uvicorn.access - INFO - 127.0.0.1:54214 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:25:39,507 - uvicorn.access - INFO - 127.0.0.1:54214 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 18:25:39,514 - lightrag - INFO - Subgraph query successful | Node count: 0 | Edge count: 0
+2025-03-26 18:25:39,514 - uvicorn.access - INFO - 127.0.0.1:54214 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:25:58,368 - uvicorn.error - INFO - Shutting down
+2025-03-26 18:25:58,469 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-03-26 18:25:58,470 - uvicorn.error - INFO - Application shutdown complete.
+2025-03-26 18:25:58,470 - uvicorn.error - INFO - Finished server process [763611]
+2025-03-26 18:26:14,978 - lightrag - INFO - Loaded graph from /home/pedrobr/Documents/repos/horus/python_services/lightrag-server/rag_storage/graph_chunk_entity_relation.graphml with 0 nodes, 0 edges
+2025-03-26 18:26:15,049 - uvicorn.error - INFO - Started server process [775540]
+2025-03-26 18:26:15,049 - uvicorn.error - INFO - Waiting for application startup.
+2025-03-26 18:26:15,049 - lightrag - INFO - Process 775540 KV load full_docs with 1 records
+2025-03-26 18:26:15,049 - lightrag - INFO - Process 775540 KV load text_chunks with 1 records
+2025-03-26 18:26:15,050 - lightrag - INFO - Process 775540 KV load llm_response_cache with 2 records
+2025-03-26 18:26:15,050 - lightrag - INFO - Process 775540 doc status load doc_status with 1 records
+2025-03-26 18:26:15,050 - uvicorn.error - INFO - Application startup complete.
+2025-03-26 18:26:15,050 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:9621 (Press CTRL+C to quit)
+2025-03-26 18:26:18,870 - uvicorn.access - INFO - 127.0.0.1:47938 - "GET /docs HTTP/1.1" 200
+2025-03-26 18:26:18,966 - uvicorn.access - INFO - 127.0.0.1:47938 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 18:26:26,762 - uvicorn.access - INFO - 127.0.0.1:47938 - "POST /documents/upload HTTP/1.1" 200
+2025-03-26 18:26:26,851 - lightrag - INFO - No new unique documents were found.
+2025-03-26 18:26:26,852 - lightrag - INFO - Successfully fetched and enqueued file: CV_Pedro_Braga_-_Desenvolvedor_Backend_Pleno[1].pdf
+2025-03-26 18:26:26,852 - lightrag - INFO - No documents to process
+2025-03-26 18:26:43,437 - uvicorn.access - INFO - 127.0.0.1:47938 - "POST /documents/scan HTTP/1.1" 200
+2025-03-26 18:26:43,441 - lightrag - INFO - Found 1 new files to index.
+2025-03-26 18:26:43,441 - lightrag - INFO - Processing batch 1/1 with 1 files
+2025-03-26 18:26:43,480 - lightrag - INFO - No new unique documents were found.
+2025-03-26 18:26:43,480 - lightrag - INFO - Successfully fetched and enqueued file: CV_Pedro_Braga_-_Desenvolvedor_Backend_Pleno[1].pdf
+2025-03-26 18:26:43,481 - lightrag - INFO - No documents to process
+2025-03-26 18:26:43,481 - lightrag - INFO - Processed 1/1 files (100.0%)
+2025-03-26 18:27:07,161 - uvicorn.access - INFO - 127.0.0.1:47938 - "POST /documents/upload HTTP/1.1" 200
+2025-03-26 18:27:07,207 - lightrag - INFO - No new unique documents were found.
+2025-03-26 18:27:07,208 - lightrag - INFO - Successfully fetched and enqueued file: CV_Pedro_Braga_-_Desenvolvedor_Backend_Pleno[1].pdf
+2025-03-26 18:27:07,208 - lightrag - INFO - No documents to process
+2025-03-26 18:27:27,808 - uvicorn.access - INFO - 127.0.0.1:47938 - "POST /documents/upload HTTP/1.1" 200
+2025-03-26 18:27:27,809 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:27:27,809 - lightrag - INFO - Process 775540 doc status writting 2 records to doc_status
+2025-03-26 18:27:27,810 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 18:27:27,810 - lightrag - INFO - Successfully fetched and enqueued file: book.txt
+2025-03-26 18:27:27,810 - lightrag - INFO - Processing 1 document(s) in 1 batches
+2025-03-26 18:27:27,810 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 18:27:28,093 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:27:28,093 - lightrag - INFO - Process 775540 doc status writting 2 records to doc_status
+2025-03-26 18:27:28,093 - lightrag - INFO - Inserting 1 to chunks
+2025-03-26 18:27:28,094 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 18:27:28,094 - lightrag - INFO - Inserting 1 records to text_chunks
+2025-03-26 18:27:58,134 - uvicorn.access - INFO - 127.0.0.1:47938 - "POST /documents/upload HTTP/1.1" 200
+2025-03-26 18:27:59,386 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:27:59,386 - lightrag - INFO - Process 775540 doc status writting 3 records to doc_status
+2025-03-26 18:27:59,387 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 18:27:59,387 - lightrag - INFO - Successfully fetched and enqueued file: CV Pedro Braga - Desenvolvedor Fullstack Pleno.pdf
+2025-03-26 18:27:59,387 - lightrag - INFO - Another process is already processing the document queue. Request queued.
+2025-03-26 18:28:47,073 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:30:23,074 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:30:23,075 - lightrag - INFO -   Chunk 1/1: extracted 0 entities and 0 relationships (deduplicated)
+2025-03-26 18:30:23,075 - lightrag - INFO - Didn't extract any entities and relationships.
+2025-03-26 18:30:23,075 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:30:23,075 - lightrag - INFO - Process 775540 doc status writting 3 records to doc_status
+2025-03-26 18:30:23,076 - lightrag - INFO - Process 775540 KV writting 2 records to full_docs
+2025-03-26 18:30:23,076 - lightrag - INFO - Process 775540 KV writting 2 records to text_chunks
+2025-03-26 18:30:23,076 - lightrag - INFO - Process 775540 KV writting 4 records to llm_response_cache
+2025-03-26 18:30:23,081 - lightrag - INFO - Writing graph with 0 nodes, 0 edges
+2025-03-26 18:30:23,088 - lightrag - INFO - In memory DB persist to disk
+2025-03-26 18:30:23,089 - lightrag - INFO - Completed batch 1 of 1.
+2025-03-26 18:30:23,089 - lightrag - INFO - Processing additional documents due to pending request
+2025-03-26 18:30:23,089 - lightrag - INFO - Processing 1 document(s) in 1 batches
+2025-03-26 18:30:23,089 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 18:30:23,120 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:30:23,121 - lightrag - INFO - Process 775540 doc status writting 3 records to doc_status
+2025-03-26 18:30:23,121 - lightrag - INFO - Inserting 2 to chunks
+2025-03-26 18:30:23,122 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 18:30:23,122 - lightrag - INFO - Inserting 2 records to text_chunks
+2025-03-26 18:31:40,914 - uvicorn.access - INFO - 127.0.0.1:38860 - "POST /documents/scan HTTP/1.1" 200
+2025-03-26 18:31:40,920 - lightrag - INFO - Found 3 new files to index.
+2025-03-26 18:31:40,921 - lightrag - INFO - Processing batch 1/1 with 3 files
+2025-03-26 18:31:40,923 - lightrag - INFO - No new unique documents were found.
+2025-03-26 18:31:40,924 - lightrag - INFO - Successfully fetched and enqueued file: book.txt
+2025-03-26 18:31:41,092 - lightrag - INFO - No new unique documents were found.
+2025-03-26 18:31:41,092 - lightrag - INFO - Successfully fetched and enqueued file: CV Pedro Braga - Desenvolvedor Fullstack Pleno.pdf
+2025-03-26 18:31:41,174 - lightrag - INFO - No new unique documents were found.
+2025-03-26 18:31:41,174 - lightrag - INFO - Successfully fetched and enqueued file: CV_Pedro_Braga_-_Desenvolvedor_Backend_Pleno[1].pdf
+2025-03-26 18:31:41,174 - lightrag - INFO - Another process is already processing the document queue. Request queued.
+2025-03-26 18:31:41,174 - lightrag - INFO - Processed 3/3 files (100.0%)
+2025-03-26 18:31:43,472 - uvicorn.access - INFO - 127.0.0.1:38860 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:31:45,403 - uvicorn.access - INFO - 127.0.0.1:38860 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:31:47,403 - uvicorn.access - INFO - 127.0.0.1:38860 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:31:49,403 - uvicorn.access - INFO - 127.0.0.1:38860 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:31:50,074 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:31:57,330 - uvicorn.access - INFO - 127.0.0.1:38860 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 18:31:57,339 - lightrag - INFO - Subgraph query successful | Node count: 0 | Edge count: 0
+2025-03-26 18:31:57,339 - uvicorn.access - INFO - 127.0.0.1:38860 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:32:34,552 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:32:54,273 - uvicorn.access - INFO - 127.0.0.1:49426 - "POST /documents/text HTTP/1.1" 200
+2025-03-26 18:32:54,274 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:32:54,274 - lightrag - INFO - Process 775540 doc status writting 4 records to doc_status
+2025-03-26 18:32:54,275 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 18:32:54,275 - lightrag - INFO - Another process is already processing the document queue. Request queued.
+2025-03-26 18:33:07,226 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:33:07,226 - lightrag - INFO -   Chunk 1/2: extracted 1 entities and 0 relationships (deduplicated)
+2025-03-26 18:33:09,983 - uvicorn.access - INFO - 127.0.0.1:57470 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 18:33:09,997 - lightrag - INFO - Subgraph query successful | Node count: 0 | Edge count: 0
+2025-03-26 18:33:09,997 - uvicorn.access - INFO - 127.0.0.1:57470 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:34:07,530 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:34:07,530 - lightrag - INFO -   Chunk 2/2: extracted 6 entities and 0 relationships (deduplicated)
+2025-03-26 18:34:07,531 - lightrag - INFO - Didn't extract any relationships
+2025-03-26 18:34:07,531 - lightrag - INFO - Extracted 7 entities and 0 relationships (deduplicated)
+2025-03-26 18:34:07,532 - lightrag - INFO - Inserting 7 to entities
+2025-03-26 18:34:07,582 - lightrag - INFO - Inserting 0 to relationships
+2025-03-26 18:34:07,582 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:34:07,582 - lightrag - INFO - Process 775540 doc status writting 4 records to doc_status
+2025-03-26 18:34:07,583 - lightrag - INFO - Process 775540 KV writting 3 records to full_docs
+2025-03-26 18:34:07,583 - lightrag - INFO - Process 775540 KV writting 4 records to text_chunks
+2025-03-26 18:34:07,584 - lightrag - INFO - Process 775540 KV writting 8 records to llm_response_cache
+2025-03-26 18:34:07,586 - lightrag - INFO - Writing graph with 7 nodes, 0 edges
+2025-03-26 18:34:07,587 - lightrag - INFO - In memory DB persist to disk
+2025-03-26 18:34:07,587 - lightrag - INFO - Completed batch 1 of 1.
+2025-03-26 18:34:07,587 - lightrag - INFO - Processing additional documents due to pending request
+2025-03-26 18:34:07,587 - lightrag - INFO - Processing 1 document(s) in 1 batches
+2025-03-26 18:34:07,587 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 18:34:07,588 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:34:07,588 - lightrag - INFO - Process 775540 doc status writting 4 records to doc_status
+2025-03-26 18:34:07,588 - lightrag - INFO - Inserting 1 to chunks
+2025-03-26 18:34:07,589 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 18:34:07,589 - lightrag - INFO - Inserting 1 records to text_chunks
+2025-03-26 18:34:11,904 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:34:24,240 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:34:24,241 - lightrag - INFO -   Chunk 1/1: extracted 1 entities and 0 relationships (deduplicated)
+2025-03-26 18:34:24,241 - lightrag - INFO - Didn't extract any relationships
+2025-03-26 18:34:24,241 - lightrag - INFO - Extracted 1 entities and 0 relationships (deduplicated)
+2025-03-26 18:34:24,241 - lightrag - INFO - Inserting 1 to entities
+2025-03-26 18:34:24,273 - lightrag - INFO - Inserting 0 to relationships
+2025-03-26 18:34:24,274 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:34:24,274 - lightrag - INFO - Process 775540 doc status writting 4 records to doc_status
+2025-03-26 18:34:24,274 - lightrag - INFO - Process 775540 KV writting 4 records to full_docs
+2025-03-26 18:34:24,274 - lightrag - INFO - Process 775540 KV writting 5 records to text_chunks
+2025-03-26 18:34:24,275 - lightrag - INFO - Process 775540 KV writting 10 records to llm_response_cache
+2025-03-26 18:34:24,277 - lightrag - INFO - Writing graph with 7 nodes, 0 edges
+2025-03-26 18:34:24,277 - lightrag - INFO - In memory DB persist to disk
+2025-03-26 18:34:24,277 - lightrag - INFO - Completed batch 1 of 1.
+2025-03-26 18:34:24,278 - lightrag - INFO - Document processing pipeline completed
+2025-03-26 18:35:06,976 - uvicorn.access - INFO - 127.0.0.1:57470 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 18:35:06,981 - lightrag - INFO - Subgraph query successful | Node count: 7 | Edge count: 0
+2025-03-26 18:35:06,982 - uvicorn.access - INFO - 127.0.0.1:57470 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:35:13,891 - uvicorn.access - INFO - 127.0.0.1:57470 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:35:15,875 - uvicorn.access - INFO - 127.0.0.1:57470 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:35:17,892 - uvicorn.access - INFO - 127.0.0.1:57470 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:35:19,875 - uvicorn.access - INFO - 127.0.0.1:57470 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:35:21,875 - uvicorn.access - INFO - 127.0.0.1:57470 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:35:23,875 - uvicorn.access - INFO - 127.0.0.1:57470 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:35:53,678 - lightrag - INFO - Subgraph query successful | Node count: 1 | Edge count: 0
+2025-03-26 18:35:53,678 - uvicorn.access - INFO - 127.0.0.1:50574 - "GET /graphs?label=Pedro&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:36:27,804 - lightrag - INFO - Subgraph query successful | Node count: 1 | Edge count: 0
+2025-03-26 18:36:27,804 - uvicorn.access - INFO - 127.0.0.1:52466 - "GET /graphs?label=Henrique&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:37:06,970 - uvicorn.access - INFO - 127.0.0.1:54408 - "POST /documents/text HTTP/1.1" 200
+2025-03-26 18:37:06,970 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:37:06,970 - lightrag - INFO - Process 775540 doc status writting 5 records to doc_status
+2025-03-26 18:37:06,972 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 18:37:06,972 - lightrag - INFO - Processing 1 document(s) in 1 batches
+2025-03-26 18:37:06,972 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 18:37:06,973 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:37:06,973 - lightrag - INFO - Process 775540 doc status writting 5 records to doc_status
+2025-03-26 18:37:06,973 - lightrag - INFO - Inserting 1 to chunks
+2025-03-26 18:37:06,979 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 18:37:06,981 - lightrag - INFO - Inserting 1 records to text_chunks
+2025-03-26 18:37:10,690 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:37:21,016 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 18:37:21,016 - lightrag - INFO -   Chunk 1/1: extracted 0 entities and 0 relationships (deduplicated)
+2025-03-26 18:37:21,017 - lightrag - INFO - Didn't extract any entities and relationships.
+2025-03-26 18:37:21,017 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 18:37:21,017 - lightrag - INFO - Process 775540 doc status writting 5 records to doc_status
+2025-03-26 18:37:21,017 - lightrag - INFO - Process 775540 KV writting 5 records to full_docs
+2025-03-26 18:37:21,018 - lightrag - INFO - Process 775540 KV writting 6 records to text_chunks
+2025-03-26 18:37:21,018 - lightrag - INFO - Process 775540 KV writting 12 records to llm_response_cache
+2025-03-26 18:37:21,020 - lightrag - INFO - Writing graph with 7 nodes, 0 edges
+2025-03-26 18:37:21,021 - lightrag - INFO - In memory DB persist to disk
+2025-03-26 18:37:21,021 - lightrag - INFO - Completed batch 1 of 1.
+2025-03-26 18:37:21,021 - lightrag - INFO - Document processing pipeline completed
+2025-03-26 18:37:24,641 - uvicorn.access - INFO - 127.0.0.1:54408 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:37:26,622 - uvicorn.access - INFO - 127.0.0.1:54408 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:37:28,622 - uvicorn.access - INFO - 127.0.0.1:54408 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:37:30,622 - uvicorn.access - INFO - 127.0.0.1:54408 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 18:37:33,928 - uvicorn.access - INFO - 127.0.0.1:54408 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 18:37:33,933 - lightrag - INFO - Subgraph query successful | Node count: 1 | Edge count: 0
+2025-03-26 18:37:33,933 - uvicorn.access - INFO - 127.0.0.1:54408 - "GET /graphs?label=Henrique&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:37:36,138 - lightrag - INFO - Subgraph query successful | Node count: 1 | Edge count: 0
+2025-03-26 18:37:36,139 - uvicorn.access - INFO - 127.0.0.1:54408 - "GET /graphs?label=Pedro&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:37:41,277 - lightrag - INFO - Subgraph query successful | Node count: 7 | Edge count: 0
+2025-03-26 18:37:41,277 - uvicorn.access - INFO - 127.0.0.1:34002 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 18:51:28,568 - uvicorn.error - INFO - Shutting down
+2025-03-26 18:51:28,670 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-03-26 18:51:28,671 - uvicorn.error - INFO - Application shutdown complete.
+2025-03-26 18:51:28,672 - uvicorn.error - INFO - Finished server process [775540]
+2025-03-26 20:08:25,529 - lightrag - INFO - Loaded graph from /home/pedrobr/Documents/repos/horus/python_services/lightrag-server/rag_storage/graph_chunk_entity_relation.graphml with 7 nodes, 0 edges
+2025-03-26 20:08:25,603 - uvicorn.error - INFO - Started server process [810803]
+2025-03-26 20:08:25,603 - uvicorn.error - INFO - Waiting for application startup.
+2025-03-26 20:08:25,604 - lightrag - INFO - Process 810803 KV load full_docs with 5 records
+2025-03-26 20:08:25,604 - lightrag - INFO - Process 810803 KV load text_chunks with 6 records
+2025-03-26 20:08:25,606 - lightrag - INFO - Process 810803 KV load llm_response_cache with 12 records
+2025-03-26 20:08:25,607 - lightrag - INFO - Process 810803 doc status load doc_status with 5 records
+2025-03-26 20:08:25,607 - uvicorn.error - INFO - Application startup complete.
+2025-03-26 20:08:25,607 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:9621 (Press CTRL+C to quit)
+2025-03-26 20:14:03,869 - uvicorn.access - INFO - 127.0.0.1:40878 - "GET / HTTP/1.1" 307
+2025-03-26 20:14:03,876 - uvicorn.access - INFO - 127.0.0.1:40878 - "GET /webui HTTP/1.1" 307
+2025-03-26 20:14:03,956 - uvicorn.access - INFO - 127.0.0.1:40878 - "GET /webui/assets/index-DTDDxtXc.js HTTP/1.1" 304
+2025-03-26 20:14:03,957 - uvicorn.access - INFO - 127.0.0.1:40886 - "GET /webui/assets/index-CbzkrOyx.css HTTP/1.1" 304
+2025-03-26 20:14:04,376 - uvicorn.access - INFO - 127.0.0.1:40886 - "GET /docs HTTP/1.1" 200
+2025-03-26 20:14:04,401 - uvicorn.access - INFO - 127.0.0.1:40886 - "GET /auth-status HTTP/1.1" 200
+2025-03-26 20:14:04,407 - uvicorn.access - INFO - 127.0.0.1:40878 - "GET /graph/label/list HTTP/1.1" 401
+2025-03-26 20:14:04,452 - lightrag - INFO - Subgraph query successful | Node count: 7 | Edge count: 0
+2025-03-26 20:14:04,453 - uvicorn.access - INFO - 127.0.0.1:40878 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 20:14:04,454 - uvicorn.access - INFO - 127.0.0.1:40886 - "GET /auth-status HTTP/1.1" 200
+2025-03-26 20:14:04,555 - uvicorn.access - INFO - 127.0.0.1:40886 - "GET /docs HTTP/1.1" 200
+2025-03-26 20:14:04,573 - lightrag - INFO - Subgraph query successful | Node count: 7 | Edge count: 0
+2025-03-26 20:14:04,574 - uvicorn.access - INFO - 127.0.0.1:40886 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 20:14:04,712 - uvicorn.access - INFO - 127.0.0.1:40886 - "GET /openapi.json HTTP/1.1" 200
+2025-03-26 20:14:18,423 - uvicorn.access - INFO - 127.0.0.1:40886 - "POST /documents/upload HTTP/1.1" 200
+2025-03-26 20:14:18,429 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 20:14:18,429 - lightrag - INFO - Process 810803 doc status writting 6 records to doc_status
+2025-03-26 20:14:18,430 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 20:14:18,430 - lightrag - INFO - Successfully fetched and enqueued file: JohnWick.txt
+2025-03-26 20:14:18,430 - lightrag - INFO - Processing 1 document(s) in 1 batches
+2025-03-26 20:14:18,430 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 20:14:18,728 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 20:14:18,729 - lightrag - INFO - Process 810803 doc status writting 6 records to doc_status
+2025-03-26 20:14:18,729 - lightrag - INFO - Inserting 2 to chunks
+2025-03-26 20:14:18,730 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 20:14:18,730 - lightrag - INFO - Inserting 2 records to text_chunks
+2025-03-26 20:15:03,361 - uvicorn.access - INFO - 127.0.0.1:37094 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 20:15:05,330 - uvicorn.access - INFO - 127.0.0.1:37094 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 20:15:07,330 - uvicorn.access - INFO - 127.0.0.1:37094 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 20:15:09,333 - uvicorn.access - INFO - 127.0.0.1:37094 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 20:15:11,331 - uvicorn.access - INFO - 127.0.0.1:37094 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 20:15:14,952 - uvicorn.access - INFO - 127.0.0.1:37094 - "POST /documents/scan HTTP/1.1" 200
+2025-03-26 20:15:14,964 - lightrag - INFO - Found 4 new files to index.
+2025-03-26 20:15:14,965 - lightrag - INFO - Processing batch 1/1 with 4 files
+2025-03-26 20:15:14,967 - lightrag - INFO - No new unique documents were found.
+2025-03-26 20:15:14,967 - lightrag - INFO - Successfully fetched and enqueued file: book.txt
+2025-03-26 20:15:14,968 - lightrag - INFO - No new unique documents were found.
+2025-03-26 20:15:14,968 - lightrag - INFO - Successfully fetched and enqueued file: JohnWick.txt
+2025-03-26 20:15:15,246 - lightrag - INFO - No new unique documents were found.
+2025-03-26 20:15:15,247 - lightrag - INFO - Successfully fetched and enqueued file: CV Pedro Braga - Desenvolvedor Fullstack Pleno.pdf
+2025-03-26 20:15:15,321 - lightrag - INFO - No new unique documents were found.
+2025-03-26 20:15:15,322 - lightrag - INFO - Successfully fetched and enqueued file: CV_Pedro_Braga_-_Desenvolvedor_Backend_Pleno[1].pdf
+2025-03-26 20:15:15,322 - lightrag - INFO - Another process is already processing the document queue. Request queued.
+2025-03-26 20:15:15,323 - lightrag - INFO - Processed 4/4 files (100.0%)
+2025-03-26 20:15:35,811 - uvicorn.access - INFO - 127.0.0.1:37094 - "POST /documents/scan HTTP/1.1" 200
+2025-03-26 20:15:35,813 - lightrag - INFO - Found 4 new files to index.
+2025-03-26 20:15:35,813 - lightrag - INFO - Processing batch 1/1 with 4 files
+2025-03-26 20:15:35,815 - lightrag - INFO - No new unique documents were found.
+2025-03-26 20:15:35,816 - lightrag - INFO - Successfully fetched and enqueued file: book.txt
+2025-03-26 20:15:35,817 - lightrag - INFO - No new unique documents were found.
+2025-03-26 20:15:35,817 - lightrag - INFO - Successfully fetched and enqueued file: JohnWick.txt
+2025-03-26 20:15:37,128 - lightrag - INFO - No new unique documents were found.
+2025-03-26 20:15:37,128 - lightrag - INFO - Successfully fetched and enqueued file: CV Pedro Braga - Desenvolvedor Fullstack Pleno.pdf
+2025-03-26 20:15:37,199 - lightrag - INFO - No new unique documents were found.
+2025-03-26 20:15:37,199 - lightrag - INFO - Successfully fetched and enqueued file: CV_Pedro_Braga_-_Desenvolvedor_Backend_Pleno[1].pdf
+2025-03-26 20:15:37,199 - lightrag - INFO - Another process is already processing the document queue. Request queued.
+2025-03-26 20:15:37,199 - lightrag - INFO - Processed 4/4 files (100.0%)
+2025-03-26 20:15:38,180 - uvicorn.access - INFO - 127.0.0.1:37094 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 20:16:46,210 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 20:17:19,689 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 20:18:20,797 - uvicorn.access - INFO - 127.0.0.1:60364 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 20:18:22,885 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 20:18:22,889 - lightrag - INFO -   Chunk 1/2: extracted 0 entities and 0 relationships (deduplicated)
+2025-03-26 20:18:52,232 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 20:18:52,232 - lightrag - INFO -   Chunk 2/2: extracted 0 entities and 0 relationships (deduplicated)
+2025-03-26 20:18:52,232 - lightrag - INFO - Didn't extract any entities and relationships.
+2025-03-26 20:18:52,233 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 20:18:52,234 - lightrag - INFO - Process 810803 doc status writting 6 records to doc_status
+2025-03-26 20:18:52,237 - lightrag - INFO - Process 810803 KV writting 6 records to full_docs
+2025-03-26 20:18:52,238 - lightrag - INFO - Process 810803 KV writting 8 records to text_chunks
+2025-03-26 20:18:52,239 - lightrag - INFO - Process 810803 KV writting 16 records to llm_response_cache
+2025-03-26 20:18:52,249 - lightrag - INFO - Writing graph with 7 nodes, 0 edges
+2025-03-26 20:18:52,264 - lightrag - INFO - In memory DB persist to disk
+2025-03-26 20:18:52,264 - lightrag - INFO - Completed batch 1 of 1.
+2025-03-26 20:18:52,264 - lightrag - INFO - Processing additional documents due to pending request
+2025-03-26 20:18:52,264 - lightrag - INFO - All documents have been processed or are duplicates
+2025-03-26 20:18:52,264 - lightrag - INFO - Document processing pipeline completed
+2025-03-26 20:19:46,402 - uvicorn.access - INFO - 127.0.0.1:44326 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 20:19:46,414 - lightrag - INFO - Subgraph query successful | Node count: 7 | Edge count: 0
+2025-03-26 20:19:46,416 - uvicorn.access - INFO - 127.0.0.1:44326 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 20:21:11,202 - uvicorn.access - INFO - 127.0.0.1:53422 - "POST /documents/text HTTP/1.1" 422
+2025-03-26 20:21:23,959 - uvicorn.access - INFO - 127.0.0.1:53416 - "POST /documents/text HTTP/1.1" 422
+2025-03-26 20:21:39,837 - uvicorn.access - INFO - 127.0.0.1:44102 - "POST /documents/text HTTP/1.1" 422
+2025-03-26 20:22:09,668 - uvicorn.access - INFO - 127.0.0.1:45948 - "POST /documents/text HTTP/1.1" 200
+2025-03-26 20:22:09,671 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 20:22:09,671 - lightrag - INFO - Process 810803 doc status writting 7 records to doc_status
+2025-03-26 20:22:09,674 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 20:22:09,674 - lightrag - INFO - Processing 1 document(s) in 1 batches
+2025-03-26 20:22:09,675 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 20:22:09,689 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 20:22:09,689 - lightrag - INFO - Process 810803 doc status writting 7 records to doc_status
+2025-03-26 20:22:09,690 - lightrag - INFO - Inserting 1 to chunks
+2025-03-26 20:22:09,692 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 20:22:09,692 - lightrag - INFO - Inserting 1 records to text_chunks
+2025-03-26 20:22:22,743 - uvicorn.access - INFO - 127.0.0.1:57268 - "POST /documents/text HTTP/1.1" 422
+2025-03-26 20:22:26,312 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 20:22:30,876 - uvicorn.access - INFO - 127.0.0.1:52362 - "POST /documents/text HTTP/1.1" 422
+2025-03-26 20:22:38,905 - uvicorn.access - INFO - 127.0.0.1:52362 - "POST /documents/text HTTP/1.1" 422
+2025-03-26 20:22:44,264 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 20:22:44,264 - lightrag - INFO -   Chunk 1/1: extracted 2 entities and 0 relationships (deduplicated)
+2025-03-26 20:22:44,266 - lightrag - INFO - Didn't extract any relationships
+2025-03-26 20:22:44,266 - lightrag - INFO - Extracted 2 entities and 0 relationships (deduplicated)
+2025-03-26 20:22:44,266 - lightrag - INFO - Inserting 2 to entities
+2025-03-26 20:22:44,305 - lightrag - INFO - Inserting 0 to relationships
+2025-03-26 20:22:44,305 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 20:22:44,305 - lightrag - INFO - Process 810803 doc status writting 7 records to doc_status
+2025-03-26 20:22:44,306 - lightrag - INFO - Process 810803 KV writting 7 records to full_docs
+2025-03-26 20:22:44,306 - lightrag - INFO - Process 810803 KV writting 9 records to text_chunks
+2025-03-26 20:22:44,307 - lightrag - INFO - Process 810803 KV writting 18 records to llm_response_cache
+2025-03-26 20:22:44,313 - lightrag - INFO - Writing graph with 9 nodes, 0 edges
+2025-03-26 20:22:44,319 - lightrag - INFO - In memory DB persist to disk
+2025-03-26 20:22:44,319 - lightrag - INFO - Completed batch 1 of 1.
+2025-03-26 20:22:44,320 - lightrag - INFO - Document processing pipeline completed
+2025-03-26 20:22:48,278 - uvicorn.access - INFO - 127.0.0.1:44322 - "POST /documents/text HTTP/1.1" 200
+2025-03-26 20:22:48,278 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 20:22:48,279 - lightrag - INFO - Process 810803 doc status writting 8 records to doc_status
+2025-03-26 20:22:48,279 - lightrag - INFO - Stored 1 new unique documents
+2025-03-26 20:22:48,279 - lightrag - INFO - Processing 1 document(s) in 1 batches
+2025-03-26 20:22:48,279 - lightrag - INFO - Start processing batch 1 of 1.
+2025-03-26 20:22:48,283 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 20:22:48,283 - lightrag - INFO - Process 810803 doc status writting 8 records to doc_status
+2025-03-26 20:22:48,284 - lightrag - INFO - Inserting 1 to chunks
+2025-03-26 20:22:48,284 - lightrag - INFO - Inserting 1 records to full_docs
+2025-03-26 20:22:48,285 - lightrag - INFO - Inserting 1 records to text_chunks
+2025-03-26 20:22:59,645 - uvicorn.access - INFO - 127.0.0.1:44322 - "POST /documents/scan HTTP/1.1" 200
+2025-03-26 20:22:59,655 - lightrag - INFO - Found 4 new files to index.
+2025-03-26 20:22:59,656 - lightrag - INFO - Processing batch 1/1 with 4 files
+2025-03-26 20:22:59,659 - lightrag - INFO - No new unique documents were found.
+2025-03-26 20:22:59,660 - lightrag - INFO - Successfully fetched and enqueued file: book.txt
+2025-03-26 20:22:59,662 - lightrag - INFO - No new unique documents were found.
+2025-03-26 20:22:59,663 - lightrag - INFO - Successfully fetched and enqueued file: JohnWick.txt
+2025-03-26 20:22:59,886 - lightrag - INFO - No new unique documents were found.
+2025-03-26 20:22:59,887 - lightrag - INFO - Successfully fetched and enqueued file: CV Pedro Braga - Desenvolvedor Fullstack Pleno.pdf
+2025-03-26 20:22:59,979 - lightrag - INFO - No new unique documents were found.
+2025-03-26 20:22:59,980 - lightrag - INFO - Successfully fetched and enqueued file: CV_Pedro_Braga_-_Desenvolvedor_Backend_Pleno[1].pdf
+2025-03-26 20:22:59,981 - lightrag - INFO - Another process is already processing the document queue. Request queued.
+2025-03-26 20:22:59,981 - lightrag - INFO - Processed 4/4 files (100.0%)
+2025-03-26 20:23:00,262 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 20:23:13,975 - lightrag - INFO - Inserting 1 records to llm_response_cache
+2025-03-26 20:23:13,977 - lightrag - INFO -   Chunk 1/1: extracted 0 entities and 0 relationships (deduplicated)
+2025-03-26 20:23:13,977 - lightrag - INFO - Didn't extract any entities and relationships.
+2025-03-26 20:23:13,977 - lightrag - INFO - Inserting 1 records to doc_status
+2025-03-26 20:23:13,977 - lightrag - INFO - Process 810803 doc status writting 8 records to doc_status
+2025-03-26 20:23:13,979 - lightrag - INFO - Process 810803 KV writting 8 records to full_docs
+2025-03-26 20:23:13,980 - lightrag - INFO - Process 810803 KV writting 10 records to text_chunks
+2025-03-26 20:23:13,980 - lightrag - INFO - Process 810803 KV writting 20 records to llm_response_cache
+2025-03-26 20:23:13,985 - lightrag - INFO - Writing graph with 9 nodes, 0 edges
+2025-03-26 20:23:13,992 - lightrag - INFO - In memory DB persist to disk
+2025-03-26 20:23:13,992 - lightrag - INFO - Completed batch 1 of 1.
+2025-03-26 20:23:13,992 - lightrag - INFO - Processing additional documents due to pending request
+2025-03-26 20:23:13,992 - lightrag - INFO - All documents have been processed or are duplicates
+2025-03-26 20:23:13,992 - lightrag - INFO - Document processing pipeline completed
+2025-03-26 20:23:23,212 - uvicorn.access - INFO - 127.0.0.1:44322 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 20:23:25,126 - uvicorn.access - INFO - 127.0.0.1:44322 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 20:23:27,126 - uvicorn.access - INFO - 127.0.0.1:44322 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 20:23:29,126 - uvicorn.access - INFO - 127.0.0.1:44322 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 20:23:34,225 - uvicorn.access - INFO - 127.0.0.1:44322 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 20:23:34,238 - lightrag - INFO - Subgraph query successful | Node count: 9 | Edge count: 0
+2025-03-26 20:23:34,240 - uvicorn.access - INFO - 127.0.0.1:44322 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 20:23:34,557 - uvicorn.access - INFO - 127.0.0.1:44322 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 20:23:34,562 - lightrag - INFO - Subgraph query successful | Node count: 9 | Edge count: 0
+2025-03-26 20:23:34,562 - uvicorn.access - INFO - 127.0.0.1:44322 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 20:23:34,783 - uvicorn.access - INFO - 127.0.0.1:44322 - "GET /graph/label/list HTTP/1.1" 200
+2025-03-26 20:23:34,787 - lightrag - INFO - Subgraph query successful | Node count: 9 | Edge count: 0
+2025-03-26 20:23:34,787 - uvicorn.access - INFO - 127.0.0.1:44322 - "GET /graphs?label=*&max_depth=3&min_degree=0 HTTP/1.1" 200
+2025-03-26 20:23:38,969 - uvicorn.access - INFO - 127.0.0.1:44322 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 20:23:40,953 - uvicorn.access - INFO - 127.0.0.1:44322 - "GET /documents/pipeline_status HTTP/1.1" 200
+2025-03-26 20:25:13,872 - uvicorn.error - INFO - Shutting down
+2025-03-26 20:25:13,974 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-03-26 20:25:13,977 - uvicorn.error - INFO - Application shutdown complete.
+2025-03-26 20:25:13,977 - uvicorn.error - INFO - Finished server process [810803]

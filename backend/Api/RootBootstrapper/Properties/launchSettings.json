@@ -12,21 +12,22 @@
     "Development-Linux": {
       "commandName": "Executable",
       "executablePath": "dotnet",
-      "commandLineArgs": "./linux-x64/Horus.RootBootstrapper.dll",
-      "applicationUrl": "https://localhost:3000",
+      "commandLineArgs": "./Debug/linux-x64/Horus.RootBootstrapper.dll",
+      "applicationUrl": "https://0.0.0.0:3000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_URLS": "http://localhost:3000"
+        "ASPNETCORE_URLS": "http://0.0.0.0:3000"
       }
     },
     "Development": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,
-      "applicationUrl": "https://localhost:3000",
+      "commandLineArgs": "-r linux-x64",
+      "applicationUrl": "https://0.0.0.0:3000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_URLS": "http://localhost:3000"
+        "ASPNETCORE_URLS": "http://0.0.0.0:3000"
       }
     },
     "IIS Express": {

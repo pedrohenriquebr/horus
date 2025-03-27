@@ -51,7 +51,7 @@ public enum ApplicationErrorCode
 
 public enum ApplicationExceptionType
 {
-    Application,
-    Validation,
-    Business
+    Application = 500,
+    Validation = 400,
+    Business = 422
 }

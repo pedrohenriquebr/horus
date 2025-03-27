@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Horus.Modules.Core.Infra.Context;
 
+using System;
+
 public class VectorConverter : ValueConverter<float[], byte[]>
 {
     public VectorConverter()

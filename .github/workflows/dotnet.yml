@@ -1,0 +1,132 @@
+name: .NET Build and Security Check
+
+# Permissions specification for security
+permissions:
+  contents: read
+  security-events: write
+
+on:
+  push:
+    branches: [ master, development ]
+  pull_request:
+    branches: [ master, development ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: ./backend
+      
+    - name: Build
+      run: dotnet build --no-restore
+      working-directory: ./backend
+      
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      working-directory: ./backend
+
+  security-check:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+      security-events: write
+    
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    
+    - name: Check for sensitive data in files
+      run: |
+        echo "🔍 Starting security scan for sensitive data..."
+        
+        # Define patterns to search for
+        PATTERNS=(
+          # API Keys and Tokens
+          '"[Tt]oken"\s*[:=]\s*"[^"]*"'
+          '"[Aa]pi[Kk]ey"\s*[:=]\s*"[^"]*"'
+          '"[Aa]uth[Tt]oken"\s*[:=]\s*"[^"]*"'
+          '"[Bb]earer"\s*[:=]\s*"[^"]*"'
+          
+          # Credentials
+          '"[Pp]assword"\s*[:=]\s*"[^"]*"'
+          '"[Ss]ecret"\s*[:=]\s*"[^"]*"'
+          '"[Cc]redentials"\s*[:=]\s*"[^"]*"'
+          
+          # Connection Strings
+          '"[Cc]onnection[Ss]tring"\s*[:=]\s*"[^"]*"'
+          '"[Dd]atabase[Uu]rl"\s*[:=]\s*"[^"]*"'
+          
+          # Service-specific keys
+          '"[Ss]earch[Ee]ngine[Ii]d"\s*[:=]\s*"[^"]*"'
+          '"[Hh]ugging[Ff]ace[Aa]pi[Kk]ey"\s*[:=]\s*"[^"]*"'
+        )
+        
+        # Files to check (using find to handle nested directories)
+        FILES_TO_CHECK=(
+          "appsettings*.json"
+          "*.config"
+          "*.env*"
+          "*.properties"
+          "*.yml"
+          "*.yaml"
+        )
+        
+        # Initialize variables
+        FOUND_TOKENS=0
+        FINDINGS_REPORT=""
+        
+        echo "📁 Scanning configuration files..."
+        
+        # Search through specified file patterns
+        for file_pattern in "${FILES_TO_CHECK[@]}"; do
+          while IFS= read -r file; do
+            if [ -f "$file" ]; then
+              echo "Checking file: $file"
+              
+              for pattern in "${PATTERNS[@]}"; do
+                if grep -E "$pattern" "$file" > /dev/null 2>&1; then
+                  FINDINGS_REPORT+="\n❌ Found sensitive pattern in $file matching: $pattern"
+                  FOUND_TOKENS=1
+                fi
+              done
+            fi
+          done < <(find . -name "$file_pattern" -type f ! -path "*/node_modules/*" ! -path "*/bin/*" ! -path "*/obj/*")
+        done
+        
+        # Check for environment files
+        ENV_FILES=$(find . -type f -name ".env*" ! -path "*/node_modules/*" ! -path "*/bin/*" ! -path "*/obj/*")
+        if [ ! -z "$ENV_FILES" ]; then
+          FINDINGS_REPORT+="\n❌ Found .env file(s):\n$ENV_FILES"
+          FOUND_TOKENS=1
+        fi
+        
+        # Report findings
+        if [ $FOUND_TOKENS -eq 1 ]; then
+          echo "⛔ Security check failed!"
+          echo -e "$FINDINGS_REPORT"
+          echo "\n🔒 Security Recommendations:"
+          echo "1. Use GitHub Secrets for sensitive data: https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions"
+          echo "2. For connection strings, use environment variables or secure configuration management"
+          echo "3. Never commit .env files to the repository"
+          echo "4. Consider using Azure Key Vault or similar services for production secrets"
+          exit 1
+        else
+          echo "✅ Security check passed! No sensitive data found in configuration files."
+        fi

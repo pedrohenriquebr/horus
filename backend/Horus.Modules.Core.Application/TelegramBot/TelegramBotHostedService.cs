@@ -29,6 +29,10 @@ public class TelegramBotHostedService : IHostedService
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
+        _logger.LogInformation("Starting Telegram bot service...");
+        var token = _configuration["Telegram:Token"];
+        _logger.LogInformation("Bot token found: {HasToken}", !string.IsNullOrEmpty(token));
+        
         while (!cancellationToken.IsCancellationRequested)
             try
             {
@@ -36,13 +40,21 @@ public class TelegramBotHostedService : IHostedService
 
                 var receiverOptions = new ReceiverOptions
                 {
-                    AllowedUpdates = Array.Empty<UpdateType>(),
+                    AllowedUpdates = new[]
+                    {
+                        UpdateType.Message,
+                        UpdateType.EditedMessage,
+                    },
                     ThrowPendingUpdates = true
                 };
 
+                _logger.LogInformation("Configuring bot receiver...");
                 _botClient.StartReceiving(
                     async (botClient, update, ct) =>
-                        await _botHandler.HandleUpdateAsync(botClient, update, ct),
+                    {
+                        _logger.LogInformation("Received update type: {UpdateType}", update.Type);
+                        await _botHandler.HandleUpdateAsync(botClient, update, ct);
+                    },
                     async (botClient, exception, ct) =>
                     {
                         _logger.LogError(exception, "Error while handling telegram bot update");

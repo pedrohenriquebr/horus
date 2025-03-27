@@ -18,7 +18,6 @@ public class TelegramBotHandler
     private readonly string _botToken;
     private readonly ILogger<TelegramBotHandler> _logger;
     private readonly IServiceScopeFactory _serviceScopeFactory;
-    private ILlmProvider _llmService;
     private IMediator _mediator;
 
     public TelegramBotHandler(ILogger<TelegramBotHandler> logger,
@@ -32,20 +31,24 @@ public class TelegramBotHandler
     public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update,
         CancellationToken cancellationToken)
     {
+        _logger.LogInformation("Handler starting to process update type: {UpdateType}", update.Type);
         using var scope = _serviceScopeFactory.CreateScope();
         _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        _llmService = scope.ServiceProvider.GetRequiredService<ILlmProvider>();
+        _logger.LogInformation("Services initialized successfully");
+        this._logger.LogInformation("Received a message from user ID: {UserId}", update.Message?.From?.Id);
         if (update.Message is not { } message)
             return;
 
         var chatId = message.Chat.Id;
-
         try
         {
+            _logger.LogInformation("Starting to handle message...");
             await HandleMessageAsync(botClient, update, cancellationToken);
+            _logger.LogInformation("Message handled successfully");
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Error in HandleUpdateAsync with update type {UpdateType}", update.Type);
             await botClient.SendChatActionAsync(chatId, ChatAction.Typing, cancellationToken: cancellationToken);
             await botClient.SendTextMessageAsync(chatId, $"Error: {ex.Message}", cancellationToken: cancellationToken);
         }
@@ -94,12 +97,20 @@ public class TelegramBotHandler
             ["last_name"] = user.LastName,
             ["language_code"] = user.LanguageCode
         };
-
-        var response = await _mediator.Send(new GenerateTextQuery
-        {
-            Prompt = messageText,
-            UserInfo = userInfo
-        });
+        var response = new GenerateTextQueryResponse();
+        
+        try {
+            _logger.LogInformation("Sending message to mediator: {Message}", messageText);
+            response = await _mediator.Send(new GenerateTextQuery
+            {
+                Prompt = messageText,
+                UserInfo = userInfo
+            });
+            _logger.LogInformation("Received response from mediator");
+        } catch (Exception ex) {
+            _logger.LogError(ex, "Error sending message to mediator");
+            throw;
+        }
 
         await _botClient.SendChatActionAsync(chatId, ChatAction.Typing, cancellationToken: cancellationToken);
         await _botClient.SendTextMessageAsync(chatId, EscapeMarkdownV2SpecialChars(response.Text), null,

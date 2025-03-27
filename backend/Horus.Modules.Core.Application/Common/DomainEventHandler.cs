@@ -1,4 +1,4 @@
-using Horus.Modules.Shared.Contracts.SharedKernel;
+using Horus.Modules.Core.Domain.Events;
 using MediatR;
 
 namespace Horus.Modules.Core.Application.Common;

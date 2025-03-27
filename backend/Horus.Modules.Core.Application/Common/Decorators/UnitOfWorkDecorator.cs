@@ -1,15 +1,19 @@
+using System.Data;
 using Horus.Modules.Core.Domain;
-using Horus.Modules.Shared.Contracts.SharedKernel;
+using Horus.Modules.Core.Domain.Entities;
+using Horus.Modules.Core.Domain.Events;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Horus.Modules.Core.Application.Common.Decorators;
 
-public class UnitOfWorkDecorator<TNotification> : IDomainEventHandler<TNotification>
+public class UnitOfWorkDecorator<TNotification> : INotificationHandler<TNotification>
     where TNotification : BaseEvent
 {
-    private readonly IDomainEventHandler<TNotification> _innerHandler;
+    private readonly INotificationHandler<TNotification> _innerHandler;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UnitOfWorkDecorator(IDomainEventHandler<TNotification> innerHandler, IUnitOfWork unitOfWork)
+    public UnitOfWorkDecorator(INotificationHandler<TNotification> innerHandler, IUnitOfWork unitOfWork)
     {
         _innerHandler = innerHandler;
         _unitOfWork = unitOfWork;
@@ -25,6 +29,7 @@ public class UnitOfWorkDecorator<TNotification> : IDomainEventHandler<TNotificat
         }
         catch (Exception)
         {
+
             await _unitOfWork.RollbackAsync();
             throw;
         }

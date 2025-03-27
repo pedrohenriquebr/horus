@@ -28,7 +28,7 @@ public class DefaultMemoryProvider : IMemoryProvider
 
             if (!memoryDocs.Any()) return string.Empty;
 
-            var memories = memoryDocs.Select(doc => doc.Content);
+            var memories = memoryDocs.Select(doc => doc.ProcessedContent);
             return string.Join("\n", memories);
         }
         catch (Exception ex)
@@ -55,7 +55,7 @@ public class DefaultMemoryProvider : IMemoryProvider
                         : new Dictionary<string, object>();
 
                     return new MemoryItem(
-                        doc.Content,
+                        doc.RawContent,
                         doc.CreatedAt,
                         mt?.GetValueOrDefault("source")?.ToString() ?? "unknown",
                         mt
@@ -89,18 +89,20 @@ public class DefaultMemoryProvider : IMemoryProvider
         try
         {
             var userId = userInfo.GetValueOrDefault("id");
+            var chatSessionId = userInfo.GetValueOrDefault("chatSessionId") ?? String.Empty;
             if (string.IsNullOrEmpty(userId)) return false;
 
             var metadata = new Dictionary<string, object>
             {
                 ["type"] = "memory",
-                ["user_id"] = userId,
+                ["userId"] = userId,
                 ["timestamp"] = item.CreatedAt.ToString("o"),
                 ["source"] = item.Source,
-                ["metadata"] = item.Metadata
+                ["metadata"] = item.Metadata,
+                ["chatSessionId"] = chatSessionId
             };
 
-            await _ragService.AddDocumentAsync(item.Content, metadata);
+            await _ragService.AddDocumentForMemoryAsync(item.Content, metadata);
             return true;
         }
         catch (Exception ex)
@@ -123,7 +125,7 @@ public class DefaultMemoryProvider : IMemoryProvider
                 ["user_id"] = userId,
                 ["timestamp"] = DateTime.UtcNow.ToString("o")
             };
-            await _ragService.AddDocumentAsync(query, metadata);
+            await _ragService.AddDocumentForSearchResultAsync(query, metadata);
         }
         catch (Exception ex)
         {

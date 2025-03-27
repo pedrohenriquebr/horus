@@ -4,119 +4,121 @@ using Horus.Modules.Core.Infra.Services.LLMProvider.GeminiApi;
 using Horus.Modules.Core.Infra.Services.RateLimiter;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Horus.Modules.Core.Infra.Services.LLMProvider.GeminiApi.Tools;
 
-namespace Horus.Modules.Core.Infra.Services.LLMProvider;
-
-public class GeminiProvider : ILlmProvider
+namespace Horus.Modules.Core.Infra.Services.LLMProvider
 {
-    private readonly IOptions<GeminiConfig> _configuration;
-    private readonly IGeminiApi _geminiApi;
-    private readonly ILogger<GeminiProvider> _logger;
-    private readonly IRateLimiter _rateLimiter;
-    private readonly string _systemInstruction = null;
-    private readonly IToolMediator _toolMediator;
-
-    public GeminiProvider(
-        IRateLimiter rateLimiter,
-        ILogger<GeminiProvider> logger,
-        IOptions<GeminiConfig> configuration,
-        IGeminiApi geminiApi, IToolMediator toolMediator)
+    public class GeminiProvider : ILlmProvider, ITextSummarizer
     {
-        _rateLimiter = rateLimiter;
-        _logger = logger;
-        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        _geminiApi = geminiApi;
-        _toolMediator = toolMediator;
-    }
+        private readonly IOptions<GeminiConfig> _configuration;
+        private readonly IGeminiApi _geminiApi;
+        private readonly ILogger<GeminiProvider> _logger;
+        private readonly IRateLimiter _rateLimiter;
+        private readonly string _systemInstruction = null;
+        private IToolMediator? _toolMediator;
 
-    public async Task<string> GenerateTextAsync(
-        string prompt,
-        Dictionary<string, object>? systemInstruction = null,
-        List<ChatMessage>? chatHistory = null)
-    {
-        try
+        public GeminiProvider(
+            IRateLimiter rateLimiter,
+            ILogger<GeminiProvider> logger,
+            IOptions<GeminiConfig> configuration,
+            IGeminiApi geminiApi)
         {
-            if (!_rateLimiter.TryAcquire())
-            {
-                _logger.LogWarning("Rate limit exceeded, waiting...");
-                await _rateLimiter.WaitAsync();
-            }
-
-            var systemInstructionText = _systemInstruction;
-            if (systemInstruction != null &&
-                systemInstruction.TryGetValue("text", out var instruction))
-                systemInstructionText = instruction.ToString();
-
-            var request = new GenerateContentRequest(
-                    chatHistory
-                        .OrderBy(d => d.Timestamp)
-                        .Select(message => new Content(
-                            message.Role,
-                            new List<Part>
-                            {
-                                new(message.Content)
-                            }
-                        ))
-                        .Append(new Content("user", new List<Part>
-                        {
-                            new(prompt)
-                        }))
-                        .ToList(),
-                    SystemInstruction: new SystemInstruction(new List<Part>
-                    {
-                        new(systemInstructionText)
-                    }),
-                    tool_config: new ToolConfig(
-                        new FunctionCallingConfig("AUTO"))
-                )
-                .AddWebSearchTool();
-
-            var response = await _geminiApi.GenerateContentAsync(_configuration.Value.ModelName,
-                _configuration.Value.ApiKey,
-                request
-            );
-
-
-            if (response.HasFunctionCall())
-            {
-                var result = await response.HandleFunctionCallsAsync(_toolMediator);
-                return result;
-            }
-
-            return ExtractResponseText(response);
+            _rateLimiter = rateLimiter ?? throw new ArgumentNullException(nameof(rateLimiter));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _geminiApi = geminiApi ?? throw new ArgumentNullException(nameof(geminiApi));
         }
-        catch (Exception ex)
+
+        public GeminiProvider AddToolMediator(IToolMediator toolMediator)
         {
-            _logger.LogError(ex, "Error generating text with Gemini");
-            throw;
+            _toolMediator = toolMediator;
+            return this;
         }
-    }
 
-    public async Task<string> GenerateWithImageAsync(string imagePath,
-        string? prompt = null,
-        Dictionary<string, object>? systemInstruction = null,
-        List<ChatMessage>? chatHistory = null) // Adicionado parâmetro de histórico
-    {
-        try
+        public async Task<string> GenerateTextAsync(
+            string prompt,
+            Dictionary<string, object>? systemInstruction = null,
+            List<ChatMessage>? chatHistory = null)
         {
-            if (!_rateLimiter.TryAcquire())
+            return await GenerateContentAsync(prompt, systemInstruction, chatHistory);
+        }
+
+        public async Task<string> GenerateWithImageAsync(
+            string imagePath,
+            string? prompt = null,
+            Dictionary<string, object>? systemInstruction = null,
+            List<ChatMessage>? chatHistory = null)
+        {
+            var mediaParts = CreateMediaParts(imagePath, prompt, GetMimeType(imagePath));
+            return await GenerateContentAsync(null, systemInstruction, chatHistory, mediaParts);
+        }
+
+        public async Task<string> GenerateWithAudioAsync(
+            string audioPath,
+            string? prompt = null,
+            Dictionary<string, object>? systemInstruction = null,
+            List<ChatMessage>? chatHistory = null)
+        {
+            var mediaParts = CreateMediaParts(audioPath, prompt, GetMimeType(audioPath));
+            return await GenerateContentAsync(null, systemInstruction, chatHistory, mediaParts);
+        }
+
+        private async Task<string> GenerateContentAsync(
+            string? prompt,
+            Dictionary<string, object>? systemInstruction,
+            List<ChatMessage>? chatHistory,
+            List<Part>? mediaParts = null)
+        {
+            try
             {
-                _logger.LogWarning("Rate limit exceeded, waiting...");
-                await _rateLimiter.WaitAsync();
+                if (!_rateLimiter.TryAcquire())
+                {
+                    _logger.LogWarning("Rate limit exceeded, waiting...");
+                    await _rateLimiter.WaitAsync();
+                }
+
+                var contents = BuildContents(chatHistory, prompt, mediaParts);
+
+                var request = new GenerateContentRequest(
+                    contents,
+                    SystemInstruction: BuildSystemInstruction(systemInstruction)
+                );
+
+                if (_toolMediator != null)
+                    request = request.AddWebSearchTool();
+
+                var response = await _geminiApi.GenerateContentAsync(
+                    _configuration.Value.ModelName,
+                    _configuration.Value.ApiKey,
+                    request);
+
+                if (_toolMediator != null && response.HasFunctionCall())
+                {
+                    return await response.HandleFunctionCallsAsync(_toolMediator);
+                }
+
+                return ExtractResponseText(response);
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error generating content");
+                throw;
+            }
+        }
 
-            var systemInstructionText = _systemInstruction;
-            if (systemInstruction != null &&
-                systemInstruction.TryGetValue("text", out var instruction))
-                systemInstructionText = instruction.ToString();
-
-            var imageBytes = await File.ReadAllBytesAsync(imagePath);
-            var base64Image = Convert.ToBase64String(imageBytes);
-
+        private List<Content> BuildContents(
+            List<ChatMessage>? chatHistory,
+            string? prompt,
+            List<Part>? mediaParts)
+        {
             var contents = new List<Content>();
 
-            // Adiciona histórico existente
             if (chatHistory != null)
+            {
                 contents.AddRange(chatHistory
                     .OrderBy(d => d.Timestamp)
                     .Select(message => new Content(
@@ -125,145 +127,72 @@ public class GeminiProvider : ILlmProvider
                         {
                             new(message.Content)
                         })));
-
-            // Adiciona nova mensagem com imagem
-            var imageParts = new List<Part>
-            {
-                new(InlineData: new InlineData(
-                    GetMimeType(imagePath),
-                    base64Image))
-            };
-
-            if (!string.IsNullOrEmpty(prompt)) imageParts.Insert(0, new Part(prompt));
-
-            contents.Add(new Content("user", imageParts));
-
-            var request = new GenerateContentRequest(
-                    contents,
-                    SystemInstruction: new SystemInstruction(new List<Part>
-                    {
-                        new(systemInstructionText)
-                    })
-                )
-                .AddWebSearchTool();
-
-            var response = await _geminiApi.GenerateContentAsync(
-                _configuration.Value.ModelName,
-                _configuration.Value.ApiKey,
-                request);
-            if (response.HasFunctionCall())
-            {
-                var result = await response.HandleFunctionCallsAsync(_toolMediator);
-                return result;
             }
 
-            return ExtractResponseText(response);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error generating response with image");
-            throw;
-        }
-    }
-
-    public async Task<string> GenerateWithAudioAsync(
-        string audioPath,
-        string? prompt = null,
-        Dictionary<string, object>? systemInstruction = null,
-        List<ChatMessage>? chatHistory = null) // Adicionado parâmetro de histórico
-    {
-        try
-        {
-            var systemInstructionText = _systemInstruction;
-            if (systemInstruction != null &&
-                systemInstruction.TryGetValue("text", out var instruction))
-                systemInstructionText = instruction.ToString();
-
-            var audioBytes = await File.ReadAllBytesAsync(audioPath);
-            var base64Audio = Convert.ToBase64String(audioBytes);
-
-            var contents = new List<Content>();
-
-            // Adiciona histórico existente
-            if (chatHistory != null)
-                contents.AddRange(chatHistory
-                    .OrderBy(d => d.Timestamp)
-                    .Select(message => new Content(
-                        message.Role,
-                        new List<Part>
-                        {
-                            new(message.Content)
-                        })));
-
-            // Adiciona nova mensagem com áudio
-            var audioParts = new List<Part>
+            if (mediaParts != null)
             {
-                new(InlineData: new InlineData(
-                    GetMimeType(audioPath),
-                    base64Audio))
-            };
-
-            if (!string.IsNullOrEmpty(prompt)) audioParts.Add(new Part(prompt));
-
-            contents.Add(new Content("user", audioParts));
-
-            var request = new GenerateContentRequest(
-                    contents,
-                    SystemInstruction: new SystemInstruction(new List<Part>
-                    {
-                        new(systemInstructionText)
-                    })
-                )
-                .AddWebSearchTool();
-
-            var response = await _geminiApi.GenerateContentAsync(
-                _configuration.Value.ModelName,
-                _configuration.Value.ApiKey,
-                request);
-
-            if (response.HasFunctionCall())
+                contents.Add(new Content("user", mediaParts));
+            }
+            else if (!string.IsNullOrEmpty(prompt))
             {
-                var result = await response.HandleFunctionCallsAsync(_toolMediator);
-                return result;
+                contents.Add(new Content("user", new List<Part> { new(prompt) }));
             }
 
-            return ExtractResponseText(response);
+            return contents;
         }
-        catch (Exception ex)
+
+        private SystemInstruction? BuildSystemInstruction(Dictionary<string, object>? systemInstruction)
         {
-            _logger.LogError(ex, "Error processing audio");
-            throw;
+            if (systemInstruction == null || !systemInstruction.TryGetValue("text", out var instruction))
+                return null;
+
+            return new SystemInstruction(new List<Part>
+            {
+                new(instruction.ToString())
+            });
         }
-    }
 
-    private string ExtractResponseText(GenerateContentResponse response)
-    {
-        return response.Candidates[0].Content.Parts[0].Text;
-    }
-
-    private SystemInstruction? BuildSystemInstruction(Dictionary<string, object>? systemInstruction)
-    {
-        if (systemInstruction == null || !systemInstruction.TryGetValue("text", out var instruction))
-            return null;
-
-        return new SystemInstruction(new List<Part>
+        private List<Part> CreateMediaParts(string filePath, string? prompt, string mimeType)
         {
-            new(instruction.ToString())
-        });
-    }
+            var fileBytes = File.ReadAllBytes(filePath);
+            var base64Data = Convert.ToBase64String(fileBytes);
 
-    private string GetMimeType(string filePath)
-    {
-        var extension = Path.GetExtension(filePath).ToLower();
-        return extension switch
+            var parts = new List<Part>
+            {
+                new(InlineData: new InlineData(mimeType, base64Data))
+            };
+
+            if (!string.IsNullOrEmpty(prompt))
+            {
+                parts.Insert(0, new Part(prompt));
+            }
+
+            return parts;
+        }
+
+        private string ExtractResponseText(GenerateContentResponse response)
         {
-            ".jpg" or ".jpeg" => "image/jpeg",
-            ".png" => "image/png",
-            ".webp" => "image/webp",
-            ".mp3" => "audio/mpeg",
-            ".wav" => "audio/wav",
-            ".ogg" or ".oga" => "audio/ogg",
-            _ => "application/octet-stream"
-        };
+            return response.Candidates[0].Content.Parts[0].Text;
+        }
+
+        private string GetMimeType(string filePath)
+        {
+            var extension = Path.GetExtension(filePath).ToLower();
+            return extension switch
+            {
+                ".jpg" or ".jpeg" => "image/jpeg",
+                ".png" => "image/png",
+                ".webp" => "image/webp",
+                ".mp3" => "audio/mpeg",
+                ".wav" => "audio/wav",
+                ".ogg" or ".oga" => "audio/ogg",
+                _ => "application/octet-stream"
+            };
+        }
+
+        public Task<string> SummarizeTextAsync(string text, string systemInstruction = null)
+        {
+            return GenerateContentAsync(text, new Dictionary<string, object>(){["text"]= systemInstruction}, null);
+        }
     }
 }

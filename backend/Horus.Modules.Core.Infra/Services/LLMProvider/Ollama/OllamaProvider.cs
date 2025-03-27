@@ -39,6 +39,13 @@ public class OllamaProvider : ILlmProvider
             }
 
             var messages = new List<Message>();
+            
+            if (systemInstruction != null)
+                messages.Add(new Message
+                {
+                    Role = "system",
+                    Content = systemInstruction?.GetValueOrDefault("text")?.ToString() ?? string.Empty
+                });
 
             if (chatHistory != null)
                 messages.AddRange(chatHistory
@@ -48,6 +55,9 @@ public class OllamaProvider : ILlmProvider
                         Role = m.Role,
                         Content = m.Content
                     }));
+
+
+         
 
             messages.Add(new Message
             {
@@ -59,7 +69,6 @@ public class OllamaProvider : ILlmProvider
             {
                 Model = _options.Value.ModelName,
                 Messages = messages,
-                System = systemInstruction?.GetValueOrDefault("text")?.ToString()
             };
 
             var response = await _ollamaApi.ChatAsync(request);

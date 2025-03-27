@@ -9,13 +9,13 @@ public sealed class Paginator
 {
     private const int MinPage = 0;
 
-    public static Task<PaginatedResponse<TEntity>> Paginate<TEntity>(DbSet<TEntity> entity, BasePaginated request)
+    public static Task<LegacyPaginatedResponse<TEntity>> Paginate<TEntity>(DbSet<TEntity> entity, BasePaginated request)
         where TEntity : class
     {
         return Paginate<TEntity>(entity.AsQueryable(), request);
     }
 
-    public static async Task<PaginatedResponse<TEntity>> Paginate<TEntity>(IQueryable<TEntity> entity,
+    public static async Task<LegacyPaginatedResponse<TEntity>> Paginate<TEntity>(IQueryable<TEntity> entity,
         BasePaginated request)
         where TEntity : class
     {
@@ -27,7 +27,7 @@ public sealed class Paginator
             .Paginate(request)
             .ToListAsync();
 
-        return new PaginatedResponse<TEntity>
+        return new LegacyPaginatedResponse<TEntity>
         {
             Items = result,
             PageSize = result.Count(),
@@ -39,3 +39,5 @@ public sealed class Paginator
         };
     }
 }
+
+

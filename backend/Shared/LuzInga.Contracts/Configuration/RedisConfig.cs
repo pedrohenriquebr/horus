@@ -6,4 +6,5 @@ public class RedisConfig
     public string KeyDelimiter { get; set; }
     public string AuditListKey { get; set; }
     public string ChatHistoryKey { get; set; }
+    public string WebPageCacheKey { get; set; } = "webpage";
 }

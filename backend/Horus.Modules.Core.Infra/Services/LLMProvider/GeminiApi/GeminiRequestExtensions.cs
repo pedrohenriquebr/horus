@@ -50,11 +50,11 @@ public static class GeminiRequestExtensions
 
     public static GenerateContentRequest AddWebSearchTool(this GenerateContentRequest request)
     {
-        return request.AddTool<SearchParameters>("search", "Perform a web search to find relevant information. " +
-                                                           "I will analyze the search results and provide you with a comprehensive summary that includes: " +
-                                                           "1) Key findings and main points, " +
-                                                           "2) Important details and context, " +
-                                                           "3) Credible sources with direct links to verify the information. " +
+        return request.AddTool<SearchParameters>("search", "Perform a web search to find relevant information. use it when user requests to find information about a topic or answer a question. " +
+                                                           "It will analyze the search results and provide you with a comprehensive summary that includes: " +
+                                                           "1) Key findings and main points, \n" +
+                                                           "2) Important details and context, \n" +
+                                                           "3) Credible sources with direct links to verify the information. \n" +
                                                            "The summary will be clear, accurate and well-organized.");
     }
 

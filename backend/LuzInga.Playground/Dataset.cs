@@ -1,0 +1,8 @@
+namespace Horus.Modules.Core.Playground;
+
+public static class Dataset
+{
+    public static string Humans =>
+        @"The moon has fascinated humans for centuries, with its glowing presence casting light across the night sky. Ancient cultures often attributed spiritual significance to the moon, linking it with various deities and mythologies. In modern times, the moon has become a subject of scientific inquiry. Researchers have sent spacecraft to the lunar surface, gathering valuable data about its composition, surface features, and potential for future human colonization. The moon’s gravitational pull also has significant effects on Earth, influencing ocean tides and stabilizing our planet’s axial tilt, which has contributed to the stability of Earth's climate over geological time scales.
+        In addition to its impact on Earth, the moon has provided a unique environment for scientific experiments. In the late 1960s and early 1970s, NASA’s Apollo missions carried out groundbreaking experiments on the lunar surface. These missions not only provided detailed information about the moon’s geology but also helped advance the understanding of space travel and human adaptability to low gravity. Looking ahead, there is growing interest in using the moon as a stepping stone for further space exploration. The establishment of lunar bases could provide the infrastructure necessary for missions to Mars and beyond, potentially transforming the moon into a hub for human activity in space.";
+}

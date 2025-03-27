@@ -1,11 +1,11 @@
 using Horus.Modules.Core.Application.Abstractions.Messaging;
 using Horus.Modules.Core.Domain;
 using MediatR;
+using MediatR.Pipeline;
 
 namespace Horus.Modules.Core.Application.Common.Behaviors;
 
 public class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : ICommand
 {
     private readonly IUnitOfWork _dbContext;
 

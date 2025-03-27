@@ -16,7 +16,7 @@ init-db:
 	docker-compose up -d db 
 	sleep 15
 	docker-compose exec db  /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -Q "CREATE DATABASE [HorusDb]" -C
-	docker-compose exec db  /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -i setup.sql -C
+	docker-compose exec db  /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -i init.sql -C
 
 init-redis:
 	docker-compose up -d redis

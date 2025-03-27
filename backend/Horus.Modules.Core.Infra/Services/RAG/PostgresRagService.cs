@@ -1,8 +1,14 @@
+using Horus.Modules.Core.Application.Events;
 using Horus.Modules.Core.Application.Services;
+using Horus.Modules.Core.Domain;
 using Horus.Modules.Core.Domain.Entities;
-using Horus.Modules.Core.Infra.Services.Repositories;
+using Horus.Modules.Core.Domain.Events;
+using Horus.Modules.Core.Domain.Factories;
+using Horus.Modules.Core.Domain.Repositories;
+using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Pgvector;
 
 namespace Horus.Modules.Core.Infra.Services.RAG;
@@ -10,6 +16,9 @@ namespace Horus.Modules.Core.Infra.Services.RAG;
 public class PostgresRagService : IRagService
 {
     private readonly IDistributedCache _cache;
+    private readonly IMediator _mediator;
+    private readonly IDocumentFactory _documentFactory;
+    private readonly IOptions<RagOptions> _options;
     private readonly IDocumentsRepository _documentsRepository;
     private readonly IEmbeddingService _embeddings;
     private readonly ILogger<PostgresRagService> _logger;
@@ -18,15 +27,21 @@ public class PostgresRagService : IRagService
         IDocumentsRepository documentsRepository,
         IEmbeddingService embeddings,
         IDistributedCache cache,
-        ILogger<PostgresRagService> logger)
+        IMediator mediator,
+        ILogger<PostgresRagService> logger,
+        IDocumentFactory documentFactory,
+        IOptions<RagOptions> options)
     {
         _documentsRepository = documentsRepository;
         _embeddings = embeddings;
         _cache = cache;
+        _mediator = mediator;
+        _documentFactory = documentFactory;
+        _options = options;
         _logger = logger;
     }
 
-    public async Task<Document> AddDocumentAsync(string content, Dictionary<string, object>? metadata = null)
+    public async Task<Document> AddDocumentForSearchResultAsync(string content, Dictionary<string, object>? metadata = null)
     {
         try
         {
@@ -37,21 +52,39 @@ public class PostgresRagService : IRagService
                 return existingDocs!;
             }
 
-            // Generate embedding
-            var embedding = await _embeddings.GetEmbeddingAsync(content);
+            
+            //TODO: Remove this
+            var newDoc = _documentFactory.CreateMemory(content);
+            if(metadata is not null)
+                newDoc.SetMetadata(metadata);
+            await _documentsRepository.InsertAsync(newDoc);
+            
+            return newDoc;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error adding document: {message}", ex.Message);
+            throw;
+        }
+    }
 
-            // Create document with default embedding if empty
-            var document = new Document
+    public async Task<Document> AddDocumentForMemoryAsync(string content, Dictionary<string, object>? metadata = null)
+    {
+        try
+        {
+            var existingDocs = await _documentsRepository.FindByContentAsync(content);
+            if (existingDocs != null)
             {
-                Content = content,
-                Embedding = new Vector(embedding),
-                Metadata = metadata
-            };
+                _logger.LogInformation("Document already exists, skipping: {content}", content[..100]);
+                return existingDocs!;
+            }
 
-            // Insert document
-            var result = await _documentsRepository.InsertAsync(document);
-            _logger.LogInformation("Document added successfully: {id}", result.Id);
-            return result;
+            var newDoc = _documentFactory.CreateMemory(content);
+            if(metadata is not null)
+                newDoc.SetMetadata(metadata);
+            await _documentsRepository.InsertAsync(newDoc);
+            
+            return newDoc;
         }
         catch (Exception ex)
         {
@@ -72,7 +105,7 @@ public class PostgresRagService : IRagService
                 ["summary"] = summary ?? string.Empty
             };
 
-            var document = await AddDocumentAsync(content, metadata);
+            var document = await AddDocumentForSearchResultAsync(content, metadata);
 
             return new SearchResult
             {
@@ -96,21 +129,21 @@ public class PostgresRagService : IRagService
         {
             // Generate embedding for query
             var queryEmbedding = await _embeddings.GetEmbeddingAsync(query);
-
+        
             // Search for similar documents
-            var results = await _documentsRepository.MatchDocumentsAsync(queryEmbedding, limit, 0.9f);
+            var results = await _documentsRepository.MatchDocumentsAsync(queryEmbedding, limit, _options.Value.SearchThresold);
             var searchResults = results
                 .Where(r => r.Metadata.GetValueOrDefault("type")?.ToString() == "search_result")
                 .Select(r => new SearchResult
                 {
                     Id = r.Id.ToString(),
                     Url = r.Metadata.GetValueOrDefault("url")?.ToString() ?? string.Empty,
-                    Content = r.Content,
+                    Content = r.ProcessedContent,
                     Summary = r.Metadata.GetValueOrDefault("summary")?.ToString(),
                     Similarity = r.Metadata.GetValueOrDefault("similarity") is float sim ? sim : 0f,
                     CreatedAt = r.CreatedAt
                 });
-
+        
             if (!searchResults.Any())
             {
                 // Fallback to recent results if no similar documents found
@@ -121,12 +154,12 @@ public class PostgresRagService : IRagService
                 {
                     Id = r.Id.ToString(),
                     Url = r.Metadata.GetValueOrDefault("url")?.ToString() ?? string.Empty,
-                    Content = r.Content,
+                    Content = r.ProcessedContent,
                     Summary = r.Metadata.GetValueOrDefault("summary")?.ToString(),
                     CreatedAt = r.CreatedAt
                 });
             }
-
+        
             return searchResults;
         }
         catch (Exception ex)
@@ -136,7 +169,7 @@ public class PostgresRagService : IRagService
         }
     }
 
-    public async Task<IEnumerable<Document>> SearchSimilarAsync(string query, int limit = 5)
+    public async Task<IEnumerable<Document>> SearchSimilarAsync(string query)
     {
         try
         {
@@ -144,13 +177,31 @@ public class PostgresRagService : IRagService
             var queryEmbedding = await _embeddings.GetEmbeddingAsync(query);
 
             // Search for similar documents
-            var results = await _documentsRepository.MatchDocumentsAsync(queryEmbedding, limit, 0.9f);
+            var results = await _documentsRepository.MatchDocumentsAsync(queryEmbedding, _options.Value.SearchLimit, _options.Value.SearchThresold);
             return results;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error searching similar documents: {message}", ex.Message);
             return Enumerable.Empty<Document>();
+        }
+    }
+
+    public async Task<IEnumerable<HybridSearchResult>> SearchSimilarHybridAsync(string requestPrompt, Guid? userId = null)
+    {
+        try
+        {
+            // Get embedding for query
+            var queryEmbedding = await _embeddings.GetEmbeddingAsync(requestPrompt);
+
+            // Search for similar documents
+            var results = await _documentsRepository.MatchDocumentsHybridAsync(queryEmbedding, requestPrompt, userId,_options.Value.SearchLimit, _options.Value.SearchThresold );
+            return results;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error searching similar documents: {message}", ex.Message);
+            return Enumerable.Empty<HybridSearchResult>();
         }
     }
 
@@ -164,7 +215,7 @@ public class PostgresRagService : IRagService
         await _documentsRepository.DeleteAllDocumentsByUserId(userId, DocumentType.Memory);
     }
 
-    public async Task DeleteDocumentAsync(string id)
+    public async Task DeleteDocumentAsync(Guid id)
     {
         try
         {
@@ -177,13 +228,38 @@ public class PostgresRagService : IRagService
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="document"></param>
+    public async Task IngestAsync(Document document)
+    {
+        try
+        {
+            var hash = document.Checksum;
+            var existingDocs = await _documentsRepository.AnyAsync<Document>(d => d.Checksum == hash);
+            if (existingDocs)
+            {
+                _logger.LogInformation("Document already exists, skipping: {content}", document.RawContent[..100]);
+                return;
+            }
+            
+            await _documentsRepository.InsertAsync(document);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error adding document: {message}", ex.Message);
+            throw;
+        }
+    }
+
     public async Task<string> GetContextAsync(string query)
     {
         try
         {
             // First try to find exact matches
             var exactMatches = await _documentsRepository.GetAllMemoriesByUserId($"content LIKE '%{query}%'");
-            if (exactMatches.Any()) return exactMatches.First().Content;
+            if (exactMatches.Any()) return exactMatches.First().ProcessedContent;
 
             var similarDocs = await SearchSimilarAsync(query);
             if (!similarDocs.Any()) return string.Empty;
@@ -193,7 +269,7 @@ public class PostgresRagService : IRagService
                 .Select(doc =>
                 {
                     var similarity = doc.Metadata.GetValueOrDefault("similarity") is float sim ? sim : 0f;
-                    return $"[Relevância: {similarity:F2}] {doc.Content}";
+                    return $"[Relevância: {similarity:F2}] {doc.ProcessedContent}";
                 });
 
             _logger.LogDebug("Building context: Found {count} similar documents for query: {query}",

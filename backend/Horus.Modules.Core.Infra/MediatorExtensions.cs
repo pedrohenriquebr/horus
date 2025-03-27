@@ -1,4 +1,5 @@
 using Horus.Modules.Core.Application;
+using Horus.Modules.Core.Domain.Entities;
 using Horus.Modules.Core.Infra.Context;
 using Horus.Modules.Shared.Contracts.SharedKernel;
 using MediatR;
@@ -10,7 +11,7 @@ public static class MediatorExtensions
 {
     public static async Task DispatchDomainEventsAsync(this IMediator mediator, HorusContext context)
     {
-        var entities = context.ChangeTracker.Entries<IEntity>()
+        var entities = context.ChangeTracker.Entries<BaseEntity>()
             .Where(e => e.State != EntityState.Detached
                         && e.Entity.DomainEvents != null
                         && e.Entity.DomainEvents.Any())

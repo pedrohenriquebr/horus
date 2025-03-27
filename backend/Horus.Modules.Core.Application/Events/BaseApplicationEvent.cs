@@ -1,3 +1,4 @@
+using Horus.Modules.Core.Domain.Entities;
 using MediatR;
 
 namespace Horus.Modules.Core.Application.Events;

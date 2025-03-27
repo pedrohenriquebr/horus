@@ -1,27 +1,32 @@
+using System.Linq.Expressions;
+using System.Text.Json;
+using Horus.Modules.Core.Domain;
 using Horus.Modules.Core.Domain.Entities;
+using Horus.Modules.Core.Domain.Repositories;
 using Horus.Modules.Core.Infra.Context;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Npgsql;
 
 namespace Horus.Modules.Core.Infra.Services.Repositories;
 
-public class DocumentsRepository : IDocumentsRepository
+public class DocumentsRepository : BaseRepository, IDocumentsRepository
 {
     private readonly HorusContext _context;
     private readonly ILogger<DocumentsRepository> _logger;
 
-    public DocumentsRepository(HorusContext context, ILogger<DocumentsRepository> logger)
+    public DocumentsRepository(HorusContext context, ILogger<DocumentsRepository> logger) : base(context)
     {
         _context = context;
         _logger = logger;
     }
 
-    public async Task<Document?> GetAsync(string id)
+    public async Task<Document?> GetAsync(Guid id)
     {
         try
         {
-            return await _context.Documents.FindAsync(long.Parse(id));
+            return await _context.Documents.FindAsync(id);
         }
         catch (Exception ex)
         {
@@ -41,14 +46,14 @@ public class DocumentsRepository : IDocumentsRepository
             var query = @"
             SELECT * 
             FROM documents
-            WHERE metadata->>'user_id' = {0}
+            WHERE metadata->>'userId' = {0}
               AND metadata->>'type' = 'memory'
             LIMIT {1};";
-
+            
             // Executa o comando SQL no banco de dados usando parâmetros
-            var result = await _context.Documents
-                .FromSqlRaw(query, userId, limit)
-                .ToListAsync();
+            var result = await EntityFrameworkQueryableExtensions
+                .ToListAsync<Document>(_context.Documents
+                    .FromSqlRaw(query, userId, limit));
 
             return result;
         }
@@ -60,13 +65,12 @@ public class DocumentsRepository : IDocumentsRepository
     }
 
 
-    public async Task<Document> InsertAsync(Document data)
+    public Task<Document> InsertAsync(Document data)
     {
         try
         {
             _context.Documents.Add(data);
-            await _context.SaveChangesAsync();
-            return data;
+            return Task.FromResult(data);
         }
         catch (Exception ex)
         {
@@ -75,29 +79,26 @@ public class DocumentsRepository : IDocumentsRepository
         }
     }
 
-    public async Task<Document> UpdateAsync(string id, Document data)
+    public Task<Document> UpdateAsync(Document data)
     {
         try
         {
-            var existing = await GetDocumentByIdAsync(id);
-            _context.Entry(existing).CurrentValues.SetValues(data);
-            await _context.SaveChangesAsync();
-            return existing;
+            _context.Documents.Update(data);
+            return Task.FromResult(data);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error updating document with id {id}", id);
+            _logger.LogError(ex, "Error updating document with id {id}", data.Id);
             throw;
         }
     }
 
-    public async Task DeleteAsync(string id)
+    public async Task DeleteAsync(Guid id)
     {
         try
         {
             var document = await GetDocumentByIdAsync(id);
             _context.Documents.Remove(document);
-            await _context.SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -111,12 +112,12 @@ public class DocumentsRepository : IDocumentsRepository
     {
         try
         {
-            var results = await _context.Documents.FromSqlRaw(
-                "SELECT * FROM match_documents(@embedding, @limit, @threshold)",
+            var results = await EntityFrameworkQueryableExtensions.ToListAsync<Document>(_context.Documents.FromSqlRaw(
+                "SELECT * FROM hybrid_rag_search(@embedding, @limit, @threshold)",
                 new SqlParameter("@embedding", embedding),
                 new SqlParameter("@limit", limit),
                 new SqlParameter("@threshold", threshold)
-            ).ToListAsync();
+            ));
             return results;
         }
         catch (Exception ex)
@@ -125,17 +126,53 @@ public class DocumentsRepository : IDocumentsRepository
             return Enumerable.Empty<Document>();
         }
     }
-
-    public async Task DeleteAllDocumentsByUserId(string userId, DocumentType documentType)
+    
+    public async Task<IEnumerable<HybridSearchResult>> MatchDocumentsHybridAsync(float[] embedding, string query, Guid? userId = null, int limit = 5,
+        float threshold = 0.5f)
     {
         try
         {
-            var query = @"
+            var results = await _context.Set<HybridSearchResult>()
+                .FromSqlRaw(
+                    "SELECT * FROM hybrid_rag_search(@embedding::vector(384), @query::text, @limit::int, @threshold::float, @userId::UUID, NULL::UUID)",
+                    new NpgsqlParameter("@embedding", embedding),
+                    new NpgsqlParameter("@query", query),
+                    new NpgsqlParameter("@limit", limit),
+                    new NpgsqlParameter("@threshold", threshold),
+                    new NpgsqlParameter("@userId", userId)
+
+                )
+                .ToListAsync();
+            return results;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error matching documents");
+            return Enumerable.Empty<HybridSearchResult>();
+        }
+    }
+
+    public async Task DeleteAllDocumentsByUserId(string userId, DocumentType? documentType=null)
+    {
+        try
+        {
+            if (documentType != null)
+            {
+                var query = @"
             DELETE FROM documents 
-            WHERE metadata->>'user_id' = {0}
+            WHERE metadata->>'userId' = {0}
             AND metadata->>'type' = {1}";
 
-            await _context.Database.ExecuteSqlRawAsync(query, userId, MapDocumentType(documentType));
+                await _context.Database.ExecuteSqlRawAsync(query, userId, MapDocumentType(documentType!.Value));
+            }
+            else
+            {
+                var query = @"
+            DELETE FROM documents 
+            WHERE metadata->>'userId' = {0}";
+
+                await _context.Database.ExecuteSqlRawAsync(query, userId);
+            }
         }
         catch (Exception ex)
         {
@@ -147,8 +184,8 @@ public class DocumentsRepository : IDocumentsRepository
     {
         try
         {
-            var query = "SELECT * FROM documents WHERE content = {0}";
-            var results = await _context.Documents.FromSqlRaw(query, content).ToListAsync();
+            var query = "SELECT * FROM documents WHERE processed_content = {0}";
+            var results = await EntityFrameworkQueryableExtensions.ToListAsync<Document>(_context.Documents.FromSqlRaw(query, content));
             return results.FirstOrDefault();
         }
         catch (Exception ex)
@@ -158,10 +195,22 @@ public class DocumentsRepository : IDocumentsRepository
         }
     }
 
-    // Helper method to get document by id
-    private async Task<Document> GetDocumentByIdAsync(string id)
+    public async Task<IEnumerable<Document>> GetByStatusAsync(int statusId)
     {
-        var document = await _context.Documents.FindAsync(long.Parse(id));
+        var list = await this._context.Documents.Where(d => d.StatusId == statusId).ToListAsync();
+        return list;
+    }
+
+    public async Task<IEnumerable<Document>> GetByProjectIdAsync(Guid projectId)
+    {
+        var list = await this._context.Documents.Where(d => d.ProjectId == projectId).ToListAsync();
+        return list.AsEnumerable();
+    }
+
+    // Helper method to get document by id
+    private async Task<Document> GetDocumentByIdAsync(Guid id)
+    {
+        var document = await _context.Documents.FindAsync(id);
         if (document == null) throw new Exception($"Document with ID {id} not found.");
         return document;
     }

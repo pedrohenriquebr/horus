@@ -1,0 +1,96 @@
+
+@import url(https://fonts.googleapis.com/css2?family=Lato&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Open+Sans&display=swap);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#webcrumbs {
+    /* Font Families */
+    --font-sans: 'Open Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-title: 'Lato', ui-sans-serif, system-ui, sans-serif;
+    --font-body: 'Open Sans', ui-sans-serif, system-ui, sans-serif;
+  
+    /* Neutral Colors */
+    --neutral-50: #f7f7f7;
+    --neutral-100: #eeeeee;
+    --neutral-200: #e0e0e0;
+    /* ... continue para as outras variações de neutral */
+  
+    /* Primary Colors */
+    --primary-50: #f3f1ff;
+    --primary-100: #e9e5ff;
+    --primary-DEFAULT: #611bf8;
+    /* ... continue para as outras variações de primary */
+  }
+  
+  /* Font Families */
+  .title {
+    font-family: var(--font-title);
+  }
+  
+  .body {
+    font-family: var(--font-body);
+  }
+  
+  /* Text Colors */
+  .text-neutral-50 {
+    color: var(--neutral-50);
+  }
+  
+  .text-primary-DEFAULT {
+    color: var(--primary-DEFAULT);
+  }
+  
+  /* Background Colors */
+  .bg-neutral-50 {
+    background-color: var(--neutral-50);
+  }
+  
+  .bg-primary-DEFAULT {
+    background-color: var(--primary-DEFAULT);
+  }
+  
+  /* Font Sizes */
+  .text-xs {
+    font-size: 12px;
+    line-height: 19.2px;
+  }
+  
+  .text-sm {
+    font-size: 14px;
+    line-height: 21px;
+  }
+  
+  /* Continue para os outros tamanhos de fonte */
+  
+  /* Border Radius */
+  .rounded-sm {
+    border-radius: 6px;
+  }
+  
+  .rounded {
+    border-radius: 12px;
+  }
+  
+  .rounded-md {
+    border-radius: 18px;
+  }
+  
+  /* Continue para os outros border radius */
+  
+  /* Spacing Utilities */
+  .p-1 {
+    padding: 4px;
+  }
+  
+  .m-2 {
+    margin: 8px;
+  }
+  
+  .pt-3 {
+    padding-top: 12px;
+  }
+  
+  /* Continue para todas as variações de espaçamento */

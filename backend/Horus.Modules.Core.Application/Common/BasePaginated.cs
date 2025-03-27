@@ -6,9 +6,11 @@ namespace Horus.Modules.Core.Application.Common;
 
 public class BasePaginated : IQuerySort, IQueryPaging
 {
-    [QueryOperator(Max = 50)] public int? Limit { get; set; } = 10;
+    public int? Limit { get; set; } = 10;
 
-    [QueryOperator(HasName = "Page")] public int? Offset { get; set; } = 0;
+    public int? Offset { get; set; } = 0;
 
     public string Sort { get; set; } = "name";
+    
+    public int PageSize { get; set; } = 10;
 }

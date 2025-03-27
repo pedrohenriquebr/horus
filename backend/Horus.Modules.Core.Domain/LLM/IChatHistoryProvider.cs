@@ -1,4 +1,6 @@
+using Horus.Modules.Core.Domain.Entities;
 using Horus.Modules.Shared.Contracts.Configuration;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using StackExchange.Redis;
@@ -7,7 +9,7 @@ namespace Horus.Modules.Core.Domain.LLM;
 
 public interface IChatHistoryProvider
 {
-    Task StoreMessageAsync(string role, string content, Dictionary<string, string> userInfo);
+    Task StoreMessageAsync(string role, string content, Dictionary<string, string> userInfo, Dictionary<string, object>? additionalMetadata = null);
     Task<IEnumerable<ChatMessage>> GetHistoryAsync(Dictionary<string, string> userInfo, int limit = 50);
 
     Task ClearHistoryAsync(Dictionary<string, string> userInfo);
@@ -26,15 +28,23 @@ public class RedisChatHistoryProvider : IChatHistoryProvider
 {
     private readonly string _keyTemplate;
     private readonly IConnectionMultiplexer _redis;
+    private readonly IHorusContext _horusContext;
 
-    public RedisChatHistoryProvider(IConnectionMultiplexer redis, IOptions<RedisConfig> options)
+    public RedisChatHistoryProvider(IConnectionMultiplexer redis, IOptions<RedisConfig> options, IHorusContext horusContext)
     {
         _redis = redis;
+        _horusContext = horusContext;
         _keyTemplate = $"{options.Value.ChatHistoryKey}{options.Value.KeyDelimiter}{{0}}";
     }
 
-    public async Task StoreMessageAsync(string role, string content, Dictionary<string, string> userInfo)
+    public async Task StoreMessageAsync(string role, string content, Dictionary<string, string> userInfo, Dictionary<string, object>? additionalMetadata = null)
     {
+        var chatSessionId = userInfo.GetValueOrDefault("chatSessionId");
+        if (string.IsNullOrEmpty(chatSessionId))
+            return;
+        ChatSession? chatSession = null;
+        
+        
         var key = BuildKey(userInfo);
         var chatMessage = new ChatMessage
         {
@@ -44,10 +54,28 @@ public class RedisChatHistoryProvider : IChatHistoryProvider
             Timestamp = DateTime.UtcNow
         };
         await _redis.GetDatabase().ListRightPushAsync(new RedisKey(key), JsonConvert.SerializeObject(chatMessage));
+
+        if (!string.IsNullOrEmpty(chatSessionId))
+        {
+            chatSession = await _horusContext.ChatSessions.FirstOrDefaultAsync(x => x.Id == Guid.Parse(chatSessionId))!;
+            
+            if(chatSession == null)
+                throw new Exception("Chat session not found");
+            
+            var msg = chatSession?.AddNewMessage(role, content);
+            
+            if(additionalMetadata != null)
+                msg?.SetMetadata(additionalMetadata);
+        }
+            
+
     }
 
     public async Task<IEnumerable<ChatMessage>> GetHistoryAsync(Dictionary<string, string> userInfo, int limit = 50)
     {
+        if(!userInfo.ContainsKey("chatSessionId"))
+            return new List<ChatMessage>();
+        
         var key = BuildKey(userInfo);
 
         // Redis ListRangeAsync uses inclusive indexes, so -50 means the 50th last message, and -1 means the latest message.
@@ -60,7 +88,7 @@ public class RedisChatHistoryProvider : IChatHistoryProvider
 
     public async Task ClearHistoryAsync(Dictionary<string, string> userInfo)
     {
-        if (!userInfo.ContainsKey("id"))
+        if (!userInfo.ContainsKey("chatSessionId"))
             return;
         var key = BuildKey(userInfo);
         await _redis.GetDatabase().KeyDeleteAsync(key);
@@ -73,6 +101,6 @@ public class RedisChatHistoryProvider : IChatHistoryProvider
 
     private string BuildKey(Dictionary<string, string> userInfo)
     {
-        return string.Format(_keyTemplate, userInfo["id"]);
+        return string.Format(_keyTemplate, userInfo["chatSessionId"]);
     }
 }
